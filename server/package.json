@@ -6,15 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon ./server.js",
-    "start": "node ./server.js"
+    "start": "node ./server.js",
+    "seed:dev":"npx prisma migrate reset && node ./db/seed.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.0",
+    "prisma": "^5.14.0",
     "socket.io": "^4.7.5"
   }
 }
