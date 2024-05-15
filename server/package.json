@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon ./server.js",
-    "start": "node ./server.js"
+    "start": "node ./server.js",
+    "seed:dev":"npx prisma migrate reset && node ./db/seed.js"
   },
   "keywords": [],
   "author": "",
