@@ -49,7 +49,8 @@ function App() {
         />
         <button>send message</button>
       </form>
-      {displayRoomNumber &&
+      {
+        displayRoomNumber &&
         <p>in room {room}</p>
       }
       {
