@@ -78,7 +78,7 @@ const seed = async () => {
   await createInitialPlayer("Player One");
   await createInitialPlayer("Player Two");
   console.log("players created, creating initial game");
-  createInitialGame();
+  await createInitialGame();
   console.log("inital game created")
   console.log("seed complete");
 };
