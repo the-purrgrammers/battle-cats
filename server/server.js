@@ -14,11 +14,17 @@ const io = new Server(server, {
   },
 });
 
+//establish a connection
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  // specify the room the user belongs to
+  socket.on("joinRoom", (data) => {
+    socket.join(data);
+  });
+
+  //listen for incoming messages and room numbers {message, room}
   socket.on("sendMessage", (data) => {
-    data = data + " from the server";
-    io.emit("receiveMessage", data);
+    //respond ONLY to users in the same room
+    socket.to(data.room).emit("receiveMessage", data.message);
   });
 });
 
