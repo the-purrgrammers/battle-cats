@@ -9,7 +9,8 @@ function App() {
   const [message, setMessage] = useState("")
   const [response, setResponse] = useState("")
   const [room, setRoom] = useState('')
-  
+  const [displayRoomNumber, setDisplayRoomNumber] = useState('')
+
   // receives messages from the server
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
@@ -18,16 +19,18 @@ function App() {
   }, [])
 
   //assign yourself a room
-  const handleJoin = (e)=>{
+  const handleJoin = (e) => {
     e.preventDefault()
     socket.emit("joinRoom", room)
+    //display the number of the room you've joined
+    setDisplayRoomNumber(room)
   }
 
-//sends messages to the server
+  //sends messages to the server
   const handleMessage = (e) => {
     e.preventDefault()
     //send an object containing both the message and your room number
-    socket.emit("sendMessage", {message, room})
+    socket.emit("sendMessage", { message, room })
   }
   return (
     <>
@@ -46,8 +49,8 @@ function App() {
         />
         <button>send message</button>
       </form>
-      {room&&
-      <p>in room {room}</p>
+      {displayRoomNumber &&
+        <p>in room {room}</p>
       }
       {
         response &&
