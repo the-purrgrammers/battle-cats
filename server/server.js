@@ -1,4 +1,4 @@
-
+const path = require("path");
 require("dotenv").config()
 const express = require("express");
 const app = express();
@@ -9,7 +9,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 
-
+app.use(express.static(path.join(__dirname, "../", 'client/dist')));
 
 const io = new Server(server, {
   cors: {
