@@ -3,7 +3,18 @@ import "../styles/oppGame.css"
 
 
 const OpponentShipMap = () => {
-  const [oppGameState, setOppGameState] = useState([]
+  const [oppGameState, setOppGameState] = useState([
+    ["A", "A", "A", "A", "A", 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, "D", "D", "D", 0, "E"],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, "E"],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, "B", "B", "B", "B"],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]
   );
 
   if (!oppGameState) {
@@ -14,10 +25,10 @@ const OpponentShipMap = () => {
     <>
     <div className="grid-container">
     <h1>OPPONENT CAT MAP</h1>
-      {oppGameState.map(gameRow => (
-        <div className="grid-row">
-          {gameRow.map(gridItem => (
-            <div className="grid-item">--{gridItem}--</div>
+      {oppGameState.map((gameRow, rowId) => (
+        <div key={rowId} className="grid-row">
+          {gameRow.map((gridItem, itemId) => (
+            <div key={`${rowId}${itemId}`} className="grid-item">--?--</div>
           ))}
         </div>
       ))}
