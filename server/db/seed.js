@@ -11,8 +11,9 @@ const createInitialPlayer = async (username) => {
     console.error("error creating inital players", error);
   }
 };
-
-const initialBoard = {
+// resetting: setGameState([...gameState, newState]) 
+//accessing: gameState[gameState.length-1].p1[1][3]  
+const initialBoard = [{
  p1: [
     ["A", 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ["A", 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,7 +38,7 @@ const initialBoard = {
     [0, 0, 0, 0, 0, 0, "B", "B", "B", "B"],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
-};
+}];
 
 const createInitialGame = async () => {
   await prisma.game.create({
