@@ -1,21 +1,26 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../styles/oppGame.css"
 
 
-const OpponentShipMap = () => {
-  const [oppGameState, setOppGameState] = useState([
-    ["A", "A", "A", "A", "A", 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, "D", "D", "D", 0, "E"],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, "E"],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, "C", 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, "B", "B", "B", "B"],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]
-  );
+const OpponentShipMap = ({oppId}) => {
+  const [oppGameState, setOppGameState] = useState([]);
+  
+  
+  useEffect(() => {
+    const fetchInitGameState = async () => {
+      try {
+        //HAVE TO SORT OUT THIS LINK WITH PROXY 
+        const response = await fetch(`http://localhost:3000/game`);
+        const result = await response.json();
+        const oppBoard = result.gameState;
+        setOppGameState(oppBoard[oppBoard.length - 1][oppId])
+      } catch (error) {
+        console.error("CANT GET YOUR GAME:", error)
+      }
+    }
+    fetchInitGameState();
+  }, [oppId])
 
   if (!oppGameState) {
     return <h2>LOADING...</h2>
@@ -28,7 +33,7 @@ const OpponentShipMap = () => {
       {oppGameState.map((gameRow, rowId) => (
         <div key={rowId} className="grid-row">
           {gameRow.map((gridItem, itemId) => (
-            <div key={`${rowId}${itemId}`} className="grid-item">--?--</div>
+            <div key={`${rowId}${itemId}`} className="grid-item">?</div>
           ))}
         </div>
       ))}
