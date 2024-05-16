@@ -1,0 +1,31 @@
+h1 {
+  text-align: center;
+}
+
+.grid-container {
+  height: auto;
+  width: 500px;
+  border: 30px double black;
+  border-radius: 30px;
+  margin: 20px;
+}
+
+.grid-row {
+  text-align: center;
+  margin: auto;
+  gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(10, .0fr);
+  grid-auto-rows: minmax(10px);
+  grid-auto-columns: 10;
+}
+.grid-item {
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  border: 5px outset black;
+ 
+  color: mediumpurple
+  
+  
+}
