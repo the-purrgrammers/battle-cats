@@ -5,10 +5,12 @@ const app = express();
 const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+const morgan = require('morgan')
 app.use(cors());
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 
+app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../", 'client/dist')));
 
 const io = new Server(server, {
@@ -32,6 +34,8 @@ io.on("connection", (socket) => {
   });
 });
 
+
+app.use('/', require('./routes/index.js'))
 server.listen(PORT, () => {
   console.log("server running on " + PORT);
 });
