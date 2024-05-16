@@ -20,22 +20,15 @@ const io = new Server(server, {
   },
 });
 
-//frontend calls joinRoom socket with "gameroom" argument
-// if (io.sockets.adapter.rooms.get("gameroom").size === 2) don't allow more joins  
-// else, backend calls socket.on("joinRoom", (data)=> socekt.join(data)) and is added to gameroom 
-
-//establish a connection
 io.on("connection", (socket) => {
-  // specify the room the user belongs to
   socket.on("joinRoom", (data) => {
+  if(!io.sockets.adapter.rooms.get("gameRoom")){
     socket.join(data);
-  });
-
-  //listen for incoming messages and room numbers {message, room}
-  socket.on("sendMessage", (data) => {
-    console.log(data)
-    //respond ONLY to users in the same room
-    socket.to(data.room).emit("receiveMessage", data.message);
+    socket.emit("assignPlayer", {player:"p1"})
+  }else if (io.sockets.adapter.rooms.get("gameRoom").size < 2){
+    socket.join(data);
+    socket.emit("assignPlayer", {player:"p2"})
+  }
   });
 });
 
