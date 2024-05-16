@@ -1,5 +1,13 @@
+import HomeBody from "../Components/HomeBody"
+import Footer from "../Components/Footer"
+
 const HomePage = () => {
-  return <h1> Home Page</h1>
+  return (
+    <>
+      <HomeBody />
+      <Footer />
+    </>
+  )
 }
 
 export default HomePage
