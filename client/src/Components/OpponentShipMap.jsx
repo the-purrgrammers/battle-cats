@@ -4,6 +4,7 @@ import "../styles/oppGame.css"
 
 
 const OpponentShipMap = ({oppId}) => {
+  const [selectedTile, setSelectedTile] = useState(null);
   const [oppGameState, setOppGameState] = useState([]);
   
   
@@ -25,6 +26,12 @@ const OpponentShipMap = ({oppId}) => {
   if (!oppGameState) {
     return <h2>LOADING...</h2>
   }
+// changes selectedTile in useState onClick
+  const handleClick = (e) => {
+    const divId = e.target.id;
+    setSelectedTile(divId)
+  }
+
     //NOTE: SORT OUT KEY PROPS WHEN THERE ARE ID's COMING IN
   return (
     <>
@@ -33,7 +40,7 @@ const OpponentShipMap = ({oppId}) => {
       {oppGameState.map((gameRow, rowId) => (
         <div key={rowId} className="grid-row">
           {gameRow.map((gridItem, itemId) => (
-            <div key={`${rowId}${itemId}`} className="grid-item">?</div>
+            <div key={`${rowId}${itemId}`} id={`${rowId}${itemId}`} className={`${rowId}${itemId}` === selectedTile ? "selected-grid-item" : "grid-item"} onClick={handleClick}>?</div>
           ))}
         </div>
       ))}
