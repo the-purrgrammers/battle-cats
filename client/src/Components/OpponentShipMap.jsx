@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import "../styles/oppGame.css"
 
 
-const OpponentShipMap = ({oppId}) => {
-  const [selectedTile, setSelectedTile] = useState(null);
-  const [oppGameState, setOppGameState] = useState([]);
+const OpponentShipMap = ({oppId, selectedTile, setSelectedTile}) => {
+const [oppGameState, setOppGameState] = useState([]);
   
   
   useEffect(() => {
