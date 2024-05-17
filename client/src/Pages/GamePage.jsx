@@ -30,7 +30,7 @@ const GamePage = () => {
     <>
       <h1>Game Page</h1>
       <OpponentShipMap oppId={oppId}/>
-      <EndTurnButton />
+      <EndTurnButton oppId={oppId} playerId={playerId}/>
       <PlayerShipMap playerId={playerId}/>
     </>
   )

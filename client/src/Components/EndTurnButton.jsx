@@ -1,6 +1,17 @@
-const EndTurnButton = () => {
+import { useState } from "react";
+
+const EndTurnButton = ({playerId, oppId}) => {
+
+  const [playingPlayer, setPlayingPlayer] = ('p1');
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setPlayingPlayer(oppId);
+    console.log(playingPlayer);
+  }
+
   return (
-    <button>PET THAT CAT!</button>
+    <button onClick={(e)=>{handleClick}}>PET THAT CAT!</button>
   )
 }
 
