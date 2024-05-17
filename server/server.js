@@ -29,6 +29,7 @@ io.on("connection", (socket) => {
     socket.join(data);
     socket.emit("assignPlayer", {player:"p2"})
   }
+  console.log(`THIS IS WHAT WE WNT`, io.sockets.adapter.rooms.get("gameRoom"))
   });
 });
 

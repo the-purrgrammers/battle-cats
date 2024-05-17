@@ -3,27 +3,9 @@ import { useParams } from "react-router-dom";
 import "../styles/oppGame.css"
 
 
-const OpponentShipMap = ({oppId}) => {
+const OpponentShipMap = ({oppGameState}) => {
   const [selectedTile, setSelectedTile] = useState(null);
-  const [oppGameState, setOppGameState] = useState([]);
-  
-  
-  useEffect(() => {
-    const fetchInitGameState = async () => {
-      try {
-        //HAVE TO SORT OUT THIS LINK WITH PROXY 
-        const response = await fetch(`http://localhost:3000/game`);
-        const result = await response.json();
-        const oppBoard = result.gameState;
-        setOppGameState(oppBoard[oppBoard.length - 1][oppId])
-      } catch (error) {
-        console.error("CANT GET YOUR GAME:", error)
-      }
-    }
-    fetchInitGameState();
-  }, [oppId])
-
-  if (!oppGameState) {
+ if (!oppGameState) {
     return <h2>LOADING...</h2>
   }
 // changes selectedTile in useState onClick

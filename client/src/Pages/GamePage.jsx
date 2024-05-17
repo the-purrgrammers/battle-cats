@@ -11,6 +11,9 @@ import PlayerShipMap from "../Components/PlayerShipMap"
 const GamePage = () => {
   const [playerId, setPlayerId] = useState();
   const [oppId, setOppId] = useState();
+  const [oppGameState, setOppGameState] = useState([]);
+  const [myGameState, setMyGameState] = useState([]);
+  
   useEffect(() => {
     socket.emit("joinRoom", "gameRoom")
     socket.on("assignPlayer", (data) => {
@@ -25,13 +28,28 @@ const GamePage = () => {
 }, [])
   
   
-
+  useEffect(() => {
+    const fetchInitGameState = async () => {
+      try {
+        //HAVE TO SORT OUT THIS LINK WITH PROXY 
+        const response = await fetch(`http://localhost:3000/game`);
+        const result = await response.json();
+        const board = result.gameState;
+        setOppGameState(board[board.length - 1][oppId])
+        setMyGameState(board[board.length - 1][playerId])
+      } catch (error) {
+        console.error("CANT GET YOUR GAME:", error)
+      }
+    }
+    fetchInitGameState();
+  }, [oppId])
+  
   return (
     <>
       <h1>Game Page</h1>
-      <OpponentShipMap oppId={oppId}/>
+      <OpponentShipMap oppGameState={oppGameState}/>
       <EndTurnButton />
-      <PlayerShipMap playerId={playerId}/>
+      <PlayerShipMap myGameState={myGameState}/>
     </>
   )
 
