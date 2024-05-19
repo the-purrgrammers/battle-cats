@@ -13,18 +13,25 @@ const getGame = async (id) => {
   }
 };
 
-const updateGame = async (data) => {
-  if (data.msg) {
-    delete data.msg;
-  }
-  let msg;
-  const currentState = data.gameState[data.gameState.length - 1];
+const updateGame = async (selectedTile, id) => {
+  //get the game from the db
+  const data = await prisma.game.findFirst({
+    where: {
+      id,
+    },
+  });
+  //parse the game, grab the most recent object in gamestate
+  const game = JSON.parse(data.gameState);
+  const prevState = game[game.length - 1];
+  //clone the most recent entry
+  const currentState = structuredClone(prevState);
+
   const currentPlayer = currentState.turn;
   const boardToChange =
     currentPlayer === "p1" ? currentState.p2 : currentState.p1;
   const opponent = currentPlayer === "p1" ? "p2" : "p1";
-  const tile = currentState.selectedTile;
 
+  //for comparison
   const shipLength = {
     A: 5,
     B: 4,
@@ -32,7 +39,8 @@ const updateGame = async (data) => {
     D: 3,
     E: 2,
   };
-
+  
+  let msg;
   const updateShipsHitAndSunk = (shipType) => {
     const shipsHit =
       opponent === "p1" ? currentState.p1ShipsHit : currentState.p2ShipsHit;
@@ -54,25 +62,25 @@ const updateGame = async (data) => {
       }
     }
 
-    if (shipsSunk.length === 5){
+    if (shipsSunk.length === 5) {
       endGame();
     }
   };
 
+  let winnerId = null;
+  let loserId = null;
   const endGame = () => {
-    const winner = currentPlayer === "p1" ? 1 : 2;
-    const loser = winner === 1 ? 2 : 1;
-    data.winnerId = winner;
-    data.loserId = loser;
-    if (winner === "p1") {
+    winnerId == currentPlayer === "p1" ? 1 : 2;
+    loserId == winnerId === 1 ? 2 : 1;
+    if (winnerId === 1) {
       msg = { p1: "YOU WIN!", p2: "YOU LOST!" };
     } else {
       msg = { p2: "YOU WIN!", p1: "YOU LOST!" };
     }
   };
 
-  const row = parseInt(tile[0]);
-  const col = parseInt(tile[1]);
+  const row = parseInt(selectedTile[0]);
+  const col = parseInt(selectedTile[1]);
   const valueToChange = boardToChange[row][col];
 
   if (typeof valueToChange !== "number") {
@@ -82,22 +90,31 @@ const updateGame = async (data) => {
   } else {
     boardToChange[row][col] = 1;
   }
+  //update the turn and tile properties of the current gamestate object
+  currentState.turn = opponent;
+  currentState.selectedTile = selectedTile;
+  // push it to the gamestate array
+  game.push(currentState);
 
   try {
-    const updatedGame = prisma.game.update({
+    const updatedGame = await prisma.game.update({
       where: {
-        id: data.id,
+        id,
       },
-      data,
+      data: {
+        gameState: JSON.stringify(game),
+        winnerId,
+        loserId
+      },
     });
     if (msg) {
       updatedGame.msg = msg;
     }
     return updatedGame;
-    //alert the websocket that theres new state for opponent
   } catch (error) {
     console.error("error updating game in db", error);
   }
 };
+
 
 module.exports = { getGame, updateGame };
