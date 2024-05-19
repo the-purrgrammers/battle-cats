@@ -13,7 +13,7 @@ const GamePage = () => {
   const [oppId, setOppId] = useState();
   const [oppGameState, setOppGameState] = useState([]);
   const [myGameState, setMyGameState] = useState([]);
-  
+
   useEffect(() => {
     socket.emit("joinRoom", "gameRoom")
     socket.on("assignPlayer", (data) => {
@@ -25,15 +25,16 @@ const GamePage = () => {
         setOppId('p1')
       }
     })
-}, [])
-  
-  
+  }, [])
+
+
   useEffect(() => {
     const fetchInitGameState = async () => {
       try {
         //HAVE TO SORT OUT THIS LINK WITH PROXY 
         const response = await fetch(`http://localhost:3000/game`);
         const result = await response.json();
+        console.log(result)
         const board = result.gameState;
         setOppGameState(board[board.length - 1][oppId])
         setMyGameState(board[board.length - 1][playerId])
@@ -43,13 +44,13 @@ const GamePage = () => {
     }
     fetchInitGameState();
   }, [oppId])
-  
+
   return (
     <>
       <h1>Game Page</h1>
-      <OpponentShipMap oppGameState={oppGameState}/>
+      <OpponentShipMap oppGameState={oppGameState} />
       <EndTurnButton />
-      <PlayerShipMap myGameState={myGameState}/>
+      <PlayerShipMap myGameState={myGameState} />
     </>
   )
 

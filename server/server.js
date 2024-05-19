@@ -1,17 +1,17 @@
 const path = require("path");
-require("dotenv").config()
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
-const morgan = require('morgan')
+const morgan = require("morgan");
 app.use(cors());
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "../", 'client/dist')));
+app.use(express.static(path.join(__dirname, "../", "client/dist")));
 
 const io = new Server(server, {
   cors: {
@@ -22,19 +22,17 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
-  if(!io.sockets.adapter.rooms.get("gameRoom")){
-    socket.join(data);
-    socket.emit("assignPlayer", {player:"p1"})
-  }else if (io.sockets.adapter.rooms.get("gameRoom").size < 2){
-    socket.join(data);
-    socket.emit("assignPlayer", {player:"p2"})
-  }
-  console.log(`THIS IS WHAT WE WNT`, io.sockets.adapter.rooms.get("gameRoom"))
+    if (!io.sockets.adapter.rooms.get("gameRoom")) {
+      socket.join(data);
+      socket.emit("assignPlayer", { player: "p1" });
+    } else if (io.sockets.adapter.rooms.get("gameRoom").size < 2) {
+      socket.join(data);
+      socket.emit("assignPlayer", { player: "p2" });
+    }
   });
 });
 
-
-app.use('/', require('./routes/index.js'))
+app.use("/", require("./routes/index.js"));
 server.listen(PORT, () => {
   console.log("server running on " + PORT);
 });
