@@ -48,9 +48,8 @@ const GamePage = () => {
   return (
     <>
       <h1>Game Page</h1>
-      <OpponentShipMap oppGameState={oppGameState} />
-      <EndTurnButton />
-      <PlayerShipMap myGameState={myGameState} />
+      <OpponentShipMap oppGameState={oppGameState}/>
+      <PlayerShipMap myGameState={myGameState}/>
     </>
   )
 
