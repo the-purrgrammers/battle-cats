@@ -48,7 +48,6 @@ const GamePage = () => {
     <>
       <h1>Game Page</h1>
       <OpponentShipMap oppGameState={oppGameState}/>
-      <EndTurnButton />
       <PlayerShipMap myGameState={myGameState}/>
     </>
   )

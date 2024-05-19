@@ -1,6 +1,15 @@
-const EndTurnButton = () => {
+const EndTurnButton = ({selectedGridItem}) => {
+  const handleClick = () => {
+    if (typeof selectedGridItem !== "number" && selectedGridItem === selectedGridItem.toUpperCase()) {
+      alert(`HIT`)
+    } else {
+      alert(`MISS`)
+    }
+
+  }
+  
   return (
-    <button>PET THAT CAT!</button>
+    <button onClick={handleClick}>PET THAT CAT!</button>
   )
 }
 
