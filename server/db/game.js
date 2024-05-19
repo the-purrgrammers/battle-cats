@@ -25,7 +25,7 @@ const updateGame = async (selectedTile, id) => {
   const prevState = game[game.length - 1];
   //clone the most recent entry
   const currentState = structuredClone(prevState);
-
+  console.log("currentState turn", currentState);
   const currentPlayer = currentState.turn;
   const boardToChange =
     currentPlayer === "p1" ? currentState.p2 : currentState.p1;
@@ -46,6 +46,8 @@ const updateGame = async (selectedTile, id) => {
       opponent === "p1" ? currentState.p1ShipsHit : currentState.p2ShipsHit;
     const shipsSunk =
       opponent === "p1" ? currentState.p1ShipsSunk : currentState.p2ShipsSunk;
+
+    console.log("shipsHit", shipsHit);
 
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
@@ -86,6 +88,7 @@ const updateGame = async (selectedTile, id) => {
   if (typeof valueToChange !== "number") {
     boardToChange[row][col] = valueToChange.toLowerCase();
     const shipType = valueToChange;
+    console.log("ShipType", shipType);
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
