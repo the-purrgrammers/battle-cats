@@ -39,14 +39,13 @@ const updateGame = async (selectedTile, id) => {
     D: 3,
     E: 2,
   };
-  
+
   let msg;
   const updateShipsHitAndSunk = (shipType) => {
     const shipsHit =
       opponent === "p1" ? currentState.p1ShipsHit : currentState.p2ShipsHit;
     const shipsSunk =
       opponent === "p1" ? currentState.p1ShipsSunk : currentState.p2ShipsSunk;
-
 
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
@@ -71,8 +70,8 @@ const updateGame = async (selectedTile, id) => {
   let winnerId = null;
   let loserId = null;
   const endGame = () => {
-    winnerId == currentPlayer === "p1" ? 1 : 2;
-    loserId == winnerId === 1 ? 2 : 1;
+    (winnerId == currentPlayer) === "p1" ? 1 : 2;
+    (loserId == winnerId) === 1 ? 2 : 1;
     if (winnerId === 1) {
       msg = { p1: "YOU WIN!", p2: "YOU LOST!" };
     } else {
@@ -106,7 +105,7 @@ const updateGame = async (selectedTile, id) => {
       data: {
         gameState: JSON.stringify(game),
         winnerId,
-        loserId
+        loserId,
       },
     });
     if (msg) {
@@ -117,6 +116,5 @@ const updateGame = async (selectedTile, id) => {
     console.error("error updating game in db", error);
   }
 };
-
 
 module.exports = { getGame, updateGame };

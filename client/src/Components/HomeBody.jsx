@@ -1,15 +1,20 @@
-import '../styles/homepage.css';
-import {useNavigate} from 'react-router-dom';
+import "../styles/homepage.css";
+import { useNavigate } from "react-router-dom";
 
 const HomeBody = () => {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <>
-      <section className='homeMainSection'>
+      <section className="homeMainSection">
         <h1>Battle Cats!</h1>
-        <button onClick={()=>{navigate('/game')}}>Play Now</button>
+        <button
+          onClick={() => {
+            navigate("/game");
+          }}
+        >
+          Play Now
+        </button>
       </section>
     </>
   );

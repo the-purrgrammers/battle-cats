@@ -1,5 +1,3 @@
-const Nav = () => {
+const Nav = () => {};
 
-}
-
-export default Nav
+export default Nav;
