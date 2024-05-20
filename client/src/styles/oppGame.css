@@ -49,6 +49,7 @@ h1 {
 
 .miss{
   background-color: azure;
+  pointer-events: none;
 }
 
 .carrier{
@@ -71,6 +72,7 @@ h1 {
 
 .hit{
   background-color: red;
+  pointer-events: none;
 }
 
 
