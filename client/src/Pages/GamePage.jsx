@@ -1,94 +1,93 @@
-import "../styles/index.css"
-import io from 'socket.io-client'
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
+import "../styles/index.css";
+import io from "socket.io-client";
+const URL =
+  process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 const socket = io.connect(URL);
-import { useEffect, useState } from "react"
-import EndTurnButton from "../Components/EndTurnButton"
-import OpponentShipMap from "../Components/OpponentShipMap"
-import PlayerShipMap from "../Components/PlayerShipMap"
-
-
+import { useEffect, useState } from "react";
+import EndTurnButton from "../Components/EndTurnButton";
+import OpponentShipMap from "../Components/OpponentShipMap";
+import PlayerShipMap from "../Components/PlayerShipMap";
 
 const GamePage = () => {
   const [playerId, setPlayerId] = useState("");
-  const [turn, setTurn] = useState("")
+  const [turn, setTurn] = useState("");
   const [oppId, setOppId] = useState();
   const [oppGameState, setOppGameState] = useState([]);
   const [myGameState, setMyGameState] = useState([]);
   const [selectedTile, setSelectedTile] = useState(null);
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState("");
 
   socket.on("updatedTurn", (data) => {
-    setMsg("")
-    const currentIndex = data.gameState.length - 1
-    const newGame = data.gameState[currentIndex]
-    const newTurn = newGame.turn
-    setTurn(newTurn)
-    setOppGameState(newGame[oppId])
-    setMyGameState(newGame[playerId])
+    setMsg("");
+    const currentIndex = data.gameState.length - 1;
+    const newGame = data.gameState[currentIndex];
+    const newTurn = newGame.turn;
+    setTurn(newTurn);
+    setOppGameState(newGame[oppId]);
+    setMyGameState(newGame[playerId]);
     if (data.msg) {
-      setMsg(data.msg)
+      setMsg(data.msg);
     }
-  })
+  });
 
   useEffect(() => {
-    const isPlayingAs = sessionStorage.getItem("player")
+    const isPlayingAs = sessionStorage.getItem("player");
     if (!isPlayingAs) {
-      socket.emit("joinRoom", "gameRoom")
+      socket.emit("joinRoom", "gameRoom");
       socket.on("assignPlayer", (data) => {
         if (data.player === "p1") {
-          sessionStorage.setItem("player", "p1")
-          setPlayerId('p1')
-          setOppId('p2')
+          sessionStorage.setItem("player", "p1");
+          setPlayerId("p1");
+          setOppId("p2");
         } else {
-          sessionStorage.setItem("player", "p2")
-          setPlayerId('p2')
-          setOppId('p1')
+          sessionStorage.setItem("player", "p2");
+          setPlayerId("p2");
+          setOppId("p1");
         }
-      })
+      });
     } else {
-      setPlayerId(isPlayingAs)
-      const opponent = isPlayingAs === 'p1' ? 'p2' : 'p1'
-      setOppId(opponent)
-      socket.emit("joinRoom", "gameRoom")
+      setPlayerId(isPlayingAs);
+      const opponent = isPlayingAs === "p1" ? "p2" : "p1";
+      setOppId(opponent);
+      socket.emit("joinRoom", "gameRoom");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchInitGameState = async () => {
       try {
-        //HAVE TO SORT OUT THIS LINK WITH PROXY 
+        //HAVE TO SORT OUT THIS LINK WITH PROXY
         const response = await fetch(`http://localhost:3000/game`);
         const result = await response.json();
-        console.log(result)
+        console.log(result);
         const board = result.gameState;
-        const currentTurn = board[board.length - 1].turn
+        const currentTurn = board[board.length - 1].turn;
 
         //TODO: get the turn
-        setTurn(currentTurn)
-        setOppGameState(board[board.length - 1][oppId])
-        setMyGameState(board[board.length - 1][playerId])
+        setTurn(currentTurn);
+        setOppGameState(board[board.length - 1][oppId]);
+        setMyGameState(board[board.length - 1][playerId]);
       } catch (error) {
-        console.error("CANT GET YOUR GAME:", error)
+        console.error("CANT GET YOUR GAME:", error);
       }
-    }
+    };
     fetchInitGameState();
-  }, [oppId])
+  }, [oppId]);
 
   return (
     <>
-      {
-        turn !== playerId ?
-          <span className='waiting-message'>Waiting on your opponent...</span> :
-          <span className='waiting-message'>Your Turn!</span>
-      }
-      {
-        !msg ? "" :
-          msg &&
-            playerId === "p1" ?
-            <span className="sunk-ship-message">{msg.p1}</span> :
-            <span className="sunk-ship-message">{msg.p2}</span>
-      }
+      {turn !== playerId ? (
+        <span className="waiting-message">Waiting on your opponent...</span>
+      ) : (
+        <span className="waiting-message">Your Turn!</span>
+      )}
+      {!msg ? (
+        ""
+      ) : msg && playerId === "p1" ? (
+        <span className="sunk-ship-message">{msg.p1}</span>
+      ) : (
+        <span className="sunk-ship-message">{msg.p2}</span>
+      )}
       <OpponentShipMap
         oppGameState={oppGameState}
         setSelectedTile={setSelectedTile}
@@ -103,8 +102,7 @@ const GamePage = () => {
       />
       <PlayerShipMap myGameState={myGameState} />
     </>
-  )
+  );
+};
 
-}
-
-export default GamePage
+export default GamePage;

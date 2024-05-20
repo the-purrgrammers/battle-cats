@@ -29,14 +29,14 @@ router.put("/endturn", async (req, res) => {
   }
 });
 
-router.put("/endturn", async(req,res)=>{
-  const selectedTile = req.body.selectedTile
+router.put("/endturn", async (req, res) => {
+  const selectedTile = req.body.selectedTile;
   try {
     const updatedGame = await updateGame(selectedTile, 1);
-    res.status(200).send(updatedGame)
+    res.status(200).send(updatedGame);
   } catch (error) {
-    console.error("error on PUT endturn route", error)
+    console.error("error on PUT endturn route", error);
   }
-})
+});
 
 module.exports = router;

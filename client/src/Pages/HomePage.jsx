@@ -1,5 +1,5 @@
-import HomeBody from "../Components/HomeBody"
-import Footer from "../Components/Footer"
+import HomeBody from "../Components/HomeBody";
+import Footer from "../Components/Footer";
 
 const HomePage = () => {
   return (
@@ -7,7 +7,7 @@ const HomePage = () => {
       <HomeBody />
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
