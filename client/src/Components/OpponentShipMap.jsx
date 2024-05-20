@@ -4,7 +4,7 @@ import "../styles/oppGame.css"
 import EndTurnButton from "./EndTurnButton";
 
 
-const OpponentShipMap = ({oppGameState}) => {
+const OpponentShipMap = ({oppGameState, playerId, turn}) => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [selectedGridItem, setSelectedGridItem] = useState(null)
  if (!oppGameState) {
@@ -25,13 +25,22 @@ const OpponentShipMap = ({oppGameState}) => {
       {oppGameState.map((gameRow, rowId) => (
         <div key={rowId} className="grid-row">
           {gameRow.map((gridItem, itemId) => (
-            <div key={`${rowId}${itemId}`} id={`${rowId}${itemId}`} className={`${rowId}${itemId}` === selectedTile ? "selected-grid-item" : "grid-item"} onClick={(e) => handleClick(e, gridItem)}>?</div>
+            <div 
+             key={`${rowId}${itemId}`} 
+             id={`${rowId}${itemId}`} 
+             className={`${rowId}${itemId}` === selectedTile ? "selected-grid-item" : "grid-item"} 
+             onClick={(e) =>{
+              if (turn === playerId){
+                handleClick(e, gridItem)
+              }
+              }}>?
+            </div>
           ))}
         </div>
       ))}
     </div>
     <div>
-      <EndTurnButton selectedGridItem={selectedGridItem}/>
+      <EndTurnButton selectedGridItem={selectedGridItem} selectedTile={selectedTile} setSelectedTile={setSelectedTile} playerId={playerId}/>
     </div>
     </>
   )

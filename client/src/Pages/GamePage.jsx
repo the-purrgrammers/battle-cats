@@ -13,6 +13,7 @@ const GamePage = () => {
   const [oppId, setOppId] = useState();
   const [oppGameState, setOppGameState] = useState([]);
   const [myGameState, setMyGameState] = useState([]);
+  const [turn, setTurn] = useState("");
 
   useEffect(() => {
     socket.emit("joinRoom", "gameRoom")
@@ -36,6 +37,8 @@ const GamePage = () => {
         const result = await response.json();
         console.log(result)
         const board = result.gameState;
+        const currentTurn = board[board.length - 1].turn
+        setTurn(currentTurn);
         setOppGameState(board[board.length - 1][oppId])
         setMyGameState(board[board.length - 1][playerId])
       } catch (error) {
@@ -48,7 +51,7 @@ const GamePage = () => {
   return (
     <>
       <h1>Game Page</h1>
-      <OpponentShipMap oppGameState={oppGameState}/>
+      <OpponentShipMap oppGameState={oppGameState} playerId={playerId} turn={turn}/>
       <PlayerShipMap myGameState={myGameState}/>
     </>
   )
