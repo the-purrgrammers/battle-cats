@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getGame } = require("../db/game");
+const { getGame, updateGame } = require("../db/game");
 
 router.get("/", async (req, res) => {
   try {
@@ -16,6 +16,16 @@ router.get("/:id", async (req, res) => {
     res.send(gameById);
   } catch (error) {
     console.log(error)
+  }
+})
+
+router.put("/endturn", async(req,res)=>{
+  const selectedTile = req.body.selectedTile
+  try {
+    const updatedGame = await updateGame(selectedTile, 1);
+    res.status(200).send(updatedGame)
+  } catch (error) {
+    console.error("error on PUT endturn route", error)
   }
 })
 
