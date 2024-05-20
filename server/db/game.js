@@ -47,6 +47,7 @@ const updateGame = async (selectedTile, id) => {
     const shipsSunk =
       opponent === "p1" ? currentState.p1ShipsSunk : currentState.p2ShipsSunk;
 
+
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
     } else {
@@ -86,6 +87,7 @@ const updateGame = async (selectedTile, id) => {
   if (typeof valueToChange !== "number") {
     boardToChange[row][col] = valueToChange.toLowerCase();
     const shipType = valueToChange;
+
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
@@ -115,5 +117,6 @@ const updateGame = async (selectedTile, id) => {
     console.error("error updating game in db", error);
   }
 };
+
 
 module.exports = { getGame, updateGame };

@@ -60,8 +60,10 @@ const GamePage = () => {
         //HAVE TO SORT OUT THIS LINK WITH PROXY 
         const response = await fetch(`http://localhost:3000/game`);
         const result = await response.json();
+        console.log(result)
         const board = result.gameState;
         const currentTurn = board[board.length - 1].turn
+
         //TODO: get the turn
         setTurn(currentTurn)
         setOppGameState(board[board.length - 1][oppId])

@@ -30,9 +30,11 @@ io.on("connection", (socket) => {
       socket.join(data);
       socket.emit("assignPlayer", { player: "p2" });
     }
+
   });
   socket.on("shareNewTurn", (data) => {
     socket.broadcast.to("gameRoom").emit("updatedTurn", data);
+
   });
 });
 
