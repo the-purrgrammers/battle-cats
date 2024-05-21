@@ -16,6 +16,7 @@ const hitShips = ["a","b","c","d","e"]
     <>
       <div className="grid-container">
         <h1>OPPONENT CAT MAP</h1>
+        
         {oppGameState.map((gameRow, rowId) => (
           <div key={rowId} className="grid-row">
             {gameRow.map((gridItem, itemId) => (

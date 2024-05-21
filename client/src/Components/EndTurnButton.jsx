@@ -2,12 +2,12 @@ import io from 'socket.io-client'
 const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
 const socket = io.connect(URL);
 
-const EndTurnButton = ({ selectedTile, setSelectedTile, setMsg }) => {
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) => {
 
   const endTurn = async () => {
     try {
       setMsg('')
-      const result = await fetch('http://localhost:3000/game/endturn', {
+      const result = await fetch('/game/endturn', {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json"
@@ -19,10 +19,13 @@ const EndTurnButton = ({ selectedTile, setSelectedTile, setMsg }) => {
       )
       const updatedGame = await result.json()
       updatedGame.gameState = JSON.parse(updatedGame.gameState)
-      console.log(updatedGame)
+      console.log(`THIS IS THE UPDATED GAME`,updatedGame)
       socket.emit("shareNewTurn", updatedGame)
       if(updatedGame.msg){
         setMsg(updatedGame.msg)
+      }
+      if (updatedGame.winnerId) {
+        setWinnerId(updatedGame.winnerId);
       }
       setSelectedTile('')
     } catch (error) {
