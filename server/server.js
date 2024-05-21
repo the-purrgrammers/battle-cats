@@ -36,7 +36,10 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/", require("./routes/index.js"));
+// app.use("/", require("./routes/index.js"));
+app.use("/auth", require("./auth"));
+app.use("/api/game", require("./game"));
+
 server.listen(PORT, () => {
   console.log("server running on " + PORT);
 });
