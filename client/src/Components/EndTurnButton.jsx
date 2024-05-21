@@ -1,6 +1,8 @@
-import io from 'socket.io-client'
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
+import io from "socket.io-client";
+const URL =
+  process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 const socket = io.connect(URL);
+
 
 const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) => {
 
@@ -9,10 +11,12 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
       setMsg('')
       const result = await fetch('/game/endturn', {
         method: 'PUT',
+
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
+
           selectedTile: selectedTile
         })
       }
@@ -28,21 +32,15 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
         setWinnerId(updatedGame.winnerId);
       }
       setSelectedTile('')
+
     } catch (error) {
-      console.error("error fetching updated board", error)
+      console.error("error fetching updated board", error);
     }
-  }
+  };
 
   return (
-    <>
-      {
-        selectedTile &&
-        <button onClick={endTurn}>PET THAT CAT!</button>
-      }
-    </>
-
-
-  )
-}
+    <>{selectedTile && <button onClick={endTurn}>PET THAT CAT!</button>}</>
+  );
+};
 
 export default EndTurnButton;

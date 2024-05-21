@@ -42,8 +42,8 @@ const initialBoard = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ],
 
-    p1ShipsHit: {A:0,B:0,C:0,D:0,E:0},
-    p2ShipsHit: {A:0,B:0,C:0,D:0,E:0},
+    p1ShipsHit: { A: 0, B: 0, C: 0, D: 0, E: 0 },
+    p2ShipsHit: { A: 0, B: 0, C: 0, D: 0, E: 0 },
 
     p1ShipsSunk: [],
     p2ShipsSunk: [],

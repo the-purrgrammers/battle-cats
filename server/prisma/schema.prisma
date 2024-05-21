@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id               Int     @id @default(autoincrement())
   username         String
@@ -34,6 +33,5 @@ model Game {
   winnerId    Int?
   loser       User?  @relation("loser", fields: [loserId], references: [id])
   loserId     Int?
-  gameState      String
+  gameState   String
 }
-

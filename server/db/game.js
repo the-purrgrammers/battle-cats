@@ -39,7 +39,7 @@ const updateGame = async (selectedTile, id) => {
     D: 3,
     E: 2,
   };
-  
+
   let msg;
   const updateShipsHitAndSunk = (shipType) => {
     const shipsHit =
@@ -47,11 +47,20 @@ const updateGame = async (selectedTile, id) => {
     const shipsSunk =
       opponent === "p1" ? currentState.p1ShipsSunk : currentState.p2ShipsSunk;
 
-
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
+      if(currentPlayer === "p1"){
+        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+      }
     } else {
       shipsHit[shipType] = 1;
+      if(currentPlayer === "p1"){
+        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+      }
     }
 
     if (shipsHit[shipType] === shipLength[shipType]) {
@@ -71,8 +80,10 @@ const updateGame = async (selectedTile, id) => {
   let winnerId = null;
   let loserId = null;
   const endGame = () => {
+
     winnerId = currentPlayer === "p1" ? 1 : 2;
     loserId = winnerId === 1 ? 2 : 1;
+
     if (winnerId === 1) {
       msg = { p1: "YOU WIN!", p2: "YOU LOST!" };
     } else {
@@ -91,6 +102,11 @@ const updateGame = async (selectedTile, id) => {
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
+    if(currentPlayer === "p1"){
+      msg = {p1: "Your shot missed!", p2: "Your opponent's shot missed!"};
+    }else if(currentPlayer === "p2"){
+      msg = {p2: "Your shot missed!", p1: "Your opponent's shot missed!"};
+    }
   }
   //update the turn and tile properties of the current gamestate object
   currentState.turn = opponent;
@@ -106,7 +122,7 @@ const updateGame = async (selectedTile, id) => {
       data: {
         gameState: JSON.stringify(game),
         winnerId,
-        loserId
+        loserId,
       },
     });
     if (msg) {
@@ -117,6 +133,5 @@ const updateGame = async (selectedTile, id) => {
     console.error("error updating game in db", error);
   }
 };
-
 
 module.exports = { getGame, updateGame };
