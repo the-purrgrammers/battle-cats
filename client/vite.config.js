@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/auth" : "http://localhost:3000",
-      "/game" : "http://localhost:3000",
-      "/game/endturn" : "http://localhost:3000"
+      "/api/auth" : "http://localhost:3000",
+      "/api/game" : "http://localhost:3000",
+      "/api/game/endturn" : "http://localhost:3000"
     }
   }
 })

@@ -9,7 +9,7 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
   const endTurn = async () => {
     try {
       setMsg('')
-      const result = await fetch('/game/endturn', {
+      const result = await fetch('api/game/endturn', {
         method: 'PUT',
 
         headers: {

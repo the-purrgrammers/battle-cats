@@ -61,7 +61,7 @@ const GamePage = () => {
       try {
 
         //HAVE TO SORT OUT THIS LINK WITH PROXY 
-        const response = await fetch(`/game`);
+        const response = await fetch(`api/game`);
         const result = await response.json();
         const board = result.gameState;
         const currentTurn = board[board.length - 1].turn;
@@ -85,7 +85,7 @@ const GamePage = () => {
         winnerId === null ? (
           <>
              {
-        turn !== playerId && winnerId === null ?
+        turn !== playerId ?
           <span className='waiting-message'>Waiting on your opponent...</span> :
           <span className='waiting-message'>Your Turn!</span>
       }
