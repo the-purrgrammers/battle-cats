@@ -50,16 +50,16 @@ const updateGame = async (selectedTile, id) => {
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
       if(currentPlayer === "p1"){
-        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+        msg = {p1: "You found part of a cat!", p2: "Your opponent has discovered a part of one of your cats!"};
       }else if(currentPlayer === "p2"){
-        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+        msg = {p2: "You found part of a cat!", p1: "Your opponent has discovered a part of one of your cats!"};
       }
     } else {
       shipsHit[shipType] = 1;
       if(currentPlayer === "p1"){
-        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+        msg = {p1: "You found part of a cat!", p2: "Your opponent has discovered a part of one of your cats!"};
       }else if(currentPlayer === "p2"){
-        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+        msg = {p2: "You found part of a cat!", p1: "Your opponent has discovered a part of one of your cats!"};
       }
     }
 
