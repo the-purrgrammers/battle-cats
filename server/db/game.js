@@ -80,8 +80,10 @@ const updateGame = async (selectedTile, id) => {
   let winnerId = null;
   let loserId = null;
   const endGame = () => {
-    (winnerId == currentPlayer) === "p1" ? 1 : 2;
-    (loserId == winnerId) === 1 ? 2 : 1;
+
+    winnerId = currentPlayer === "p1" ? 1 : 2;
+    loserId = winnerId === 1 ? 2 : 1;
+
     if (winnerId === 1) {
       msg = { p1: "YOU WIN!", p2: "YOU LOST!" };
     } else {

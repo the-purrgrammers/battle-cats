@@ -3,10 +3,12 @@ import io from "socket.io-client";
 const URL =
   process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 const socket = io.connect(URL);
-import { useEffect, useState } from "react";
-import EndTurnButton from "../Components/EndTurnButton";
-import OpponentShipMap from "../Components/OpponentShipMap";
-import PlayerShipMap from "../Components/PlayerShipMap";
+
+import { useEffect, useState } from "react"
+import EndTurnButton from "../Components/EndTurnButton"
+import OpponentShipMap from "../Components/OpponentShipMap"
+import PlayerShipMap from "../Components/PlayerShipMap"
+import WinLoseScreen from "../Components/WinLoseScreen";
 
 const GamePage = () => {
   const [playerId, setPlayerId] = useState("");
@@ -15,7 +17,8 @@ const GamePage = () => {
   const [oppGameState, setOppGameState] = useState([]);
   const [myGameState, setMyGameState] = useState([]);
   const [selectedTile, setSelectedTile] = useState(null);
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState('');
+  const [winnerId, setWinnerId] = useState(null);
 
   socket.on("updatedTurn", (data) => {
     setMsg("");
@@ -56,10 +59,10 @@ const GamePage = () => {
   useEffect(() => {
     const fetchInitGameState = async () => {
       try {
-        //HAVE TO SORT OUT THIS LINK WITH PROXY
-        const response = await fetch(`http://localhost:3000/game`);
+
+        //HAVE TO SORT OUT THIS LINK WITH PROXY 
+        const response = await fetch(`/game`);
         const result = await response.json();
-        console.log(result);
         const board = result.gameState;
         const currentTurn = board[board.length - 1].turn;
 
@@ -72,35 +75,47 @@ const GamePage = () => {
       }
     };
     fetchInitGameState();
-  }, [oppId]);
+  }, [oppId])
 
   return (
     <>
-      {turn !== playerId ? (
-        <span className="waiting-message">Waiting on your opponent...</span>
-      ) : (
-        <span className="waiting-message">Your Turn!</span>
-      )}
-      {!msg ? (
-        ""
-      ) : msg && playerId === "p1" ? (
-        <span className="sunk-ship-message">{msg.p1}</span>
-      ) : (
-        <span className="sunk-ship-message">{msg.p2}</span>
-      )}
-      <OpponentShipMap
-        oppGameState={oppGameState}
-        setSelectedTile={setSelectedTile}
-        selectedTile={selectedTile}
-        turn={turn}
-        playerId={playerId}
-      />
-      <EndTurnButton
-        selectedTile={selectedTile}
-        setSelectedTile={setSelectedTile}
-        setMsg={setMsg}
-      />
-      <PlayerShipMap myGameState={myGameState} />
+   
+      {
+
+        winnerId === null ? (
+          <>
+             {
+        turn !== playerId && winnerId === null ?
+          <span className='waiting-message'>Waiting on your opponent...</span> :
+          <span className='waiting-message'>Your Turn!</span>
+      }
+      {
+        !msg ? "" :
+          msg &&
+            playerId === "p1" ?
+            <span className="sunk-ship-message">{msg.p1}</span> :
+            <span className="sunk-ship-message">{msg.p2}</span>
+      }
+            <OpponentShipMap
+              oppGameState={oppGameState}
+              setSelectedTile={setSelectedTile}
+              selectedTile={selectedTile}
+              turn={turn}
+              playerId={playerId}
+            />
+            <EndTurnButton
+              selectedTile={selectedTile}
+              setSelectedTile={setSelectedTile}
+              setMsg={setMsg}
+              setWinnerId={setWinnerId}
+            />
+            <PlayerShipMap myGameState={myGameState} /> 
+          </>
+
+        ) : (
+          <WinLoseScreen />
+        )
+      }
     </>
   );
 };
