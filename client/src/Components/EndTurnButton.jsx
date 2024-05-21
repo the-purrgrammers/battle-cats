@@ -23,7 +23,6 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
       )
       const updatedGame = await result.json()
       updatedGame.gameState = JSON.parse(updatedGame.gameState)
-      console.log(`THIS IS THE UPDATED GAME`,updatedGame)
       socket.emit("shareNewTurn", updatedGame)
       if(updatedGame.msg){
         setMsg(updatedGame.msg)
@@ -32,6 +31,7 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
         setWinnerId(updatedGame.winnerId);
       }
       setSelectedTile('')
+      console.log(`THIS IS THE UPDATED GAME`,updatedGame)
 
     } catch (error) {
       console.error("error fetching updated board", error);

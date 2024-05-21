@@ -22,6 +22,11 @@ const GamePage = () => {
 
   socket.on("updatedTurn", (data) => {
     setMsg("");
+    console.log(`DATA WINNERID`, data.winnerId)
+    console.log(data)
+    if (data.winnerId) {
+      setWinnerId(data.winnerId);
+    }
     const currentIndex = data.gameState.length - 1;
     const newGame = data.gameState[currentIndex];
     const newTurn = newGame.turn;
@@ -113,7 +118,7 @@ const GamePage = () => {
           </>
 
         ) : (
-          <WinLoseScreen />
+          <WinLoseScreen playerId={playerId} winnerId={winnerId}/>
         )
       }
     </>
