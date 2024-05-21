@@ -49,8 +49,18 @@ const updateGame = async (selectedTile, id) => {
 
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
+      if(currentPlayer === "p1"){
+        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+      }
     } else {
       shipsHit[shipType] = 1;
+      if(currentPlayer === "p1"){
+        msg = {p1: "You hit a ship!", p2: "Your ship has been hit!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You hit a ship!", p1: "Your ship has been hit!"};
+      }
     }
 
     if (shipsHit[shipType] === shipLength[shipType]) {
@@ -90,6 +100,11 @@ const updateGame = async (selectedTile, id) => {
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
+    if(currentPlayer === "p1"){
+      msg = {p1: "Your shot missed!", p2: "Your opponent's shot missed!"};
+    }else if(currentPlayer === "p2"){
+      msg = {p2: "Your shot missed!", p1: "Your opponent's shot missed!"};
+    }
   }
   //update the turn and tile properties of the current gamestate object
   currentState.turn = opponent;
