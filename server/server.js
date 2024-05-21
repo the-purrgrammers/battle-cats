@@ -13,9 +13,7 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../", "client/dist")));
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../", "client/dist/index.html"));
-});
+
 
 const io = new Server(server, {
   cors: {
@@ -40,8 +38,12 @@ io.on("connection", (socket) => {
 });
 
 // app.use("/", require("./routes/index.js"));
-app.use("/auth", require("./auth"));
-app.use("/api/game", require("./game"));
+app.use("/auth", require("./routes/auth"));
+app.use("/api/game", require("./routes/game"));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../", "client/dist/index.html"));
+});
 
 server.listen(PORT, () => {
   console.log("server running on " + PORT);
