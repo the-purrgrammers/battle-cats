@@ -8,7 +8,6 @@ h1 {
 .grid-container {
   height: auto;
   width: 500px;
-  border: 30px double black;
   border-radius: 30px;
   margin: 20px;
 }
@@ -27,18 +26,18 @@ h1 {
   padding: 0;
   height: 40px;
   width: 40px;
-  border: 5px outset black;
+  border: 1px solid gray;
   color: rgb(8, 4, 15);
 }
 .grid-item:hover {
-  background-color: rgb(166, 151, 151);
+  background-color: rgb(174, 174, 174);
 }
 
 .selected-grid-item {
   padding: 0;
   height: 40px;
   width: 40px;
-  border: 5px outset black;
+  border: 1px solid grey;
   color: mediumpurple;
   background-color: grey;
 }
