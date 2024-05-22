@@ -24,18 +24,20 @@ const PlayerShipMap = ({ myGameState }) => {
     <>
       <div className="grid-container">
         <h2 class="map-h2s">your rug</h2>
-        {myGameState.map((gameRow, rowId) => (
-          <div key={rowId} className="grid-row">
-            {gameRow.map((gridItem, itemId) => (
-              <div
-                key={`${rowId}${itemId}`}
-                className={`${tileClasses[gridItem]} grid-item`}
-              >
-                {}
-              </div>
-            ))}
-          </div>
-        ))}
+        <div id="my-rug">
+          {myGameState.map((gameRow, rowId) => (
+            <div key={rowId} className="grid-row">
+              {gameRow.map((gridItem, itemId) => (
+                <div
+                  key={`${rowId}${itemId}`}
+                  className={`${tileClasses[gridItem]} grid-item`}
+                >
+                  {}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

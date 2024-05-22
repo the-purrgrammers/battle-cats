@@ -20,31 +20,32 @@ const OpponentShipMap = ({
     <>
       <div className="grid-container">
         <h2 class="map-h2s">your friend's rug</h2>
-        
-        {oppGameState.map((gameRow, rowId) => (
-          <div key={rowId} className="grid-row">
-            {gameRow.map((gridItem, itemId) => (
-              <div
-                key={`${rowId}${itemId}`}
-                id={`${rowId}${itemId}`}
-                className={
-                  `${rowId}${itemId}` === selectedTile
-                    ? "selected-grid-item"
-                    : hitShips.includes(gridItem)
-                    ? "grid-item hit"
-                    : gridItem === 1
-                    ? "grid-item miss"
-                    : "grid-item"
-                }
-                onClick={(e) => {
-                  if (turn === playerId) {
-                    setSelectedTile(e.target.id);
+        <div id="opp-rug">
+          {oppGameState.map((gameRow, rowId) => (
+            <div key={rowId} className="grid-row">
+              {gameRow.map((gridItem, itemId) => (
+                <div
+                  key={`${rowId}${itemId}`}
+                  id={`${rowId}${itemId}`}
+                  className={
+                    `${rowId}${itemId}` === selectedTile
+                      ? "selected-grid-item"
+                      : hitShips.includes(gridItem)
+                      ? "grid-item hit"
+                      : gridItem === 1
+                      ? "grid-item miss"
+                      : "grid-item"
                   }
-                }}
-              ></div>
-            ))}
-          </div>
-        ))}
+                  onClick={(e) => {
+                    if (turn === playerId) {
+                      setSelectedTile(e.target.id);
+                    }
+                  }}
+                ></div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

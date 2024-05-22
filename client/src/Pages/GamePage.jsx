@@ -89,7 +89,7 @@ const GamePage = () => {
 
         winnerId === null ? (
           <>
-             {
+      {
         turn !== playerId ?
           <span className='waiting-message'>Waiting on your opponent...</span> :
           <span className='waiting-message'>Your Turn!</span>
