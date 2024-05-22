@@ -101,20 +101,22 @@ const GamePage = () => {
             <span className="sunk-ship-message">{msg.p1}</span> :
             <span className="sunk-ship-message">{msg.p2}</span>
       }
-            <OpponentShipMap
-              oppGameState={oppGameState}
-              setSelectedTile={setSelectedTile}
-              selectedTile={selectedTile}
-              turn={turn}
-              playerId={playerId}
-            />
-            <EndTurnButton
-              selectedTile={selectedTile}
-              setSelectedTile={setSelectedTile}
-              setMsg={setMsg}
-              setWinnerId={setWinnerId}
-            />
-            <PlayerShipMap myGameState={myGameState} /> 
+            <div id="double-grid-container">
+              <OpponentShipMap
+                oppGameState={oppGameState}
+                setSelectedTile={setSelectedTile}
+                selectedTile={selectedTile}
+                turn={turn}
+                playerId={playerId}
+              />
+              <EndTurnButton
+                selectedTile={selectedTile}
+                setSelectedTile={setSelectedTile}
+                setMsg={setMsg}
+                setWinnerId={setWinnerId}
+              />
+              <PlayerShipMap myGameState={myGameState} /> 
+            </div>
           </>
 
         ) : (
