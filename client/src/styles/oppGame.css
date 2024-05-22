@@ -1,4 +1,12 @@
-h1 {
+#h1-battle-cats {
+  text-align: center;
+  font-size: xx-large;
+  padding: 10px;
+  background-color: aliceblue;
+  margin: 10px;
+}
+
+.map-h2s {
   text-align: center;
   font-size: x-large;
   background-color: aliceblue;
@@ -41,8 +49,8 @@ h1 {
 
 .selected-grid-item {
   padding: 0;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border: 1px solid grey;
   color: mediumpurple;
   background-color: grey;

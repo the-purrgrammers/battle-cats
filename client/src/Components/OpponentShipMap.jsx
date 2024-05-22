@@ -19,7 +19,7 @@ const OpponentShipMap = ({
   return (
     <>
       <div className="grid-container">
-        <h1>OPPONENT CAT MAP</h1>
+        <h2 class="map-h2s">your friend's rug</h2>
         
         {oppGameState.map((gameRow, rowId) => (
           <div key={rowId} className="grid-row">

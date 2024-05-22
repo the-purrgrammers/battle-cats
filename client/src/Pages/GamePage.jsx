@@ -84,7 +84,7 @@ const GamePage = () => {
 
   return (
     <>
-   
+    <h1 id="h1-battle-cats">Battle Cats!</h1>
       {
 
         winnerId === null ? (
