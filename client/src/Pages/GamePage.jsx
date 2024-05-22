@@ -19,6 +19,9 @@ const GamePage = () => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [msg, setMsg] = useState('');
   const [winnerId, setWinnerId] = useState(null);
+  const [catsLeft, setCatsLeft] = useState([]);
+
+  console.log(catsLeft)
 
   socket.on("updatedTurn", (data) => {
     setMsg("");
@@ -101,18 +104,22 @@ const GamePage = () => {
             <span className="sunk-ship-message">{msg.p1}</span> :
             <span className="sunk-ship-message">{msg.p2}</span>
       }
+            
             <OpponentShipMap
               oppGameState={oppGameState}
               setSelectedTile={setSelectedTile}
               selectedTile={selectedTile}
               turn={turn}
               playerId={playerId}
+              catsLeft={catsLeft}
             />
             <EndTurnButton
               selectedTile={selectedTile}
               setSelectedTile={setSelectedTile}
               setMsg={setMsg}
               setWinnerId={setWinnerId}
+              setCatsLeft={setCatsLeft}
+              playerId={playerId}
             />
             <PlayerShipMap myGameState={myGameState} /> 
           </>
