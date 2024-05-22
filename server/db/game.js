@@ -50,25 +50,25 @@ const updateGame = async (selectedTile, id) => {
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
       if(currentPlayer === "p1"){
-        msg = {p1: "You found part of a cat!", p2: "Your opponent has found part of one of your cats!"};
+        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet part of one of your cats!"};
       }else if(currentPlayer === "p2"){
-        msg = {p2: "You found part of a cat!", p1: "Your opponent has found part of one of your cats!"};
+        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet part of one of your cats!"};
       }
     } else {
       shipsHit[shipType] = 1;
       if(currentPlayer === "p1"){
-        msg = {p1: "You found part of a cat!", p2: "Your opponent has found a part of one of your cats!"};
+        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet a part of one of your cats!"};
       }else if(currentPlayer === "p2"){
-        msg = {p2: "You found part of a cat!", p1: "Your opponent has found a part of one of your cats!"};
+        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet a part of one of your cats!"};
       }
     }
 
     if (shipsHit[shipType] === shipLength[shipType]) {
       shipsSunk.push(shipType);
       if (currentPlayer === "p1") {
-        msg = { p1: "You have discovered a whole cat!", p2: "Your cat has been discovered" };
+        msg = { p1: "You have pet a whole cat!", p2: "One of your cats has been completely pet!" };
       } else {
-        msg = { p2: "You have discovered a whole cat!", p1: "Your cat has been discovered!" };
+        msg = { p2: "You have pet a whole cat!", p1: "One of your cats has been completely pet!" };
       }
     }
 
@@ -103,9 +103,9 @@ const updateGame = async (selectedTile, id) => {
   } else {
     boardToChange[row][col] = 1;
     if(currentPlayer === "p1"){
-      msg = {p1: "No cats hiding there!", p2: "Your opponent didn't find any cats!"};
+      msg = {p1: "No cats hiding there!", p2: "Your opponent didn't find any of your cats!"};
     }else if(currentPlayer === "p2"){
-      msg = {p2: "No cats hiding there!", p1: "Your opponent didn't find any cats!"};
+      msg = {p2: "No cats hiding there!", p1: "Your opponent didn't find any of your cats!"};
     }
   }
   //update the turn and tile properties of the current gamestate object
