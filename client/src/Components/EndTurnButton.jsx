@@ -4,7 +4,7 @@ const URL =
 const socket = io.connect(URL);
 
 
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) => {
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, setCatsLeft, playerId }) => {
 
   const endTurn = async () => {
     try {
@@ -23,6 +23,12 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
       )
       const updatedGame = await result.json()
       updatedGame.gameState = JSON.parse(updatedGame.gameState)
+      if(playerId === 'p1'){
+        setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p2ShipsSunk)
+      }else if(playerId === 'p2'){
+        setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p1ShipsSunk)
+      }
+      
       socket.emit("shareNewTurn", updatedGame)
       if(updatedGame.msg){
         setMsg(updatedGame.msg)

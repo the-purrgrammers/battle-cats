@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EndTurnButton from "./EndTurnButton";
+import CatsLeft from "./CatsLeft";
 
 const OpponentShipMap = ({
   oppGameState,
@@ -8,6 +9,7 @@ const OpponentShipMap = ({
   selectedTile,
   turn,
   playerId,
+  catsLeft,
 }) => {
   const hitShips = ["a", "b", "c", "d", "e"];
   if (!oppGameState) {
@@ -19,6 +21,11 @@ const OpponentShipMap = ({
     <>
       <div className="grid-container">
         <h2 class="map-h2s">your friend's rug</h2>
+        <CatsLeft
+          oppGameState={oppGameState}
+          playerId={playerId}
+          catsLeft={catsLeft}
+        />
         <div id="opp-rug">
           {oppGameState.map((gameRow, rowId) => (
             <div key={rowId} className="grid-row">
