@@ -134,4 +134,4 @@ const updateGame = async (selectedTile, id) => {
   }
 };
 
-module.exports = { getGame, updateGame };
+module.exports = { getGame, updateGame, };
