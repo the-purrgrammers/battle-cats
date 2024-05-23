@@ -1,11 +1,8 @@
-import io from "socket.io-client";
-const URL =
-  process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
-const socket = io.connect(URL);
+import { initializeSocket } from "../socket";
+const socket = initializeSocket()
 
-
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) => {
-
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setMyGameState }) => {
+console.log("gameId in end turn", gameId)
   const endTurn = async () => {
     try {
       setMsg('')
@@ -16,22 +13,25 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg }) =
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-
-          selectedTile: selectedTile
+          selectedTile,
+          gameId
         })
       }
       )
       const updatedGame = await result.json()
       updatedGame.gameState = JSON.parse(updatedGame.gameState)
-      socket.emit("shareNewTurn", updatedGame)
-      if(updatedGame.msg){
+      const room = sessionStorage.getItem("room")
+      socket.emit("shareNewTurn", updatedGame, room)
+      if (updatedGame.msg) {
         setMsg(updatedGame.msg)
       }
       if (updatedGame.winnerId) {
         setWinnerId(updatedGame.winnerId);
       }
+      const newTurn = updatedGame.gameState[updatedGame.gameState.length-1].turn
+      setTurn(newTurn)
       setSelectedTile('')
-      console.log(`THIS IS THE UPDATED GAME`,updatedGame)
+      console.log(`THIS IS THE UPDATED GAME`, updatedGame)
 
     } catch (error) {
       console.error("error fetching updated board", error);
