@@ -21,8 +21,6 @@ const GamePage = () => {
   const [winnerId, setWinnerId] = useState(null);
   const [catsLeft, setCatsLeft] = useState([]);
 
-  console.log(catsLeft)
-
   socket.on("updatedTurn", (data) => {
     setMsg("");
     console.log(`DATA WINNERID`, data.winnerId)
