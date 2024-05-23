@@ -1,7 +1,7 @@
 import "../styles/index.css";
-// import "../styles/oppGame.css";
+import "../styles/oppGame.css";
 import io from "socket.io-client";
-// import floor1 from "../assets/floor1.jpg";
+
 const URL =
   process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 const socket = io.connect(URL);
@@ -42,7 +42,6 @@ const GamePage = () => {
   });
 
   useEffect(() => {
-    // document.getElementById('body').style.backgroundImage = `url('${floor1}')`;
     const isPlayingAs = sessionStorage.getItem("player");
     if (!isPlayingAs) {
       socket.emit("joinRoom", "gameRoom");

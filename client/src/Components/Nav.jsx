@@ -5,9 +5,9 @@ const Nav = () => {
   return(
     <>
       <section className="navBar">
-        <button>Home</button>
-        <button>Register</button>
-        <button>Login</button>
+        <button className="navBar-button">Home</button>
+        <button className="navBar-button">Register</button>
+        <button className="navBar-button">Login</button>
       </section>
     </>
   )
