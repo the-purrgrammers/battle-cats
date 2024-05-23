@@ -2,15 +2,33 @@ body {
   background-image: url("../assets/BG2.jpg");
 }
 
-h1 {
+.battleCatsH1 {
   text-align: center;
-  font-size: 700%;
+  font-size: 500%;
+  background-color: rgba(255, 228, 196, 0.9);
 }
 
 button {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
   text-align: center;
-  width: 20%;
-  height: 20%;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover{
+  background-color: #F082AC;
 }
 
 .homeMainSection {
@@ -18,18 +36,49 @@ button {
   flex-direction: column;
   align-items: center;
   align-content: center;
-  margin-top: 8%;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
   background-color: rgba(255, 228, 196, 0.9);
+  padding-top: 7%;
   padding-bottom: 8%;
   margin-left: 5%;
   margin-right: 5%;
+  height: 50%;
 }
 
 .namesDiv {
   display: flex;
   justify-content: space-evenly;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: rgba(255, 228, 196);
+}
+
+.navBar {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  background-color: rgba(255, 228, 196);
+  position: fixed;
+  top: 0;
+  height: 7%;
+}
+
+
+button:hover {
+  background-color: #fff;
+}
+
+button:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  button{
+    min-width: 120px;
+    padding: 0 25px;
+  }
 }
