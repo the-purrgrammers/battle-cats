@@ -1,8 +1,7 @@
 import { initializeSocket } from "../socket";
 const socket = initializeSocket()
 
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setMyGameState }) => {
-console.log("gameId in end turn", gameId)
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn }) => {
   const endTurn = async () => {
     try {
       setMsg('')
@@ -31,8 +30,6 @@ console.log("gameId in end turn", gameId)
       const newTurn = updatedGame.gameState[updatedGame.gameState.length-1].turn
       setTurn(newTurn)
       setSelectedTile('')
-      console.log(`THIS IS THE UPDATED GAME`, updatedGame)
-
     } catch (error) {
       console.error("error fetching updated board", error);
     }

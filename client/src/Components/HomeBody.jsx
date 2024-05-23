@@ -26,6 +26,7 @@ const HomeBody = () => {
     };
   }, [socket]);
 
+  //use the sockets to share your newly created room with others 
   const handleCreate = (e) => {
     e.preventDefault();
     if (!rooms.includes(roomName)) {
@@ -39,6 +40,8 @@ const HomeBody = () => {
     <section className="homeMainSection">
       <h1>Battle Cats!</h1>
       <h3>Join a room:</h3>
+      {/* map out the room array displaying a button for each room that will join you to that room 
+      and nav you to the gamepage */}
       {
         rooms.map((room, idx) => (
           <button

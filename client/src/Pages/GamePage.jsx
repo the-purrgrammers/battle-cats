@@ -18,20 +18,17 @@ const GamePage = () => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [msg, setMsg] = useState('');
   const [winnerId, setWinnerId] = useState(null);
-  // const [gameCreated, setGameCreated] = useState(false)
   const [gameId, setGameId] = useState('')
-  console.log("playerId", playerId)
-  console.log("gameId", gameId)
-  console.log("oppboard", oppGameState)
-  console.log("myboard", myGameState)
-  console.log("turn", turn)
 
-
+//when one player completes setting their board, they share it along with the turn so that 
+//you can set your oppGameState
   socket.on("receiveBoardAndTurn", (board, turn) => {
     setOppGameState(board[board.length - 1][oppId]);
     setTurn(turn)
   })
-
+  
+  //after the opposing player has pressed the endturn button, 
+  //the new gamestate is shared to both players via websocket
   socket.on("updatedTurn", (data) => {
     setMsg("");
     if (data.winnerId) {
@@ -49,6 +46,8 @@ const GamePage = () => {
     }
   });
 
+  //code for refreshing: if connection is lost, go into session storage and 
+  //get all the necessary info
   useEffect(() => {
     const isPlayingAs = sessionStorage.getItem("player");
     if (!isPlayingAs) {
@@ -76,7 +75,8 @@ const GamePage = () => {
     }
   }, []);
 
-
+//both players call this when finishing their board: one will create the game,
+//while the second to finish will update the game with their board
   const fetchInitGameState = async (initialBoard) => {
     const room = sessionStorage.getItem("room")
     try {
@@ -108,7 +108,8 @@ const GamePage = () => {
 
 
 
-
+//page renders conditionally based on having a gameId (change this to something else)
+//whether their is a winner, etc.
   return (
     <>
       {gameId ? (
@@ -140,7 +141,6 @@ const GamePage = () => {
               setWinnerId={setWinnerId}
               gameId={gameId}
               setTurn={setTurn}
-              setMyGameState={setMyGameState}
             />
             <PlayerShipMap myGameState={myGameState} />
           </>

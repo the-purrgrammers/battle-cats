@@ -14,13 +14,14 @@ const getGame = async (id) => {
 };
 
 const createGame = async (board, room) => {
+  //see if the game with this room name already exists
   const existingGame = await prisma.game.findFirst({
     where: {
       room,
       winnerId: null,
     },
   });
-
+// template to provide game with necessary info
   const boardTemplate = {
     turn: "p1",
     selectedTile: "",
@@ -29,13 +30,13 @@ const createGame = async (board, room) => {
     p1ShipsSunk: [],
     p2ShipsSunk: [],
   };
-
+//whoever submitted their board first will add it to the template
   if (board.hasOwnProperty("p1")) {
     boardTemplate.p1 = board.p1;
   } else if (board.hasOwnProperty("p2")) {
     boardTemplate.p2 = board.p2;
   }
-
+//if the game doesn't exist, create it:
   if (!existingGame) {
     try {
       const newGame = await prisma.game.create({

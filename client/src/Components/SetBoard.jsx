@@ -1,9 +1,7 @@
-import { initializeSocket } from "../socket"
-const socket = initializeSocket()
 import { useState, useEffect } from "react"
 import Ship from "./Ship"
 
-const SetBoard = ({ playerId, setCompletedBoards, completedBoards, fetchInitGameState }) => {
+const SetBoard = ({ playerId, fetchInitGameState }) => {
   const [board, setBoard] = useState(Array(10).fill(Array(10).fill(0)))
   const [direction, setDirection] = useState("horizontal")
   const [shipsToPlace, setShipsToPlace] = useState(["A", "B", "C", "D", "E"])
@@ -27,17 +25,23 @@ const SetBoard = ({ playerId, setCompletedBoards, completedBoards, fetchInitGame
 
   const handleDrop = (e, droppedRow, droppedColumn) => {
     e.preventDefault();
+    //dataTransfer is how we store the shipType ("A") in the dragged object
     const type = e.dataTransfer.getData('text/plain');
     const { length } = shipDetails[type];
 
+//prevent a piece from hanging over the board
     if (direction === "horizontal" && droppedColumn + length > 10) return;
     if (direction === "vertical" && droppedRow + length > 10) return;
 
+    //prevent overlapping pieces
     for (let i = 0; i < length; i++) {
       if (direction === "horizontal" && board[droppedRow][droppedColumn + i] !== 0) return;
       if (direction === "vertical" && board[droppedRow + i][droppedColumn] !== 0) return;
     }
 
+    //once you drop a ship, map over board state and change the values in the appropriate cells. 
+    //changing starts from the cell the mouse was over, and goes horizontal/vertical based on direction
+    //it goes for the length of the ship, provided by the shipDetails
     const newBoard = board.map((row, rowIdx) =>
       row.map((gridItem, gridIdx) => {
         if (direction === "horizontal") {
@@ -76,6 +80,8 @@ const SetBoard = ({ playerId, setCompletedBoards, completedBoards, fetchInitGame
     setShipsToPlace(["A", "B", "C", "D", "E"])
   }
 
+  //place the board state in and object under the property that is your identity,
+  //and create a game/ add your board to the existing game
   const handleSubmit = () => {
     const room = sessionStorage.getItem("room")
     if (shipsToPlace.length === 0) {
