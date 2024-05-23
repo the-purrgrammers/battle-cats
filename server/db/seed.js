@@ -1,10 +1,15 @@
 const { prisma } = require("./index.js");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-const createInitialPlayer = async (username) => {
+
+const createInitialPlayer = async (username, password) => {
+
   try {
     await prisma.user.create({
       data: {
         username,
+        password
       },
     });
   } catch (error) {
@@ -59,13 +64,18 @@ const createInitialGame = async () => {
       gameState: JSON.stringify(initialBoard),
     },
   });
+
 };
 
 const seed = async () => {
+  const hashedPass1 = await bcrypt.hash(`nunya1`, saltRounds);
+  const hashedPass2 = await bcrypt.hash(`nunya2`, saltRounds);
   console.log("starting seed");
   console.log("creating players");
   await createInitialPlayer("Player One");
   await createInitialPlayer("Player Two");
+  await createInitialPlayer("Lance", hashedPass1);
+  await createInitialPlayer("Molly", hashedPass2);
   console.log("players created, creating initial game");
   await createInitialGame();
   console.log("inital game created");

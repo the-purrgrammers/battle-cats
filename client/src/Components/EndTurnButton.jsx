@@ -1,7 +1,8 @@
+
 import { initializeSocket } from "../socket";
 const socket = initializeSocket()
 
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn }) => {
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId }) => {
   const endTurn = async () => {
     try {
       setMsg('')
@@ -22,11 +23,19 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
       const room = sessionStorage.getItem("room")
       socket.emit("shareNewTurn", updatedGame, room)
       if (updatedGame.msg) {
-        setMsg(updatedGame.msg)
+            setMsg(updatedGame.msg)
       }
-      if (updatedGame.winnerId) {
+       if (updatedGame.winnerId) {
         setWinnerId(updatedGame.winnerId);
       }
+      if(playerId === 'p1'){
+        setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p2ShipsSunk)
+      }else if(playerId === 'p2'){
+        setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p1ShipsSunk)
+      }
+     
+    
+     
       const newTurn = updatedGame.gameState[updatedGame.gameState.length-1].turn
       setTurn(newTurn)
       setSelectedTile('')

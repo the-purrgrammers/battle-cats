@@ -1,0 +1,40 @@
+.catCircle {
+  position: relative;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 50%;
+  width: 50%;
+  height: 70%;
+  padding-bottom: 3%;
+}
+
+.catCircleSunk {
+  position: relative;
+  background-color: red;
+  border: 3px solid black;
+  border-radius: 50%;
+  width: 50%;
+  height: 70%;
+  padding-bottom: 3%;
+}
+
+.circleCont {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50%;
+}
+
+.catsLeftCont {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  background-color:bisque;
+}
+
+.catsLeftHeader {
+  margin-bottom: 0%;
+}

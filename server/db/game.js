@@ -115,38 +115,27 @@ const updateGame = async (selectedTile, id) => {
 
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
-      if (currentPlayer === "p1") {
-        msg = {
-          p1: "You found part of a cat!",
-          p2: "Your opponent has discovered a part of one of your cats!",
-        };
-      } else if (currentPlayer === "p2") {
-        msg = {
-          p2: "You found part of a cat!",
-          p1: "Your opponent has discovered a part of one of your cats!",
-        };
+
+      if(currentPlayer === "p1"){
+        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet part of one of your cats!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet part of one of your cats!"};
       }
     } else {
       shipsHit[shipType] = 1;
-      if (currentPlayer === "p1") {
-        msg = {
-          p1: "You found part of a cat!",
-          p2: "Your opponent has discovered a part of one of your cats!",
-        };
-      } else if (currentPlayer === "p2") {
-        msg = {
-          p2: "You found part of a cat!",
-          p1: "Your opponent has discovered a part of one of your cats!",
-        };
+      if(currentPlayer === "p1"){
+        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet a part of one of your cats!"};
+      }else if(currentPlayer === "p2"){
+        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet a part of one of your cats!"};
       }
     }
 
     if (shipsHit[shipType] === shipLength[shipType]) {
       shipsSunk.push(shipType);
       if (currentPlayer === "p1") {
-        msg = { p1: "You sunk a ship!", p2: "Your ship has sunk!" };
+        msg = { p1: "You have pet a whole cat!", p2: "One of your cats has been completely pet!" };
       } else {
-        msg = { p2: "You sunk a ship!", p1: "Your ship has sunk!" };
+        msg = { p2: "You have pet a whole cat!", p1: "One of your cats has been completely pet!" };
       }
     }
 
@@ -179,10 +168,12 @@ const updateGame = async (selectedTile, id) => {
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
-    if (currentPlayer === "p1") {
-      msg = { p1: "Your shot missed!", p2: "Your opponent's shot missed!" };
-    } else if (currentPlayer === "p2") {
-      msg = { p2: "Your shot missed!", p1: "Your opponent's shot missed!" };
+
+    if(currentPlayer === "p1"){
+      msg = {p1: "No cats hiding there!", p2: "Your opponent didn't find any of your cats!"};
+    }else if(currentPlayer === "p2"){
+      msg = {p2: "No cats hiding there!", p1: "Your opponent didn't find any of your cats!"};
+
     }
   }
   //update the turn and tile properties of the current gamestate object
@@ -212,3 +203,4 @@ const updateGame = async (selectedTile, id) => {
 };
 
 module.exports = { getGame, updateGame, createGame };
+

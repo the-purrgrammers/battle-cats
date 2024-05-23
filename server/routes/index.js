@@ -1,3 +1,4 @@
+require("dotenv").config()
 const router = require("express").Router();
 
 //token checkpoint here eventually

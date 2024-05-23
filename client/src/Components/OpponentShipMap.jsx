@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/oppGame.css";
 import EndTurnButton from "./EndTurnButton";
+import CatsLeft from "./CatsLeft";
 
 const OpponentShipMap = ({
   oppGameState,
@@ -9,6 +10,7 @@ const OpponentShipMap = ({
   selectedTile,
   turn,
   playerId,
+  catsLeft
 }) => {
   const hitShips = ["a", "b", "c", "d", "e"];
   if (!oppGameState) {
@@ -20,7 +22,7 @@ const OpponentShipMap = ({
     <>
       <div className="grid-container">
         <h1>OPPONENT CAT MAP</h1>
-        
+        <CatsLeft oppGameState={oppGameState} playerId={playerId} catsLeft={catsLeft}/>
         {oppGameState.map((gameRow, rowId) => (
           <div key={rowId} className="grid-row">
             {gameRow.map((gridItem, itemId) => (

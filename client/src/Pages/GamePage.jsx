@@ -19,6 +19,7 @@ const GamePage = () => {
   const [msg, setMsg] = useState('');
   const [winnerId, setWinnerId] = useState(null);
   const [gameId, setGameId] = useState('')
+  const [catsLeft, setCatsLeft] = useState([]);
 
 //when one player completes setting their board, they share it along with the turn so that 
 //you can set your oppGameState
@@ -115,6 +116,7 @@ const GamePage = () => {
       {gameId ? (
         winnerId === null ? (
           <>
+
             {turn !== playerId ? (
               <span className="waiting-message">Waiting on your opponent...</span>
             ) : (
@@ -133,6 +135,7 @@ const GamePage = () => {
               selectedTile={selectedTile}
               turn={turn}
               playerId={playerId}
+              catsLeft={catsLeft}
             />
             <EndTurnButton
               selectedTile={selectedTile}
@@ -141,6 +144,9 @@ const GamePage = () => {
               setWinnerId={setWinnerId}
               gameId={gameId}
               setTurn={setTurn}
+              setCatsLeft={setCatsLeft}
+              playerId={playerId}
+
             />
             <PlayerShipMap myGameState={myGameState} />
           </>
