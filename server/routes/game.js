@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getGame, updateGame, createGame } = require("../db/game");
+const { getGame, updateGame, createGame, getListOfUserGames } = require("../db/game");
 
 router.get("/", async (req, res) => {
   try {
@@ -8,6 +8,19 @@ router.get("/", async (req, res) => {
     res.status(200).send(currentGame);
   } catch (error) {}
 });
+
+router.get("/:userId", async (req, res) => {
+  const curUserId = parseInt(req.params);
+  try {
+    const listOfUserGames = await getListOfUserGames(curUserId)
+    res.send(listOfUserGames);
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+})
+
 
 router.get("/:id", async (req, res) => {
   try {
