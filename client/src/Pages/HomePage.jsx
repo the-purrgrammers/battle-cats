@@ -5,9 +5,9 @@ import Nav from "../Components/Nav";
 const HomePage = () => {
   return (
     <>
-      <Nav />
-      <HomeBody />
-      <Footer />
+        <Nav />
+        <HomeBody />
+        <Footer />
     </>
   );
 };
