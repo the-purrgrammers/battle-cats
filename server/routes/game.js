@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getGame, updateGame } = require("../db/game");
+const { getGame, updateGame, createGame } = require("../db/game");
 
 router.get("/", async (req, res) => {
   try {
@@ -19,20 +19,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/endturn", async (req, res) => {
-  const selectedTile = req.body.selectedTile;
+router.post("/createGame", async (req, res) => {
   try {
-    const updatedGame = await updateGame(selectedTile, 1);
-    res.status(200).send(updatedGame);
+    const newGame = await createGame(req.body.initialBoard, req.body.room);
+    res.status(201).send(newGame);
   } catch (error) {
-    console.error("error on PUT endturn route", error);
+    console.error("error on POST /createGame route", error);
   }
 });
 
 router.put("/endturn", async (req, res) => {
   const selectedTile = req.body.selectedTile;
+  const gameId = parseInt(req.body.gameId);
   try {
-    const updatedGame = await updateGame(selectedTile, 1);
+    const updatedGame = await updateGame(selectedTile, gameId);
     res.status(200).send(updatedGame);
   } catch (error) {
     console.error("error on PUT endturn route", error);

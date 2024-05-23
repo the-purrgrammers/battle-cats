@@ -34,4 +34,5 @@ model Game {
   loser       User?  @relation("loser", fields: [loserId], references: [id])
   loserId     Int?
   gameState   String
+  room        String
 }

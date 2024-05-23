@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../", "client/dist")));
 
-
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -23,18 +22,33 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("joinRoom", (data) => {
-    if (!io.sockets.adapter.rooms.get("gameRoom")) {
-      socket.join(data);
+  socket.on("addRoom", (room)=>{
+    io.emit("shareRoom", room)
+  })
+
+  socket.on("joinRoom", (room) => {
+    if (!io.sockets.adapter.rooms.get(room)) {
+      socket.join(room);
+      console.log(io.sockets.adapter.rooms.get(room));
       socket.emit("assignPlayer", { player: "p1" });
-    } else if (io.sockets.adapter.rooms.get("gameRoom").size < 2) {
-      socket.join(data);
+    } else if (io.sockets.adapter.rooms.get(room).size < 2) {
+      socket.join(room);
+      console.log(io.sockets.adapter.rooms.get(room));
       socket.emit("assignPlayer", { player: "p2" });
     }
   });
-  socket.on("shareNewTurn", (data) => {
-    socket.broadcast.to("gameRoom").emit("updatedTurn", data);
+  socket.on("shareNewTurn", (turn, room) => {
+    io.to(room).emit("updatedTurn", turn);
   });
+  socket.on("submitBoard", (board, room) => {
+    io.in(room).emit("completedBoard", board);
+  });
+  socket.on("shareBoardAndTurn", ( board, turn, room) => {
+    socket.broadcast.to(room).emit("receiveBoardAndTurn", board, turn);
+  });
+  socket.on("gameCreated", (data) => {
+    socket.broadcast.to(room).emit("gameExists", data)
+  })
 });
 
 // app.use("/", require("./routes/index.js"));

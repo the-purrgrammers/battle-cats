@@ -60,6 +60,7 @@ const createInitialGame = async () => {
     data: {
       playerOneId: 1,
       playerTwoId: 2,
+      room: "generic",
       gameState: JSON.stringify(initialBoard),
     },
   });
