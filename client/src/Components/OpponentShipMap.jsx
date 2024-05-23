@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../styles/oppGame.css";
 import EndTurnButton from "./EndTurnButton";
 
 const OpponentShipMap = ({

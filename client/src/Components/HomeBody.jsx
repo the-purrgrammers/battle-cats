@@ -1,4 +1,3 @@
-import "../styles/homepage.css";
 import { useNavigate } from "react-router-dom";
 
 const HomeBody = () => {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../styles/oppGame.css";
 
 const tileClasses = {
   A: "carrier",

@@ -1,5 +1,7 @@
 import "../styles/index.css";
+// import "../styles/oppGame.css";
 import io from "socket.io-client";
+// import floor1 from "../assets/floor1.jpg";
 const URL =
   process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
 const socket = io.connect(URL);
@@ -39,6 +41,7 @@ const GamePage = () => {
   });
 
   useEffect(() => {
+    // document.getElementById('body').style.backgroundImage = `url('${floor1}')`;
     const isPlayingAs = sessionStorage.getItem("player");
     if (!isPlayingAs) {
       socket.emit("joinRoom", "gameRoom");
@@ -89,6 +92,7 @@ const GamePage = () => {
 
         winnerId === null ? (
           <>
+      <div id="message-container">
       {
         turn !== playerId ?
           <span className='waiting-message'>Waiting on your opponent...</span> :
@@ -101,6 +105,7 @@ const GamePage = () => {
             <span className="sunk-ship-message">{msg.p1}</span> :
             <span className="sunk-ship-message">{msg.p2}</span>
       }
+      </div>
             <div id="double-grid-container">
               <OpponentShipMap
                 oppGameState={oppGameState}
