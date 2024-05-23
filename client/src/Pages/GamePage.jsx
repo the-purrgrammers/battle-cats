@@ -7,7 +7,9 @@ import EndTurnButton from "../Components/EndTurnButton"
 import OpponentShipMap from "../Components/OpponentShipMap"
 import PlayerShipMap from "../Components/PlayerShipMap"
 import WinLoseScreen from "../Components/WinLoseScreen";
+import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
+
 
 const GamePage = () => {
   const [playerId, setPlayerId] = useState("");
@@ -148,7 +150,10 @@ const GamePage = () => {
               playerId={playerId}
 
             />
-            <PlayerShipMap myGameState={myGameState} />
+
+            <PlayerShipMap myGameState={myGameState} /> 
+            <ChatBox playerId={playerId}/>
+
           </>
         ) : (
           <WinLoseScreen playerId={playerId} winnerId={winnerId} />
