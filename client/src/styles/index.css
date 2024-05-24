@@ -1,5 +1,5 @@
 .waiting-message {
-  background-color: rgb(161, 212, 212);
+  background-color: rgb(134, 155, 99);
   padding: 10px;
   font-size: larger;
   width: fit-content;
@@ -9,7 +9,7 @@
 }
 
 .sunk-ship-message {
-  background-color: #d68696;
+  background-color: rgb(105, 120, 77);
   padding: 10px;
   font-size: larger;
   width: fit-content;

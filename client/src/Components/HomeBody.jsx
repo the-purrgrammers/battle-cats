@@ -40,7 +40,7 @@ const HomeBody = () => {
   return (
     <section className="homeMainSection">
       <h1>Battle Cats!</h1>
-      <h3>Join a room:</h3>
+      <h3>join a room:</h3>
       {/* map out the room array displaying a button for each room that will join you to that room 
       and nav you to the gamepage */}
       {
@@ -56,13 +56,13 @@ const HomeBody = () => {
           </button>
         ))
       }
-      <h3>Create a room:</h3>
+      <h3>create a room:</h3>
       <form onSubmit={handleCreate}>
         <input
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
-          placeholder="Room name" />
-        <button type="submit">Create</button>
+          placeholder="room name" />
+        <button type="submit">create</button>
       </form>
     </section>
   );

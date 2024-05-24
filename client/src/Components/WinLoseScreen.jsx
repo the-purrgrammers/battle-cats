@@ -4,9 +4,9 @@ const WinLoseScreen = ({ winnerId, playerId }) => {
   return (
     <>
       {winnerId === playerIdNum ? (
-        <h1>The felines celebrate you {playerId}! You pet every last kitty!</h1>
+        <h1>you won! the felines celebrate you! you pet every cat!</h1>
       ) : (
-        <h1>Go lick your petless paws {playerId}. Every kitten foiled your attempts.</h1>
+        <h1>sorry, you lost. every kitten foiled your attempts. try again?</h1>
       )
       }
     </>

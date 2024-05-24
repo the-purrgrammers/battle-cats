@@ -45,12 +45,13 @@ const ChatBox = ({ playerId }) => {
           </ul>
           <form onSubmit={submitHandler}>
             <input
+              id="chat-input"
               value={chatMessage}
               onChange={(e) => {
                 setChatMessage(e.target.value);
               }}
             />
-            <button>Send Message</button>
+            <button id="send-messg-btn">send message</button>
           </form>
         </div>
       </div>

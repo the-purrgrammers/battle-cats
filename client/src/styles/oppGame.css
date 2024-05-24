@@ -9,8 +9,9 @@ body {
   text-align: center;
   font-size: xx-large;
   padding: 10px;
-  background-color: aliceblue;
+  background-color: bisque;
   margin: 10px;
+  width: 250px;
 }
 
 #message-container {
@@ -18,10 +19,29 @@ body {
   justify-content: center;
 }
 
+#chat-input {
+  margin-left: 22px;
+}
+
+#send-messg-btn {
+  display: flex;
+  justify-content: center;
+  margin: 22px;
+  margin-top: 5px;
+  height: 50px;
+  width: 150px;
+  text-wrap: nowrap;
+  text-align: left;
+  font-family: "Short Stack", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: small;
+}
+
 .map-h2s {
   text-align: center;
   font-size: x-large;
-  background-color: aliceblue;
+  background-color: bisque;
   padding: 10px;
 }
 
@@ -110,7 +130,7 @@ body {
 }
 
 .grid-item {
-  background-color: rgb(161, 212, 212);
+  background-color: #fbeee0;
 }
 
 .miss {
@@ -137,7 +157,8 @@ body {
 }
 
 .hit {
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0);
+  background-image: url(../assets/pet-cat-icon.png);
   pointer-events: none;
 }
 

@@ -113,17 +113,17 @@ const GamePage = () => {
   //whether their is a winner, etc.
   return (
     <>
-      <h1 id="h1-battle-cats">Battle Cats!</h1>
+      <div className='h1-battle-cats-cont'><h1 id="h1-battle-cats">Battle Cats!</h1></div>
       {gameId ? (
         winnerId === null ? (
           <>
             <div id="message-container">
               {turn !== playerId ? (
                 <span className="waiting-message">
-                  Waiting on your opponent...
+                  waiting on your friend...
                 </span>
               ) : (
-                <span className="waiting-message">Your Turn!</span>
+                <span className="waiting-message">your turn!</span>
               )}
               {!msg ? (
                 ""
