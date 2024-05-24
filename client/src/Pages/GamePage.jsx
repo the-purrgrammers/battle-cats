@@ -109,8 +109,6 @@ const GamePage = () => {
     }
   }
 
-
-
 //page renders conditionally based on having a gameId (change this to something else)
 //whether their is a winner, etc.
   return (
