@@ -134,6 +134,7 @@ const GamePage = () => {
               )}
             </div>
             <div id="double-grid-container">
+              <ChatBox playerId={playerId} />
               <OpponentShipMap
                 oppGameState={oppGameState}
                 setSelectedTile={setSelectedTile}
@@ -142,20 +143,21 @@ const GamePage = () => {
                 playerId={playerId}
                 catsLeft={catsLeft}
               />
-              <EndTurnButton
-                selectedTile={selectedTile}
-                setSelectedTile={setSelectedTile}
-                setMsg={setMsg}
-                setWinnerId={setWinnerId}
-                gameId={gameId}
-                setTurn={setTurn}
-                setCatsLeft={setCatsLeft}
-                playerId={playerId}
-              />
-            </div>
+              <div id="end-turn-btn-container">
+                <EndTurnButton
+                  selectedTile={selectedTile}
+                  setSelectedTile={setSelectedTile}
+                  setMsg={setMsg}
+                  setWinnerId={setWinnerId}
+                  gameId={gameId}
+                  setTurn={setTurn}
+                  setCatsLeft={setCatsLeft}
+                  playerId={playerId}
+                  />
+              </div>
 
             <PlayerShipMap myGameState={myGameState} />
-            <ChatBox playerId={playerId} />
+            </div>
           </>
         ) : (
           <WinLoseScreen playerId={playerId} winnerId={winnerId} />

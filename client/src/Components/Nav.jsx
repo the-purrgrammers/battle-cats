@@ -1,5 +1,3 @@
-import '../styles/homepage.css'
-
 const Nav = () => {
 
   return(

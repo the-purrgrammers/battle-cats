@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
-import "../styles/homepage.css";
 
 
 const HomeBody = () => {

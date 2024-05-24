@@ -25,9 +25,13 @@ body {
   padding: 10px;
 }
 
+#chat-h2 {
+  margin-top: 40px;
+}
+
 #double-grid-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   justify-content: space-evenly;
 }
 
@@ -63,6 +67,8 @@ body {
   border: 1px solid gray;
   color: rgb(8, 4, 15);
 }
+/* 
+end-turn-btn-container */
 
 .grid-item:hover {
   background-color: rgb(174, 174, 174);
@@ -107,7 +113,6 @@ body {
   background-color: red;
   pointer-events: none;
 }
-
 
 .ship-container{
   background-color: bisque;

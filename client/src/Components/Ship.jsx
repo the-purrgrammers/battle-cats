@@ -1,4 +1,3 @@
-
 const Ship = ({ type, direction, shipDetails }) => {
 
   const handleDragStart = (e) => {

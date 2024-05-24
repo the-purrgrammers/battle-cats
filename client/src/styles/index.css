@@ -2,39 +2,42 @@
   background-color: rgb(161, 212, 212);
   padding: 10px;
   font-size: larger;
-  width: 225px;
-  text-align: center;
+  width: fit-content;
+  text-align: left;
   margin-left: 10px;
+  text-wrap: nowrap;
 }
 
 .sunk-ship-message {
   background-color: #d68696;
   padding: 10px;
   font-size: larger;
-  width: 225px;
-  text-align: center;
+  width: fit-content;
+  text-align: left;
+  text-wrap: nowrap;
 }
 
 .chatWindow {
   background-color: white;
-  height: 300px;
-  width: 300px;
+  height: 420px;
+  width: 150px;
   border-color: black;
   border-width: 5px;
   border-style: solid;
   overflow: auto;
-  overflow-wrap:break-word;
+  overflow-wrap: break-word;
   list-style: none;
+  padding-left: 0;
 }
 
 .chatComp {
   background-color: bisque;
-  height: 400px;
-  width: 400px;
+  height: 520px;
+  width: 200px;
   border-color: black;
   border-width: 5px;
   border-style: solid;
-  border-radius: 10%;
+  border-radius: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;
