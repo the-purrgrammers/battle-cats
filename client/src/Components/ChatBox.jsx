@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { initializeSocket } from "../socket";
+const socket = initializeSocket();
 
 const ChatBox = ({playerId}) => {
   const [chatMessage, setChatMessage] = useState('');
@@ -6,16 +8,30 @@ const ChatBox = ({playerId}) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    chatLog.push(chatMessage);
+    const room = sessionStorage.getItem("room");
+    const playerMessage = {};
+    playerMessage.player = playerId;
+    playerMessage.message = chatMessage;
+    setChatLog([...chatLog, playerMessage]);
+    socket.emit('sendMessage', playerMessage, room);
     setChatMessage('');
   }
+
+  useEffect(()=>{
+    socket.on('receivedMessage', (playerMessage)=> {
+      setChatLog([...chatLog, playerMessage]);
+      console.log(playerMessage);
+    });
+    return ()=>{socket.off('receivedMessage')}
+  }, [chatLog]);
+  
 
   return (
     <>
       <div className='chatComp'>
         <ul className="chatWindow">
           {chatLog.map((message, idx)=>{
-            return <li key={idx}>{playerId}: {message}</li>
+            return <li key={idx}>{message.player}: {message.message}</li>
           })}
         </ul>
         <form onSubmit={submitHandler}>
