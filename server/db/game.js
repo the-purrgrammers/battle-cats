@@ -13,6 +13,72 @@ const getGame = async (id) => {
   }
 };
 
+const createGame = async (board, room) => {
+  //see if the game with this room name already exists
+  const existingGame = await prisma.game.findFirst({
+    where: {
+      room,
+      winnerId: null,
+    },
+  });
+// template to provide game with necessary info
+  const boardTemplate = {
+    turn: "p1",
+    selectedTile: "",
+    p1ShipsHit: { A: 0, B: 0, C: 0, D: 0, E: 0 },
+    p2ShipsHit: { A: 0, B: 0, C: 0, D: 0, E: 0 },
+    p1ShipsSunk: [],
+    p2ShipsSunk: [],
+  };
+//whoever submitted their board first will add it to the template
+  if (board.hasOwnProperty("p1")) {
+    boardTemplate.p1 = board.p1;
+  } else if (board.hasOwnProperty("p2")) {
+    boardTemplate.p2 = board.p2;
+  }
+//if the game doesn't exist, create it:
+  if (!existingGame) {
+    try {
+      const newGame = await prisma.game.create({
+        data: {
+          playerOneId: 1, // Replace with actual playerOneId
+          playerTwoId: 2, // Replace with actual playerTwoId
+          gameState: JSON.stringify([boardTemplate]),
+          room,
+        },
+      });
+      return newGame;
+    } catch (error) {
+      console.error("error creating new game in db", error);
+    }
+  } else {
+
+    // Parse the existing game state
+    const existingGameState = JSON.parse(existingGame.gameState);
+
+    // Merge existing game state with the new board data
+    if (board.hasOwnProperty("p1")) {
+      existingGameState[0].p1 = board.p1;
+    } else if (board.hasOwnProperty("p2")) {
+      existingGameState[0].p2 = board.p2;
+    }
+
+    try {
+      const updatedGame = await prisma.game.update({
+        where: {
+          id: existingGame.id,
+        },
+        data: {
+          gameState: JSON.stringify(existingGameState),
+        },
+      });
+      return updatedGame;
+    } catch (error) {
+      console.error("error adding second player to newly created game", error);
+    }
+  }
+};
+
 const updateGame = async (selectedTile, id) => {
   //get the game from the db
   const data = await prisma.game.findFirst({
@@ -49,6 +115,7 @@ const updateGame = async (selectedTile, id) => {
 
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
+
       if(currentPlayer === "p1"){
         msg = {p1: "You pet part of a cat!", p2: "Your friend has pet part of one of your cats!"};
       }else if(currentPlayer === "p2"){
@@ -80,7 +147,6 @@ const updateGame = async (selectedTile, id) => {
   let winnerId = null;
   let loserId = null;
   const endGame = () => {
-
     winnerId = currentPlayer === "p1" ? 1 : 2;
     loserId = winnerId === 1 ? 2 : 1;
 
@@ -102,10 +168,12 @@ const updateGame = async (selectedTile, id) => {
     updateShipsHitAndSunk(shipType);
   } else {
     boardToChange[row][col] = 1;
+
     if(currentPlayer === "p1"){
       msg = {p1: "No cats hiding there!", p2: "Your opponent didn't find any of your cats!"};
     }else if(currentPlayer === "p2"){
       msg = {p2: "No cats hiding there!", p1: "Your opponent didn't find any of your cats!"};
+
     }
   }
   //update the turn and tile properties of the current gamestate object
@@ -134,4 +202,5 @@ const updateGame = async (selectedTile, id) => {
   }
 };
 
-module.exports = { getGame, updateGame, };
+module.exports = { getGame, updateGame, createGame };
+

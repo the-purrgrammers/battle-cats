@@ -108,15 +108,14 @@ body {
   pointer-events: none;
 }
 
-/* A: "carrier",
-a: "carrierhit",
-B: "battleship",
-b: "battleshiphit",
-C: "cruiser",
-c: "cruiserhit",
-D: "sub",
-d: "sub hit",
-E: "destroyer",
-e: "destroyerhit",
-0: "ocean",
-1: "miss" */
+
+.ship-container{
+  background-color: bisque;
+  padding: 20px;
+  width:680px;
+  height: 300px;
+  margin:20px;
+}
+.ship-container>*{
+  margin:0px 10px;
+}
