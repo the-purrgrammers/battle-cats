@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom"
+import Nav from "../../Components/Nav";
 
 
 const Login = ({setToken, setCurUser}) => {
@@ -41,6 +42,7 @@ const Login = ({setToken, setCurUser}) => {
   return (
     <>
      <div>
+      <Nav />
     <h1>The cats need you to identify yourself. Let them sniff fingertip below</h1>
     <form onSubmit={submitHandler}>
       <label>

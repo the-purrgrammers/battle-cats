@@ -47,6 +47,7 @@ const HomeBody = () => {
       {
         rooms.map((room, idx) => (
           <button
+            className="createButton"
             key={idx}
             onClick={() => {
               socket.emit("joinRoom", room);
@@ -63,7 +64,7 @@ const HomeBody = () => {
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
           placeholder="Room name" />
-        <button type="submit">Create</button>
+        <button className="createButton" type="submit">Create</button>
       </form>
     </section>
   );

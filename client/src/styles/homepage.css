@@ -8,7 +8,7 @@ body {
   background-color: rgba(255, 228, 196, 0.9);
 }
 
-button {
+.navButton {
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -27,8 +27,49 @@ button {
   touch-action: manipulation;
 }
 
-button:hover{
+.navButton:hover{
   background-color: #F082AC;
+}
+
+.navButton:hover {
+  background-color: #fff;
+}
+
+.navButton:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+.createButton { 
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.createButton:hover{
+  background-color: #F082AC;
+}
+
+.createButton:hover {
+  background-color: #fff;
+}
+
+.createButton:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
 }
 
 .homeMainSection {
@@ -63,22 +104,13 @@ button:hover{
   background-color: rgba(255, 228, 196);
   position: fixed;
   top: 0;
+  bottom:auto;
   height: 7%;
 }
 
-
-button:hover {
-  background-color: #fff;
-}
-
-button:active {
-  box-shadow: #422800 2px 2px 0 0;
-  transform: translate(2px, 2px);
-}
-
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   button{
     min-width: 120px;
     padding: 0 25px;
   }
-}
+} */
