@@ -40,7 +40,6 @@ const GamePage = () => {
     const currentIndex = data.gameState.length - 1;
     const newGame = data.gameState[currentIndex];
     const newTurn = newGame.turn;
-    console.log("inthe update", newTurn);
     setTurn(newTurn);
     setOppGameState(newGame[oppId]);
     setMyGameState(newGame[playerId]);
