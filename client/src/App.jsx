@@ -8,7 +8,6 @@ import Register from "./Pages/authPages/Register";
 
 
 function App() {
-  const [isHomePage, setIsHomePage] = useState(true);
   const [token, setToken] = useState("");
   const [curUser, setCurUser] = useState({});
 
