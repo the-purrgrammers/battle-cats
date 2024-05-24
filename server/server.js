@@ -41,13 +41,16 @@ io.on("connection", (socket) => {
     io.to(room).emit("updatedTurn", turn);
   });
   socket.on("submitBoard", (board, room) => {
-    io.in(room).emit("completedBoard", board);
+    io.to(room).emit("completedBoard", board);
   });
   socket.on("shareBoardAndTurn", ( board, turn, room) => {
     socket.broadcast.to(room).emit("receiveBoardAndTurn", board, turn);
   });
   socket.on("gameCreated", (data) => {
     socket.broadcast.to(room).emit("gameExists", data)
+  })
+  socket.on('sendMessage', (playerMessage, room) => {
+    io.to(room).emit('receivedMessage', playerMessage);
   })
 });
 
