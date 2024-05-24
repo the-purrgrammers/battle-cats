@@ -1,16 +1,53 @@
-h1 {
+body {
+  font-family: "Short Stack", cursive;
+  font-weight: 400;
+  font-style: normal;
+  background-image: url("../assets/floor1.jpg");
+}
+
+#h1-battle-cats {
+  text-align: center;
+  font-size: xx-large;
+  padding: 10px;
+  background-color: aliceblue;
+  margin: 10px;
+}
+
+#message-container {
+  display: flex;
+  justify-content: center;
+}
+
+.map-h2s {
   text-align: center;
   font-size: x-large;
   background-color: aliceblue;
   padding: 10px;
 }
 
+#chat-h2 {
+  margin-top: 40px;
+}
+
+#double-grid-container {
+  display: flex;
+  justify-content: flex-end;
+  justify-content: space-evenly;
+}
+
 .grid-container {
   height: auto;
-  width: 500px;
-  border: 30px double black;
+  width: 520px;
   border-radius: 30px;
   margin: 20px;
+}
+
+#opp-rug {
+  background-image: url("../assets/rug1.png");
+}
+
+#my-rug {
+  background-image: url("../assets/rug2.jpg");
 }
 
 .grid-row {
@@ -25,21 +62,50 @@ h1 {
 
 .grid-item {
   padding: 0;
-  height: 40px;
-  width: 40px;
-  border: 5px outset black;
+  height: 50px;
+  width: 50px;
+  border: 1px solid gray;
   color: rgb(8, 4, 15);
 }
+
+#end-turn-btn-container{
+  height: 740.53px;
+  width: 179.73px;
+}
+
+#end-turn-btn {
+  width: auto;
+  margin-top: 350px;
+  text-wrap: nowrap;
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Short Stack", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
 .grid-item:hover {
-  background-color: rgb(166, 151, 151);
+  background-color: rgb(174, 174, 174);
 }
 
 .selected-grid-item {
   padding: 0;
-  height: 40px;
-  width: 40px;
-  border: 5px outset black;
-  color: mediumpurple;
+  height: 50px;
+  width: 50px;
+  border: 1px solid grey;
   background-color: grey;
 }
 
@@ -48,7 +114,7 @@ h1 {
 }
 
 .miss {
-  background-color: azure;
+  background-color: rgba(240, 255, 255, 0);
   pointer-events: none;
 }
 
@@ -74,7 +140,6 @@ h1 {
   background-color: red;
   pointer-events: none;
 }
-
 
 .ship-container{
   background-color: bisque;
