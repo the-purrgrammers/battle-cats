@@ -43,3 +43,18 @@
   align-items: center;
   align-content: center;
 }
+
+/* WinLoseScreen */
+#win-lose-msg-cont {
+  display: flex;
+  justify-content: center;
+}
+
+#winner-msg, #loser-msg {
+  background-color: rgb(134, 155, 99);
+  padding: 10px;
+  font-size: x-large;
+  width: fit-content;
+  text-align: center;
+  margin-left: 10px;
+}
