@@ -67,8 +67,35 @@ body {
   border: 1px solid gray;
   color: rgb(8, 4, 15);
 }
-/* 
-end-turn-btn-container */
+
+#end-turn-btn-container{
+  height: 740.53px;
+  width: 179.73px;
+}
+
+#end-turn-btn {
+  width: auto;
+  margin-top: 350px;
+  text-wrap: nowrap;
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Short Stack", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
 
 .grid-item:hover {
   background-color: rgb(174, 174, 174);

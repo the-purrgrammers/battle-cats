@@ -44,7 +44,7 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
   };
 
   return (
-    <>{selectedTile && <button onClick={endTurn}>PET THAT CAT!</button>}</>
+    <>{selectedTile && <button id='end-turn-btn' onClick={endTurn}>PET THAT CAT!</button>}</>
   );
 };
 
