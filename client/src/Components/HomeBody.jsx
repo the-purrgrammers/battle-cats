@@ -21,9 +21,23 @@ const HomeBody = () => {
       });
     });
 
-    // Clean up the event listener on component unmount
+
+    // Event listener to handle all rooms on new connection
+    socket.on("shareAllRooms", (allRooms) => {
+      setRooms(allRooms);
+    });
+
+    // Event listener to remove room when it is full
+    socket.on("removeRoom", (room) => {
+      setRooms((prevRooms) => prevRooms.filter((r) => r !== room));
+    });
+
+
+    // Clean up the event listeners on component unmount
     return () => {
       socket.off("shareRoom");
+      socket.off("shareAllRooms");
+      socket.off("removeRoom");
     };
   }, [socket]);
 
