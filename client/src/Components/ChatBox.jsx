@@ -12,7 +12,6 @@ const ChatBox = ({playerId}) => {
     const playerMessage = {};
     playerMessage.player = playerId;
     playerMessage.message = chatMessage;
-    setChatLog([...chatLog, playerMessage]);
     socket.emit('sendMessage', playerMessage, room);
     setChatMessage('');
   }
@@ -20,7 +19,6 @@ const ChatBox = ({playerId}) => {
   useEffect(()=>{
     socket.on('receivedMessage', (playerMessage)=> {
       setChatLog([...chatLog, playerMessage]);
-      console.log(playerMessage);
     });
     return ()=>{socket.off('receivedMessage')}
   }, [chatLog]);

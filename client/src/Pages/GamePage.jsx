@@ -1,15 +1,14 @@
 import "../styles/index.css";
 import { initializeSocket } from "../socket";
-const socket = initializeSocket()
+const socket = initializeSocket();
 
-import { useEffect, useState } from "react"
-import EndTurnButton from "../Components/EndTurnButton"
-import OpponentShipMap from "../Components/OpponentShipMap"
-import PlayerShipMap from "../Components/PlayerShipMap"
+import { useEffect, useState } from "react";
+import EndTurnButton from "../Components/EndTurnButton";
+import OpponentShipMap from "../Components/OpponentShipMap";
+import PlayerShipMap from "../Components/PlayerShipMap";
 import WinLoseScreen from "../Components/WinLoseScreen";
 import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
-
 
 const GamePage = () => {
   const [playerId, setPlayerId] = useState("");
@@ -18,19 +17,19 @@ const GamePage = () => {
   const [oppGameState, setOppGameState] = useState([]);
   const [myGameState, setMyGameState] = useState([]);
   const [selectedTile, setSelectedTile] = useState(null);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState("");
   const [winnerId, setWinnerId] = useState(null);
-  const [gameId, setGameId] = useState('')
+  const [gameId, setGameId] = useState("");
   const [catsLeft, setCatsLeft] = useState([]);
 
-//when one player completes setting their board, they share it along with the turn so that 
-//you can set your oppGameState
+  //when one player completes setting their board, they share it along with the turn so that
+  //you can set your oppGameState
   socket.on("receiveBoardAndTurn", (board, turn) => {
     setOppGameState(board[board.length - 1][oppId]);
-    setTurn(turn)
-  })
-  
-  //after the opposing player has pressed the endturn button, 
+    setTurn(turn);
+  });
+
+  //after the opposing player has pressed the endturn button,
   //the new gamestate is shared to both players via websocket
   socket.on("updatedTurn", (data) => {
     setMsg("");
@@ -40,7 +39,6 @@ const GamePage = () => {
     const currentIndex = data.gameState.length - 1;
     const newGame = data.gameState[currentIndex];
     const newTurn = newGame.turn;
-    console.log("inthe update", newTurn)
     setTurn(newTurn);
     setOppGameState(newGame[oppId]);
     setMyGameState(newGame[playerId]);
@@ -49,7 +47,7 @@ const GamePage = () => {
     }
   });
 
-  //code for refreshing: if connection is lost, go into session storage and 
+  //code for refreshing: if connection is lost, go into session storage and
   //get all the necessary info
   useEffect(() => {
     const isPlayingAs = sessionStorage.getItem("player");
@@ -67,60 +65,91 @@ const GamePage = () => {
       });
     } else {
       setPlayerId(isPlayingAs);
-      const room = sessionStorage.getItem("room")
-      socket.emit("joinRoom", room)
+      const room = sessionStorage.getItem("room");
+      socket.emit("joinRoom", room);
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-    const id = sessionStorage.getItem("gameId")
-    if (id) {
-      setGameId(id)
+
+    const refreshGame = async () => {
+      const gameToken = sessionStorage.getItem("gameToken")
+      if(gameToken){
+        console.log("we have a token")
+      const result = await fetch('/api/game', {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${gameToken}`
+        },
+      })
+      const refreshedGame = await result.json();
+      const game = refreshedGame.currentGame;
+      const player = refreshedGame.player;
+      setPlayerId(player);
+      if(player === 'p1'){
+        setOppId('p2')
+        setMyGameState(game.gameState[game.gameState.length -1].p1)
+        setOppGameState(game.gameState[game.gameState.length -1].p2)
+        setCatsLeft(game.gameState[game.gameState.length -1].p2ShipsSunk)
+      }else{
+        setOppId('p1');
+        setMyGameState(game.gameState[game.gameState.length -1].p2)
+        setOppGameState(game.gameState[game.gameState.length -1].p1)
+        setCatsLeft(game.gameState[game.gameState.length -1].p1ShipsSunk)
+      }
+      setTurn(game.gameState[game.gameState.length -1].turn);
+      setGameId(game.id)
     }
+  }
+  // const [catsLeft, setCatsLeft] = useState([]);
+    refreshGame();
+    //look in localstorage for token, re-fetch the most recent game state if you lose it
   }, []);
 
-//both players call this when finishing their board: one will create the game,
-//while the second to finish will update the game with their board
+  //both players call this when finishing their board: one will create the game,
+  //while the second to finish will update the game with their board
   const fetchInitGameState = async (initialBoard) => {
-    const room = sessionStorage.getItem("room")
+    const room = sessionStorage.getItem("room");
     try {
       //HAVE TO SORT OUT THIS LINK WITH PROXY
       const response = await fetch(`api/game/createGame`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           initialBoard,
-          room
-        })
+          room,
+        }),
       });
 
       const result = await response.json();
-      const board = JSON.parse(result.gameState)
+      //result is now {newgame, token}
+      const game = result.newGame;
+      const board = JSON.parse(game.gameState);
       const currentTurn = board[board.length - 1].turn;
-      const myBoard = board[board.length - 1][playerId]
+      const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-      setGameId(result.id)
-      sessionStorage.setItem("gameId", result.id)
-      socket.emit("shareBoardAndTurn", board, currentTurn, room)
+      // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
+      sessionStorage.setItem('gameToken', result.gameToken)
+      setGameId(game.id);
+      socket.emit("shareBoardAndTurn", board, currentTurn, room);
     } catch (error) {
       console.error("CANT GET YOUR GAME:", error);
     }
-  }
+  };
 
-
-
-//page renders conditionally based on having a gameId (change this to something else)
-//whether their is a winner, etc.
+  //page renders conditionally based on having a gameId (change this to something else)
+  //whether their is a winner, etc.
   return (
     <>
       {gameId ? (
         winnerId === null ? (
           <>
-
             {turn !== playerId ? (
-              <span className="waiting-message">Waiting on your opponent...</span>
+              <span className="waiting-message">
+                Waiting on your opponent...
+              </span>
             ) : (
               <span className="waiting-message">Your Turn!</span>
             )}
@@ -148,23 +177,19 @@ const GamePage = () => {
               setTurn={setTurn}
               setCatsLeft={setCatsLeft}
               playerId={playerId}
-
             />
 
-            <PlayerShipMap myGameState={myGameState} /> 
-            <ChatBox playerId={playerId}/>
-
+            <PlayerShipMap myGameState={myGameState} />
+            <ChatBox playerId={playerId} />
           </>
         ) : (
           <WinLoseScreen playerId={playerId} winnerId={winnerId} />
         )
       ) : (
-        <SetBoard playerId={playerId}
-          fetchInitGameState={fetchInitGameState}
-        />
+        <SetBoard playerId={playerId} fetchInitGameState={fetchInitGameState} />
       )}
     </>
   );
-}
+};
 
 export default GamePage;
