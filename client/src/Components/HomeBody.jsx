@@ -8,6 +8,7 @@ const HomeBody = () => {
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState('');
   const [rooms, setRooms] = useState([]);
+  const [waitingMessage, setWaitingMessage] = useState('')
 
 
   useEffect(() => {
@@ -33,11 +34,30 @@ const HomeBody = () => {
       setRooms((prevRooms) => prevRooms.filter((r) => r !== room));
     });
 
+    // event listener for starting the game once two players have joined
+    socket.on("beginGame", (room) => {
+      if (room) {
+        setWaitingMessage('')
+        navigate("/game");
+      }
+    })
+
+    //event listener for assigning a player id
+    socket.on("assignPlayer", (data) => {
+      if (data.player === "p1") {
+        sessionStorage.setItem("player", "p1");
+      } else {
+        sessionStorage.setItem("player", "p2");
+      }
+    });
+
     // Clean up the event listener on component unmount
     return () => {
       socket.off("shareRoom");
       socket.off("shareAllRooms");
       socket.off("removeRoom");
+      socket.off("beginGame");
+      socket.off("assignPlayer");
     };
   }, [socket]);
 
@@ -64,6 +84,14 @@ const HomeBody = () => {
 
   };
 
+
+  const handleLeaveRoom = () => {
+    const roomToLeave = sessionStorage.getItem("room")
+    sessionStorage.removeItem("room")
+    setWaitingMessage('')
+    socket.emit("leaveRoom", roomToLeave)
+  }
+
   return (
     <section className="homeMainSection">
       <h1>Battle Cats!</h1>
@@ -78,7 +106,7 @@ const HomeBody = () => {
             onClick={() => {
               socket.emit("joinRoom", room);
               sessionStorage.setItem("room", room)
-              navigate("/game");
+              setWaitingMessage('waiting for a friend to join your room')
             }}>
             {room}
           </button>
@@ -92,6 +120,13 @@ const HomeBody = () => {
           placeholder="room name" />
         <button className="createButton" type="submit">create</button>
       </form>
+      {
+        waitingMessage &&
+        <div>
+          <p>{waitingMessage}</p>
+          <button onClick={handleLeaveRoom}>leave room</button>
+        </div>
+      }
     </section>
   );
 };
