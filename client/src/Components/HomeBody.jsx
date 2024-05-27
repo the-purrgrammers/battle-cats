@@ -89,10 +89,8 @@ const HomeBody = () => {
         <input
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
-
           placeholder="room name" />
         <button className="createButton" type="submit">create</button>
-
       </form>
     </section>
   );

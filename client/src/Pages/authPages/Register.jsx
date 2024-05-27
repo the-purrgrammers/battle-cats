@@ -35,7 +35,6 @@ const Register = ({setToken, setCurUser}) => {
   }
   return (
     <>
-
     <Nav />
   <h1>REGISTER PAGE</h1>
   <h2>Create a new account or {<Link to="/login">log in</Link>}</h2>
@@ -59,11 +58,8 @@ const Register = ({setToken, setCurUser}) => {
     </label>
     <button>register</button>
   </form>
-  
-  </>
-    
-  )
-  
+    </> 
+  )  
 }
 
 export default Register;

@@ -42,7 +42,6 @@ const Login = ({setToken, setCurUser}) => {
   return (
     <>
      <div>
-
       <Nav />
     <h1>The cats need you to identify yourself. Let them sniff fingertip below</h1>
 
