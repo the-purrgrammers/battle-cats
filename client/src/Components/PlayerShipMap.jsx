@@ -17,7 +17,7 @@ const tileClasses = {
 
 const PlayerShipMap = ({ myGameState }) => {
   if (!myGameState) {
-    return <h2>LOADING...</h2>;
+    return <h2>loading...</h2>;
   }
   return (
     <>
@@ -31,7 +31,6 @@ const PlayerShipMap = ({ myGameState }) => {
                   key={`${rowId}${itemId}`}
                   className={`${tileClasses[gridItem]} grid-item`}
                 >
-                  {}
                 </div>
               ))}
             </div>

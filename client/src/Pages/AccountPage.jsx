@@ -23,9 +23,8 @@ const AccountPage = ({token, curUser}) => {
  }, [curUser]);
 
   return <>
-    <h1>{curUser?.username}'s Kitten Palace</h1>
-    <h2>Your User Id is: {curUser.id}</h2>
-    <h3>All we want you to know is that {curUser.message}</h3>
+    <h1>{curUser?.username}'s kitten palace</h1>
+    <h3>all we want you to know is that {curUser.message}</h3>
     </>
 }
 

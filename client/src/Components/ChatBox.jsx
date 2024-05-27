@@ -12,15 +12,15 @@ const ChatBox = ({ playerId }) => {
     const playerMessage = {};
     playerMessage.player = playerId;
     playerMessage.message = chatMessage;
-    setChatLog([...chatLog, playerMessage]);
-    socket.emit("sendMessage", playerMessage, room);
-    setChatMessage("");
-  };
+
+    socket.emit('sendMessage', playerMessage, room);
+    setChatMessage('');
+  }
+
 
   useEffect(() => {
     socket.on("receivedMessage", (playerMessage) => {
       setChatLog([...chatLog, playerMessage]);
-      console.log(playerMessage);
     });
     return () => {
       socket.off("receivedMessage");
@@ -45,12 +45,13 @@ const ChatBox = ({ playerId }) => {
           </ul>
           <form onSubmit={submitHandler}>
             <input
+              id="chat-input"
               value={chatMessage}
               onChange={(e) => {
                 setChatMessage(e.target.value);
               }}
             />
-            <button>Send Message</button>
+            <button id="send-messg-btn">send message</button>
           </form>
         </div>
       </div>

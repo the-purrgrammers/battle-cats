@@ -2,12 +2,20 @@ body {
   background-image: url("../assets/BG2.jpg");
 }
 
+.h1-battle-cats-cont {
+  display: flex;
+  justify-content: center;
+}
+
 .battleCatsH1 {
   text-align: center;
   font-size: 500%;
   background-color: rgba(255, 228, 196, 0.9);
 }
-.navBar-button, .playbutton {
+
+.navBar-button,
+.playbutton,
+#send-messg-btn {
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -26,12 +34,11 @@ body {
   touch-action: manipulation;
 }
 
-
-.navBar-button:hover{
+.navBar-button:hover {
   background-color: burlywood;
 }
 
-.playbutton:hover{
+.playbutton:hover {
   background-color: burlywood;
 }
 
@@ -123,9 +130,10 @@ body {
 }
 
 @media (min-width: 768px) {
-  .navBar-button, .playbutton{
-
+  .navBar-button,
+  .playbutton {
     min-width: 120px;
     padding: 0 25px;
   }
-} */
+}
+

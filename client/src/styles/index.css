@@ -1,5 +1,5 @@
 .waiting-message {
-  background-color: rgb(161, 212, 212);
+  background-color: rgb(134, 155, 99);
   padding: 10px;
   font-size: larger;
   width: fit-content;
@@ -9,7 +9,7 @@
 }
 
 .sunk-ship-message {
-  background-color: #d68696;
+  background-color: rgb(105, 120, 77);
   padding: 10px;
   font-size: larger;
   width: fit-content;
@@ -42,4 +42,19 @@
   flex-direction: column;
   align-items: center;
   align-content: center;
+}
+
+/* WinLoseScreen */
+#win-lose-msg-cont {
+  display: flex;
+  justify-content: center;
+}
+
+#winner-msg, #loser-msg {
+  background-color: rgb(134, 155, 99);
+  padding: 10px;
+  font-size: x-large;
+  width: fit-content;
+  text-align: center;
+  margin-left: 10px;
 }

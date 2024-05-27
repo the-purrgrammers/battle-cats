@@ -71,10 +71,39 @@ const GamePage = () => {
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-    const id = sessionStorage.getItem("gameId");
-    if (id) {
-      setGameId(id);
+
+    const refreshGame = async () => {
+      const gameToken = sessionStorage.getItem("gameToken")
+      if(gameToken){
+        console.log("we have a token")
+      const result = await fetch('/api/game', {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${gameToken}`
+        },
+      })
+      const refreshedGame = await result.json();
+      const game = refreshedGame.currentGame;
+      const player = refreshedGame.player;
+      setPlayerId(player);
+      if(player === 'p1'){
+        setOppId('p2')
+        setMyGameState(game.gameState[game.gameState.length -1].p1)
+        setOppGameState(game.gameState[game.gameState.length -1].p2)
+        setCatsLeft(game.gameState[game.gameState.length -1].p2ShipsSunk)
+      }else{
+        setOppId('p1');
+        setMyGameState(game.gameState[game.gameState.length -1].p2)
+        setOppGameState(game.gameState[game.gameState.length -1].p1)
+        setCatsLeft(game.gameState[game.gameState.length -1].p1ShipsSunk)
+      }
+      setTurn(game.gameState[game.gameState.length -1].turn);
+      setGameId(game.id)
     }
+  }
+  // const [catsLeft, setCatsLeft] = useState([]);
+    refreshGame();
+    //look in localstorage for token, re-fetch the most recent game state if you lose it
   }, []);
 
   //both players call this when finishing their board: one will create the game,
@@ -95,13 +124,18 @@ const GamePage = () => {
       });
 
       const result = await response.json();
-      const board = JSON.parse(result.gameState);
+      //result is now {newgame, token}
+      const game = result.newGame;
+      const board = JSON.parse(game.gameState);
       const currentTurn = board[board.length - 1].turn;
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-      setGameId(result.id);
-      sessionStorage.setItem("gameId", result.id);
+      
+      // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
+      sessionStorage.setItem('gameToken', result.gameToken)
+      setGameId(game.id);
+
       socket.emit("shareBoardAndTurn", board, currentTurn, room);
     } catch (error) {
       console.error("CANT GET YOUR GAME:", error);
@@ -110,53 +144,56 @@ const GamePage = () => {
 
   //page renders conditionally based on having a gameId (change this to something else)
   //whether their is a winner, etc.
+
   return (
     <>
-      <h1 id="h1-battle-cats">Battle Cats!</h1>
+      <div className='h1-battle-cats-cont'><h1 id="h1-battle-cats">Battle Cats!</h1></div>
       {gameId ? (
         winnerId === null ? (
           <>
+
             <div id="message-container">
-              {turn !== playerId ? (
-                <span className="waiting-message">
-                  Waiting on your opponent...
-                </span>
-              ) : (
-                <span className="waiting-message">Your Turn!</span>
-              )}
-              {!msg ? (
-                ""
-              ) : msg && playerId === "p1" ? (
-                <span className="sunk-ship-message">{msg.p1}</span>
-              ) : (
-                <span className="sunk-ship-message">{msg.p2}</span>
-              )}
+            {turn !== playerId ? (
+              <span className="waiting-message">
+                waiting on your friend...
+              </span>
+            ) : (
+              <span className="waiting-message">Your Turn!</span>
+            )}
+            {!msg ? (
+              ""
+            ) : msg && playerId === "p1" ? (
+              <span className="sunk-ship-message">{msg.p1}</span>
+            ) : (
+              <span className="sunk-ship-message">{msg.p2}</span>
+            )}
             </div>
-            <div id="double-grid-container">
-              <ChatBox playerId={playerId} />
-              <OpponentShipMap
-                oppGameState={oppGameState}
-                setSelectedTile={setSelectedTile}
-                selectedTile={selectedTile}
-                turn={turn}
-                playerId={playerId}
-                catsLeft={catsLeft}
-              />
-              <div id="end-turn-btn-container">
-                <EndTurnButton
-                  selectedTile={selectedTile}
-                  setSelectedTile={setSelectedTile}
-                  setMsg={setMsg}
-                  setWinnerId={setWinnerId}
-                  gameId={gameId}
-                  setTurn={setTurn}
-                  setCatsLeft={setCatsLeft}
-                  playerId={playerId}
-                  />
-              </div>
+<div id="double-grid-container">
+<ChatBox playerId={playerId} />
+            <OpponentShipMap
+              oppGameState={oppGameState}
+              setSelectedTile={setSelectedTile}
+              selectedTile={selectedTile}
+              turn={turn}
+              playerId={playerId}
+              catsLeft={catsLeft}
+            />
+                <div id="end-turn-btn-container">
+            <EndTurnButton
+              selectedTile={selectedTile}
+              setSelectedTile={setSelectedTile}
+              setMsg={setMsg}
+              setWinnerId={setWinnerId}
+              gameId={gameId}
+              setTurn={setTurn}
+              setCatsLeft={setCatsLeft}
+              playerId={playerId}
+            />
+                </div>
 
             <PlayerShipMap myGameState={myGameState} />
-            </div>
+</div>
+
           </>
         ) : (
           <WinLoseScreen playerId={playerId} winnerId={winnerId} />
