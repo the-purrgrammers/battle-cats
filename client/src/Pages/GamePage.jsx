@@ -106,10 +106,12 @@ const GamePage = () => {
     } catch (error) {
       console.error("CANT GET YOUR GAME:", error);
     }
+
   };
 
   //page renders conditionally based on having a gameId (change this to something else)
   //whether their is a winner, etc.
+
   return (
     <>
       <h1 id="h1-battle-cats">Battle Cats!</h1>
