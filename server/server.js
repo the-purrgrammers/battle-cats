@@ -46,7 +46,12 @@ io.on("connection", (socket) => {
         rooms.splice(roomIndex, 1);
         io.emit("removeRoom", room);
       }
+      io.to(room).emit("beginGame", room);
     }
+  });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
   });
 
   socket.on("shareNewTurn", (turn, room) => {
