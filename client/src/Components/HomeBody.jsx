@@ -30,7 +30,6 @@ const HomeBody = () => {
       setRooms((prevRooms) => prevRooms.filter((r) => r !== room));
     });
 
-    // event listener for starting the game once two players have joined
     socket.on("beginGame", (room) => {
       if (room) {
         setWaitingMessage('')
@@ -54,6 +53,7 @@ const HomeBody = () => {
       socket.off("removeRoom");
       socket.off("beginGame");
       socket.off("assignPlayer");
+
     };
   }, [socket]);
 
@@ -77,7 +77,6 @@ const HomeBody = () => {
     setRooms([...rooms, roomName]);
     socket.emit("addRoom", roomName);
     setRoomName('');
-
   };
 
   const handleLeaveRoom = () => {
