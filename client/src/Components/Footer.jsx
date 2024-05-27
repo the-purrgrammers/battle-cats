@@ -3,10 +3,10 @@ const Footer = () => {
     <>
       <div className="namesDiv">
         <h3>Battle Cats is developed by:</h3>
-        <h3>Char</h3>
-        <h3>Desmond</h3>
-        <h3>Nick</h3>
-        <h3>Thomas</h3>
+        <h3>char</h3>
+        <h3>desmond</h3>
+        <h3>nick</h3>
+        <h3>thomas</h3>
       </div>
     </>
   );

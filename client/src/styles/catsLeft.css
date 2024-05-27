@@ -6,11 +6,12 @@
   width: 50%;
   height: 70%;
   padding-bottom: 3%;
+  margin: 1px;
 }
 
 .catCircleSunk {
   position: relative;
-  background-color: red;
+  background-image: url(../assets/cats-left-icon.png);
   border: 3px solid black;
   border-radius: 50%;
   width: 50%;
@@ -29,12 +30,13 @@
 
 .catsLeftCont {
   display: flex;
+  margin-top: 10px;
   flex-direction: column;
   align-content: center;
   align-items: center;
-  background-color:bisque;
 }
 
 .catsLeftHeader {
   margin-bottom: 0%;
+  background-color:bisque;
 }

@@ -13,7 +13,7 @@ const OpponentShipMap = ({
 }) => {
   const hitShips = ["a", "b", "c", "d", "e"];
   if (!oppGameState) {
-    return <h2>LOADING...</h2>;
+    return <h2>loading...</h2>;
   }
 
   //NOTE: SORT OUT KEY PROPS WHEN THERE ARE ID's COMING IN
@@ -21,11 +21,6 @@ const OpponentShipMap = ({
     <>
       <div className="grid-container">
         <h2 class="map-h2s">your friend's rug</h2>
-        <CatsLeft
-          oppGameState={oppGameState}
-          playerId={playerId}
-          catsLeft={catsLeft}
-        />
         <div id="opp-rug">
           {oppGameState.map((gameRow, rowId) => (
             <div key={rowId} className="grid-row">
@@ -52,6 +47,11 @@ const OpponentShipMap = ({
             </div>
           ))}
         </div>
+        <CatsLeft
+          oppGameState={oppGameState}
+          playerId={playerId}
+          catsLeft={catsLeft}
+        />
       </div>
     </>
   );
