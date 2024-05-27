@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
-
 const HomeBody = () => {
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState('');
   const [rooms, setRooms] = useState([]);
   const [waitingMessage, setWaitingMessage] = useState('')
-
 
   useEffect(() => {
     // Event listener to handle shared rooms
@@ -22,12 +20,10 @@ const HomeBody = () => {
       });
     });
 
-
     // Event listener to handle all rooms on new connection
     socket.on("shareAllRooms", (allRooms) => {
       setRooms(allRooms);
     });
-
 
     // Event listener to remove room when it is full
     socket.on("removeRoom", (room) => {
@@ -83,7 +79,6 @@ const HomeBody = () => {
     setRoomName('');
 
   };
-
 
   const handleLeaveRoom = () => {
     const roomToLeave = sessionStorage.getItem("room")
