@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
-
 const HomeBody = () => {
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState('');
   const [rooms, setRooms] = useState([]);
   const [waitingMessage, setWaitingMessage] = useState('')
-
 
   useEffect(() => {
     // Event listener to handle shared rooms
@@ -27,7 +25,6 @@ const HomeBody = () => {
       setRooms(allRooms);
     });
 
-
     // Event listener to remove room when it is full
     socket.on("removeRoom", (room) => {
       setRooms((prevRooms) => prevRooms.filter((r) => r !== room));
@@ -40,12 +37,23 @@ const HomeBody = () => {
       }
     })
 
+    //event listener for assigning a player id
+    socket.on("assignPlayer", (data) => {
+      if (data.player === "p1") {
+        sessionStorage.setItem("player", "p1");
+      } else {
+        sessionStorage.setItem("player", "p2");
+      }
+    });
+
     // Clean up the event listener on component unmount
     return () => {
       socket.off("shareRoom");
       socket.off("shareAllRooms");
       socket.off("removeRoom");
       socket.off("beginGame");
+      socket.off("assignPlayer");
+
     };
   }, [socket]);
 

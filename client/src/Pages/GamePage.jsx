@@ -52,6 +52,7 @@ const GamePage = () => {
   //get all the necessary info
   useEffect(() => {
     const isPlayingAs = sessionStorage.getItem("player");
+    console.log("this fired", isPlayingAs)
     if (!isPlayingAs) {
       socket.on("assignPlayer", (data) => {
         if (data.player === "p1") {
