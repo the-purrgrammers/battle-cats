@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../styles/oppGame.css";
 
 const tileClasses = {
   A: "carrier",
@@ -23,19 +22,21 @@ const PlayerShipMap = ({ myGameState }) => {
   return (
     <>
       <div className="grid-container">
-        <h1>PLAYER CAT MAP</h1>
-        {myGameState.map((gameRow, rowId) => (
-          <div key={rowId} className="grid-row">
-            {gameRow.map((gridItem, itemId) => (
-              <div
-                key={`${rowId}${itemId}`}
-                className={`${tileClasses[gridItem]} grid-item`}
-              >
-                {}
-              </div>
-            ))}
-          </div>
-        ))}
+        <h2 class="map-h2s">your rug</h2>
+        <div id="my-rug">
+          {myGameState.map((gameRow, rowId) => (
+            <div key={rowId} className="grid-row">
+              {gameRow.map((gridItem, itemId) => (
+                <div
+                  key={`${rowId}${itemId}`}
+                  className={`${tileClasses[gridItem]} grid-item`}
+                >
+                  {}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

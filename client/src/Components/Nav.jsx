@@ -8,9 +8,9 @@ const Nav = () => {
   return(
     <>
       <section className="navBar">
-        <Link to={'/'}><button className="navButton">Home</button></Link>
-        <Link to={'/register'}><button className="navButton">Register</button></Link>
-        <Link to={'/login'}><button className="navButton">Login</button></Link>
+        <Link to={'/'}><button className="navBar-button">Home</button></Link>
+        <Link to={'/register'}><button className="navBar-button">Register</button></Link>
+        <Link to={'/login'}><button className="navBar-button">Login</button></Link>
       </section>
     </>
   )

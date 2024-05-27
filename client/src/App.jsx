@@ -12,7 +12,6 @@ function App() {
   const [curUser, setCurUser] = useState({});
 
   return (
-    <>
       <Routes>
         <Route path="/" element={<HomePage/>}></Route>
         <Route path="/game" element={<GamePage />}></Route>
@@ -20,7 +19,6 @@ function App() {
         <Route path="/login" element={<Login setToken={setToken} setCurUser={setCurUser}/>}></Route>
         <Route path="/register" element={<Register setToken={setToken} setCurUser={setCurUser}/>}></Route>
       </Routes>
-    </>
   );
 }
 
