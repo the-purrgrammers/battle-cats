@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Nav from "../../Components/Nav";
 
 
 const Register = ({setToken, setCurUser}) => {
@@ -34,8 +35,11 @@ const Register = ({setToken, setCurUser}) => {
   }
   return (
     <>
-  <h1>register page</h1>
-  <h2>create a new account or {<Link to="/login">log in</Link>}</h2>
+
+    <Nav />
+  <h1>REGISTER PAGE</h1>
+  <h2>Create a new account or {<Link to="/login">log in</Link>}</h2>
+
   <form onSubmit={signUpHandler}>
     <label>
       username:
