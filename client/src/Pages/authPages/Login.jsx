@@ -42,8 +42,10 @@ const Login = ({setToken, setCurUser}) => {
   return (
     <>
      <div>
+
       <Nav />
     <h1>The cats need you to identify yourself. Let them sniff fingertip below</h1>
+
     <form onSubmit={submitHandler}>
       <label>
         Username:
@@ -64,9 +66,9 @@ const Login = ({setToken, setCurUser}) => {
           <input type="submit" value="let them sniff"/>
       </label>
     <label>
-      Don't have an account yet?
+      don't have an account yet?
       <button>
-        <Link to="/register">Sign up right meow</Link>
+        <Link to="/register">sign up right meow!</Link>
       </button>
     </label>
     </form>

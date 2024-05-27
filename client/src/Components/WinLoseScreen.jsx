@@ -12,25 +12,29 @@ const WinLoseScreen = ({ winnerId, playerId }) => {
   return (
     <>
       {winnerId === playerIdNum ? (
-        <>
-          <h1>The felines celebrate you {playerId}! You pet every last kitty!</h1>
+        <div id="win-lose-msg-cont">
+          <h1 id="winner-msg">
+            you won! the felines celebrate you! you pet every cat!
+          </h1>
           <button 
             className="returnButton"
             onClick={clickHandler}>Return to Home Page
           </button>
-        </>
+        </div>
       ) : (
-        <>
-          <h1>Go lick your petless paws {playerId}. Every kitten foiled your attempts.</h1>
+        <div id="win-lose-msg-cont">
+          <h1 id="loser-msg">
+            sorry, you lost. every kitten foiled your attempts. try again?
+          </h1>
           <button
             className="returnButton"
             onClick={clickHandler}>Return to Home Page
           </button>
-        </>
+        </div>
       )
       }
     </>
-  )
-}
+  );
+};
 
-export default WinLoseScreen
+export default WinLoseScreen;

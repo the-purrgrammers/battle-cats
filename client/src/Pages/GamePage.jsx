@@ -1,4 +1,5 @@
 import "../styles/index.css";
+import "../styles/oppGame.css";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
@@ -130,9 +131,11 @@ const GamePage = () => {
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
+      
       // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
       sessionStorage.setItem('gameToken', result.gameToken)
       setGameId(game.id);
+
       socket.emit("shareBoardAndTurn", board, currentTurn, room);
     } catch (error) {
       console.error("CANT GET YOUR GAME:", error);
@@ -141,14 +144,18 @@ const GamePage = () => {
 
   //page renders conditionally based on having a gameId (change this to something else)
   //whether their is a winner, etc.
+
   return (
     <>
+      <div className='h1-battle-cats-cont'><h1 id="h1-battle-cats">Battle Cats!</h1></div>
       {gameId ? (
         winnerId === null ? (
           <>
+
+            <div id="message-container">
             {turn !== playerId ? (
               <span className="waiting-message">
-                Waiting on your opponent...
+                waiting on your friend...
               </span>
             ) : (
               <span className="waiting-message">Your Turn!</span>
@@ -160,6 +167,9 @@ const GamePage = () => {
             ) : (
               <span className="sunk-ship-message">{msg.p2}</span>
             )}
+            </div>
+<div id="double-grid-container">
+<ChatBox playerId={playerId} />
             <OpponentShipMap
               oppGameState={oppGameState}
               setSelectedTile={setSelectedTile}
@@ -168,6 +178,7 @@ const GamePage = () => {
               playerId={playerId}
               catsLeft={catsLeft}
             />
+                <div id="end-turn-btn-container">
             <EndTurnButton
               selectedTile={selectedTile}
               setSelectedTile={setSelectedTile}
@@ -178,9 +189,11 @@ const GamePage = () => {
               setCatsLeft={setCatsLeft}
               playerId={playerId}
             />
+                </div>
 
             <PlayerShipMap myGameState={myGameState} />
-            <ChatBox playerId={playerId} />
+</div>
+
           </>
         ) : (
           <WinLoseScreen playerId={playerId} winnerId={winnerId} />
