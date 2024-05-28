@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import "../styles/oppGame.css";
-import EndTurnButton from "./EndTurnButton";
 import CatsLeft from "./CatsLeft";
 
 const OpponentShipMap = ({
@@ -20,36 +17,42 @@ const OpponentShipMap = ({
   //NOTE: SORT OUT KEY PROPS WHEN THERE ARE ID's COMING IN
   return (
     <>
+    { oppGameState.length === 0 ? (
+    <div className="waitDiv">You're waiting for your friends' cats to find a comfy place to nap</div>
+  ) : (
       <div className="grid-container">
-        <h1>OPPONENT CAT MAP</h1>
-        <CatsLeft oppGameState={oppGameState} playerId={playerId} catsLeft={catsLeft}/>
-        {oppGameState.map((gameRow, rowId) => (
-          <div key={rowId} className="grid-row">
-            {gameRow.map((gridItem, itemId) => (
-              <div
-                key={`${rowId}${itemId}`}
-                id={`${rowId}${itemId}`}
-                className={
-                  `${rowId}${itemId}` === selectedTile
-                    ? "selected-grid-item"
-                    : hitShips.includes(gridItem)
-                    ? "grid-item hit"
-                    : gridItem === 1
-                    ? "grid-item miss"
-                    : "grid-item"
+      <h1>OPPONENT CAT MAP</h1>
+      <CatsLeft oppGameState={oppGameState} playerId={playerId} catsLeft={catsLeft}/>
+      {oppGameState.map((gameRow, rowId) => (
+        <div key={rowId} className="grid-row">
+          {gameRow.map((gridItem, itemId) => (
+            <div
+              key={`${rowId}${itemId}`}
+              id={`${rowId}${itemId}`}
+              className={
+                `${rowId}${itemId}` === selectedTile
+                  ? "selected-grid-item"
+                  : hitShips.includes(gridItem)
+                  ? "grid-item hit"
+                  : gridItem === 1
+                  ? "grid-item miss"
+                  : "grid-item"
+              }
+              onClick={(e) => {
+                if (turn === playerId) {
+                  setSelectedTile(e.target.id);
                 }
-                onClick={(e) => {
-                  if (turn === playerId) {
-                    setSelectedTile(e.target.id);
-                  }
-                }}
-              ></div>
-            ))}
-          </div>
-        ))}
-      </div>
+              }}
+            ></div>
+          ))}
+        </div>
+      ))}
+    </div>
+    )}
     </>
   );
-};
+}
+ 
+
 
 export default OpponentShipMap;
