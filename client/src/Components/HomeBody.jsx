@@ -7,7 +7,8 @@ const HomeBody = () => {
   const navigate = useNavigate();
   const [roomName, setRoomName] = useState('');
   const [rooms, setRooms] = useState([]);
-  const [waitingMessage, setWaitingMessage] = useState('')
+  const [waitingMessage, setWaitingMessage] = useState('');
+  
 
   useEffect(() => {
     // Event listener to handle shared rooms
@@ -24,6 +25,10 @@ const HomeBody = () => {
     socket.on("shareAllRooms", (allRooms) => {
       setRooms(allRooms);
     });
+
+    socket.on("getRooms", (rooms) => {
+      setRooms(rooms);
+    })
 
     // Event listener to remove room when it is full
     socket.on("removeRoom", (room) => {
