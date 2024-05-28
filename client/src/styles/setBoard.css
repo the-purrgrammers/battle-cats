@@ -4,12 +4,12 @@
   align-items: center;
 }
 
-#set-board-board {
-
-}
-
-#set-board-btn-div {
-
+h2 {
+  text-align: center;
+  font-size: x-large;
+  background-color: rgb(134, 155, 99);
+  padding: 10px;
+  margin: 5px;
 }
 
 .set-board-btn {
@@ -31,12 +31,4 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-}
-
-h2 {
-  text-align: center;
-  font-size: x-large;
-  background-color: bisque;
-  padding: 10px;
-  margin: 5px;
 }
