@@ -88,7 +88,7 @@ body {
   color: rgb(8, 4, 15);
 }
 
-#end-turn-btn-container{
+#end-turn-btn-container {
   height: 740.53px;
   width: 179.73px;
 }
@@ -152,6 +152,7 @@ body {
 .sub {
   background-color: rgb(172, 53, 150);
 }
+
 .destroyer {
   background-color: rgb(239, 239, 16);
 }
@@ -162,13 +163,13 @@ body {
   pointer-events: none;
 }
 
-.ship-container{
+.ship-container {
   background-color: bisque;
   padding: 20px;
-  width:680px;
-  height: 300px;
-  margin:20px;
+  width: 680px;
+  height: 90px;
+  margin: 20px;
 }
-.ship-container>*{
-  margin:0px 10px;
+.ship-container > * {
+  margin: 0px 10px;
 }
