@@ -45,6 +45,17 @@ body {
   padding: 10px;
 }
 
+.waitDiv {
+  font-size: x-large;
+  background-color: pink;
+  text-align: center;
+  border: 20px double black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50px;
+  padding: 50px;
+  margin-top: 20px;
+}
 #chat-h2 {
   margin-top: 40px;
 }
