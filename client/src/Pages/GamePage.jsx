@@ -4,6 +4,7 @@ import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
 import { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import EndTurnButton from "../Components/EndTurnButton";
 import OpponentShipMap from "../Components/OpponentShipMap";
 import PlayerShipMap from "../Components/PlayerShipMap";
@@ -22,6 +23,8 @@ const GamePage = () => {
   const [winnerId, setWinnerId] = useState(null);
   const [gameId, setGameId] = useState("");
   const [catsLeft, setCatsLeft] = useState([]);
+  const [opponentDisconnected, setOpponentDisconnected] = useState(false);
+  const navigate = useNavigate()
 
   //when one player completes setting their board, they share it along with the turn so that
   //you can set your oppGameState
@@ -72,7 +75,8 @@ const GamePage = () => {
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-
+    
+    //look in localstorage for token, re-fetch the most recent game state if you lose it
     const refreshGame = async () => {
       const gameToken = sessionStorage.getItem("gameToken")
       if(gameToken){
@@ -102,10 +106,19 @@ const GamePage = () => {
       setGameId(game.id)
     }
   }
-  // const [catsLeft, setCatsLeft] = useState([]);
     refreshGame();
-    //look in localstorage for token, re-fetch the most recent game state if you lose it
   }, []);
+
+//handle opponent leaving game early
+  socket.on("opponentDisconnected", () => {
+    setOpponentDisconnected(true);
+  });
+
+  const handleGameEnded = ()=>{
+    sessionStorage.clear();
+    navigate('/')
+  }
+
 
   //both players call this when finishing their board: one will create the game,
   //while the second to finish will update the game with their board
@@ -152,6 +165,13 @@ const GamePage = () => {
       {gameId ? (
         winnerId === null ? (
           <>
+          {
+            opponentDisconnected && 
+            <div>
+              <p>your friend has left the game</p>
+              <button onClick={handleGameEnded}> go to homepage</button>
+            </div>
+          }
 
             <div id="message-container">
             {turn !== playerId ? (
