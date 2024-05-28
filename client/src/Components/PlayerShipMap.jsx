@@ -22,7 +22,7 @@ const PlayerShipMap = ({ myGameState }) => {
   return (
     <>
       <div className="grid-container">
-        <h2 class="map-h2s">your rug</h2>
+        <h2 className="map-h2s">your rug</h2>
         <div id="my-rug">
           {myGameState.map((gameRow, rowId) => (
             <div key={rowId} className="grid-row">
