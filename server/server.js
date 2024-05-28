@@ -21,10 +21,14 @@ const io = new Server(server, {
   },
 });
 
+const rooms = [];
 io.on("connection", (socket) => {
-  socket.on("addRoom", (room)=>{
-    io.emit("shareRoom", room)
-  })
+  socket.emit("shareAllRooms", rooms);
+
+  socket.on("addRoom", (room) => {
+    rooms.push(room);
+    io.emit("shareRoom", room);
+  });
 
   socket.on("joinRoom", (room) => {
     if (!io.sockets.adapter.rooms.get(room)) {
@@ -36,19 +40,35 @@ io.on("connection", (socket) => {
       console.log(io.sockets.adapter.rooms.get(room));
       socket.emit("assignPlayer", { player: "p2" });
     }
+    if (io.sockets.adapter.rooms.get(room).size === 2) {
+      const roomIndex = rooms.indexOf(room);
+      if (roomIndex !== -1) {
+        rooms.splice(roomIndex, 1);
+        io.emit("removeRoom", room);
+      }
+      io.to(room).emit("beginGame", room);
+    }
   });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
+  });
+
   socket.on("shareNewTurn", (turn, room) => {
     io.to(room).emit("updatedTurn", turn);
   });
   socket.on("submitBoard", (board, room) => {
-    io.in(room).emit("completedBoard", board);
+    io.to(room).emit("completedBoard", board);
   });
-  socket.on("shareBoardAndTurn", ( board, turn, room) => {
+  socket.on("shareBoardAndTurn", (board, turn, room) => {
     socket.broadcast.to(room).emit("receiveBoardAndTurn", board, turn);
   });
   socket.on("gameCreated", (data) => {
-    socket.broadcast.to(room).emit("gameExists", data)
-  })
+    socket.broadcast.to(room).emit("gameExists", data);
+  });
+  socket.on("sendMessage", (playerMessage, room) => {
+    io.to(room).emit("receivedMessage", playerMessage);
+  });
 });
 
 // app.use("/", require("./routes/index.js"));

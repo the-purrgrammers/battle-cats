@@ -1,12 +1,24 @@
 const router = require("express").Router();
 const { getGame, updateGame, createGame, getListOfUserGames } = require("../db/game");
+const jwt = require('jsonwebtoken');
 
 router.get("/", async (req, res) => {
+  const auth = req.headers.authorization;
+  const gameToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+  let gameId
+  let player
+  if(gameToken){
+    const decoded = jwt.verify(gameToken, process.env.GAME_JWT)
+    gameId = decoded.id
+    player = decoded.player
+  }
   try {
-    const currentGame = await getGame(1);
-    currentGame.gameState = JSON.parse(currentGame.gameState);
-    res.status(200).send(currentGame);
-  } catch (error) {}
+    const gameAndPlayer = await getGame(gameId, player);
+    gameAndPlayer.currentGame.gameState = JSON.parse(gameAndPlayer.currentGame.gameState)
+    res.status(200).send(gameAndPlayer);
+  } catch (error) {
+    throw(error);
+  }
 });
 
 router.get("/:userId", async (req, res) => {

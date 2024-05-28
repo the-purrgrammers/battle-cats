@@ -1,13 +1,16 @@
+const jwt = require('jsonwebtoken');
+
 const { prisma } = require("./index.js");
 
-const getGame = async (id) => {
+const getGame = async (id, player) => {
   try {
+    console.log("in db getGame")
     const currentGame = await prisma.game.findFirst({
       where: {
         id,
       },
     });
-    return currentGame;
+    return {currentGame, player};
   } catch (error) {
     console.error("error fetching game for db", error);
   }
@@ -65,7 +68,14 @@ const createGame = async (board, room) => {
           room,
         },
       });
-      return newGame;
+//sign the token here, with player ID and game ID
+      const jsonGameState = JSON.parse(newGame.gameState);
+      if (jsonGameState[0].hasOwnProperty("p1")) {
+        gameToken = jwt.sign({ player: "p1", id: newGame.id }, process.env.GAME_JWT)
+      } else if (jsonGameState[0].hasOwnProperty("p2")) {
+        gameToken = jwt.sign({ player: "p2", id: newGame.id }, process.env.GAME_JWT)
+      }
+      return {newGame, gameToken};
     } catch (error) {
       console.error("error creating new game in db", error);
     }
@@ -74,11 +84,13 @@ const createGame = async (board, room) => {
     // Parse the existing game state
     const existingGameState = JSON.parse(existingGame.gameState);
 
-    // Merge existing game state with the new board data
+    // Merge existing game state with the new board data and sign token
     if (board.hasOwnProperty("p1")) {
       existingGameState[0].p1 = board.p1;
+      gameToken = jwt.sign({ player: "p1", id: existingGame.id }, process.env.GAME_JWT);
     } else if (board.hasOwnProperty("p2")) {
       existingGameState[0].p2 = board.p2;
+      gameToken = jwt.sign({ player: "p2", id: existingGame.id }, process.env.GAME_JWT);
     }
 
     try {
@@ -90,7 +102,7 @@ const createGame = async (board, room) => {
           gameState: JSON.stringify(existingGameState),
         },
       });
-      return updatedGame;
+      return {newGame: updatedGame, gameToken};
     } catch (error) {
       console.error("error adding second player to newly created game", error);
     }
