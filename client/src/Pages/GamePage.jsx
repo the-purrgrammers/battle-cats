@@ -4,7 +4,7 @@ import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
 import { useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import EndTurnButton from "../Components/EndTurnButton";
 import OpponentShipMap from "../Components/OpponentShipMap";
 import PlayerShipMap from "../Components/PlayerShipMap";
@@ -55,7 +55,6 @@ const GamePage = () => {
   //get all the necessary info
   useEffect(() => {
     const isPlayingAs = sessionStorage.getItem("player");
-    console.log("this fired", isPlayingAs)
     if (!isPlayingAs) {
       socket.on("assignPlayer", (data) => {
         if (data.player === "p1") {
@@ -75,48 +74,62 @@ const GamePage = () => {
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-    
+
     //look in localstorage for token, re-fetch the most recent game state if you lose it
     const refreshGame = async () => {
       const gameToken = sessionStorage.getItem("gameToken")
-      if(gameToken){
-        console.log("we have a token")
-      const result = await fetch('/api/game', {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${gameToken}`
-        },
-      })
-      const refreshedGame = await result.json();
-      const game = refreshedGame.currentGame;
-      const player = refreshedGame.player;
-      setPlayerId(player);
-      if(player === 'p1'){
-        setOppId('p2')
-        setMyGameState(game.gameState[game.gameState.length -1].p1)
-        setOppGameState(game.gameState[game.gameState.length -1].p2)
-        setCatsLeft(game.gameState[game.gameState.length -1].p2ShipsSunk)
-      }else{
-        setOppId('p1');
-        setMyGameState(game.gameState[game.gameState.length -1].p2)
-        setOppGameState(game.gameState[game.gameState.length -1].p1)
-        setCatsLeft(game.gameState[game.gameState.length -1].p1ShipsSunk)
+      if (gameToken) {
+        const result = await fetch('/api/game', {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${gameToken}`
+          },
+        })
+        const refreshedGame = await result.json();
+        const game = refreshedGame.currentGame;
+        const player = refreshedGame.player;
+        setPlayerId(player);
+        if (player === 'p1') {
+          setOppId('p2')
+          setMyGameState(game.gameState[game.gameState.length - 1].p1)
+          setOppGameState(game.gameState[game.gameState.length - 1].p2)
+          setCatsLeft(game.gameState[game.gameState.length - 1].p2ShipsSunk)
+        } else {
+          setOppId('p1');
+          setMyGameState(game.gameState[game.gameState.length - 1].p2)
+          setOppGameState(game.gameState[game.gameState.length - 1].p1)
+          setCatsLeft(game.gameState[game.gameState.length - 1].p1ShipsSunk)
+        }
+        setTurn(game.gameState[game.gameState.length - 1].turn);
+        setGameId(game.id)
       }
-      setTurn(game.gameState[game.gameState.length -1].turn);
-      setGameId(game.id)
     }
-  }
     refreshGame();
   }, []);
 
-//handle opponent leaving game early
+  //handle opponent leaving game early
   socket.on("opponentDisconnected", () => {
     setOpponentDisconnected(true);
   });
 
-  const handleGameEnded = ()=>{
+  const handleGameEnded = async () => {
     sessionStorage.clear();
     navigate('/')
+    try {
+     await fetch('api/game/endgame', {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          winner: playerId,
+          gameId
+        })
+      })
+
+    } catch (error) {
+      console.error("error updating the game's winner after opponent leaves", error)
+    }
   }
 
 
@@ -145,7 +158,7 @@ const GamePage = () => {
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-      
+
       // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
       sessionStorage.setItem('gameToken', result.gameToken)
       setGameId(game.id);
@@ -165,55 +178,55 @@ const GamePage = () => {
       {gameId ? (
         winnerId === null ? (
           <>
-          {
-            opponentDisconnected && 
-            <div>
-              <p>your friend has left the game</p>
-              <button onClick={handleGameEnded}> go to homepage</button>
-            </div>
-          }
+            {
+              opponentDisconnected &&
+              <div>
+                <p>your friend has left the game</p>
+                <button onClick={handleGameEnded}> go to homepage</button>
+              </div>
+            }
 
             <div id="message-container">
-            {turn !== playerId ? (
-              <span className="waiting-message">
-                waiting on your friend...
-              </span>
-            ) : (
-              <span className="waiting-message">Your Turn!</span>
-            )}
-            {!msg ? (
-              ""
-            ) : msg && playerId === "p1" ? (
-              <span className="sunk-ship-message">{msg.p1}</span>
-            ) : (
-              <span className="sunk-ship-message">{msg.p2}</span>
-            )}
+              {turn !== playerId ? (
+                <span className="waiting-message">
+                  waiting on your friend...
+                </span>
+              ) : (
+                <span className="waiting-message">Your Turn!</span>
+              )}
+              {!msg ? (
+                ""
+              ) : msg && playerId === "p1" ? (
+                <span className="sunk-ship-message">{msg.p1}</span>
+              ) : (
+                <span className="sunk-ship-message">{msg.p2}</span>
+              )}
             </div>
-<div id="double-grid-container">
-<ChatBox playerId={playerId} />
-            <OpponentShipMap
-              oppGameState={oppGameState}
-              setSelectedTile={setSelectedTile}
-              selectedTile={selectedTile}
-              turn={turn}
-              playerId={playerId}
-              catsLeft={catsLeft}
-            />
-                <div id="end-turn-btn-container">
-            <EndTurnButton
-              selectedTile={selectedTile}
-              setSelectedTile={setSelectedTile}
-              setMsg={setMsg}
-              setWinnerId={setWinnerId}
-              gameId={gameId}
-              setTurn={setTurn}
-              setCatsLeft={setCatsLeft}
-              playerId={playerId}
-            />
-                </div>
+            <div id="double-grid-container">
+              <ChatBox playerId={playerId} />
+              <OpponentShipMap
+                oppGameState={oppGameState}
+                setSelectedTile={setSelectedTile}
+                selectedTile={selectedTile}
+                turn={turn}
+                playerId={playerId}
+                catsLeft={catsLeft}
+              />
+              <div id="end-turn-btn-container">
+                <EndTurnButton
+                  selectedTile={selectedTile}
+                  setSelectedTile={setSelectedTile}
+                  setMsg={setMsg}
+                  setWinnerId={setWinnerId}
+                  gameId={gameId}
+                  setTurn={setTurn}
+                  setCatsLeft={setCatsLeft}
+                  playerId={playerId}
+                />
+              </div>
 
-            <PlayerShipMap myGameState={myGameState} />
-</div>
+              <PlayerShipMap myGameState={myGameState} />
+            </div>
 
           </>
         ) : (

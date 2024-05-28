@@ -7,7 +7,6 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
       setMsg('')
       const result = await fetch('api/game/endturn', {
         method: 'PUT',
-
         headers: {
           "Content-Type": "application/json",
         },
