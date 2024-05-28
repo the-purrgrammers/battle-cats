@@ -6,6 +6,7 @@ const WinLoseScreen = ({ winnerId, playerId }) => {
 
   const clickHandler = () =>{
     localStorage.clear();
+    sessionStorage.clear();
     navigate('/');
   }
 
