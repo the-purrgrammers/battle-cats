@@ -10,6 +10,7 @@ const HomeBody = () => {
   const [waitingMessage, setWaitingMessage] = useState('');
   
 
+
   useEffect(() => {
     // Event listener to handle shared rooms
     socket.on("shareRoom", (room) => {

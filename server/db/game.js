@@ -262,5 +262,32 @@ const updateGame = async (selectedTile, id) => {
   }
 };
 
-module.exports = { getGame, updateGame, getListOfUserGames };
-module.exports = { getGame, updateGame, createGame };
+
+const endGameEarly = async (winner, id) => {
+  console.log("got to db func")
+  let winnerId, loserId;
+  if (winner === "p1") {
+    winnerId = 1; //update this if we add users
+    loserId = 2; //update this if we add users
+  } else {
+    winnerId = 2; //update this if we add users
+    loserId = 1; //update this if we add users
+  }
+  try {
+    const endedGame = await prisma.game.update({
+      where: {
+        id,
+      },
+      data: {
+        winnerId,
+        loserId,
+      },
+    });
+    console.log(endedGame)
+  } catch (error) {
+    console.error("error updating an early-ended game in db", error);
+  }
+};
+
+module.exports = { getGame, updateGame, createGame, endGameEarly, getListOfUserGames };
+

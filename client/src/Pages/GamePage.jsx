@@ -4,6 +4,7 @@ import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import EndTurnButton from "../Components/EndTurnButton";
 import OpponentShipMap from "../Components/OpponentShipMap";
 import PlayerShipMap from "../Components/PlayerShipMap";
@@ -24,7 +25,10 @@ const GamePage = () => {
   const [catsLeft, setCatsLeft] = useState([]);
   const [catInfo, setCatInfo] = useState([])
   const [oppCatInfo, setOppCatInfo] = useState([])
-console.log("turn", turn)
+  const [opponentDisconnected, setOpponentDisconnected] = useState(false);
+  const navigate = useNavigate()
+
+
   //when one player completes setting their board, they share it along with the turn so that
   //you can set your oppGameState
   socket.on("receiveBoardAndTurn", (board, turn) => {
@@ -78,12 +82,11 @@ console.log("turn", turn)
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-    
+
     //look in localstorage for token, re-fetch the most recent game state if you lose it
     const refreshGame = async () => {
       const gameToken = sessionStorage.getItem("gameToken")
       if (gameToken) {
-        console.log("we have a token")
         const result = await fetch('/api/game', {
           headers: {
             "Content-Type": "application/json",
@@ -103,6 +106,7 @@ console.log("turn", turn)
           if (game.gameState[0].p2Cats){
             setOppCatInfo(game.gameState[0].p2Cats)
           }
+
         } else {
           setOppId('p1');
           setMyGameState(game.gameState[game.gameState.length - 1].p2)
@@ -112,6 +116,7 @@ console.log("turn", turn)
           if (game.gameState[0].p1Cats){
             setOppCatInfo(game.gameState[0].p1Cats)
           }
+
         }
         setTurn(game.gameState[game.gameState.length - 1].turn);
         setGameId(game.id)
@@ -119,6 +124,31 @@ console.log("turn", turn)
     }
     refreshGame();
   }, []);
+
+  //handle opponent leaving game early
+  socket.on("opponentDisconnected", () => {
+    setOpponentDisconnected(true);
+  });
+
+  const handleGameEnded = async () => {
+    sessionStorage.clear();
+    navigate('/')
+    try {
+     await fetch('api/game/endgame', {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          winner: playerId,
+          gameId
+        })
+      })
+
+    } catch (error) {
+      console.error("error updating the game's winner after opponent leaves", error)
+    }
+  }
 
   //both players call this when finishing their board: one will create the game,
   //while the second to finish will update the game with their board
@@ -147,7 +177,6 @@ console.log("turn", turn)
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-
       if (playerId === 'p1') {
         setCatInfo(board[0].p1Cats)
       } else {
@@ -171,6 +200,13 @@ console.log("turn", turn)
       {gameId ? (
         winnerId === null ? (
           <>
+            {
+              opponentDisconnected &&
+              <div>
+                <p>your friend has left the game</p>
+                <button onClick={handleGameEnded}> go to homepage</button>
+              </div>
+            }
 
             <div id="message-container">
               {turn !== playerId ? (
