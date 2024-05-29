@@ -3,7 +3,7 @@ import Ship from "./Ship";
 import "../styles/setBoard.css";
 
 
-const SetBoard = ({ playerId, fetchInitGameState }) => {
+const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
   const [board, setBoard] = useState(Array(10).fill(Array(10).fill(0)));
   const [direction, setDirection] = useState("horizontal");
   const [shipsToPlace, setShipsToPlace] = useState(["A", "B", "C", "D", "E"]);
@@ -72,6 +72,15 @@ const SetBoard = ({ playerId, fetchInitGameState }) => {
       })
     );
     setBoard(newBoard);
+    //create object that can be used to place the cat div on the map
+    const currentCatInfo = {
+      startCol: droppedColumn,
+      startRow: droppedRow,
+      length: shipDetails[type].length,
+      type,
+      direction
+    }
+    setCatInfo([...catInfo, currentCatInfo ])
   };
 
   const handleDragOver = (e) => {
@@ -99,7 +108,6 @@ const SetBoard = ({ playerId, fetchInitGameState }) => {
   //place the board state in and object under the property that is your identity,
   //and create a game/ add your board to the existing game
   const handleSubmit = () => {
-    const room = sessionStorage.getItem("room");
     if (shipsToPlace.length === 0) {
       setWaitingMessage("Waiting on your opponent to set their board");
       let initialBoard;

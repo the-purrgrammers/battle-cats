@@ -60,6 +60,8 @@ const createInitialGame = async () => {
     data: {
       playerOneId: 1,
       playerTwoId: 2,
+      winnerId: 3,
+      loserId: 2,
       room: "generic",
       gameState: JSON.stringify(initialBoard),
     },
@@ -78,6 +80,8 @@ const seed = async () => {
   await createInitialPlayer("Molly", hashedPass2);
   console.log("players created, creating initial game");
   await createInitialGame();
+  await createInitialGame()
+  await createInitialGame()
   console.log("inital game created");
   console.log("seed complete");
 };

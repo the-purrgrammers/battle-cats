@@ -25,6 +25,21 @@ const rooms = [];
 io.on("connection", (socket) => {
   socket.emit("shareAllRooms", rooms);
 
+//handle a permanent disconnection during game
+  socket.on("disconnecting", () => {
+    const rooms = Array.from(socket.rooms).filter((r) => r !== socket.id);
+    rooms.forEach((room) => {
+      setTimeout(() => {
+        const roomSize = io.sockets.adapter.rooms.get(room)?.size || 0;
+        if (roomSize === 1) {
+          io.to(room).emit("opponentDisconnected");
+          socket.leave(room);
+          io.emit("removeRoom", room);
+        }
+      }, 10000); // 10 seconds timeout
+    });
+  });
+
   socket.on("addRoom", (room) => {
     rooms.push(room);
     io.emit("shareRoom", room);
@@ -68,6 +83,9 @@ io.on("connection", (socket) => {
   });
   socket.on("sendMessage", (playerMessage, room) => {
     io.to(room).emit("receivedMessage", playerMessage);
+  });
+  socket.on("returnHome", () => {
+    socket.emit("getRooms", rooms);
   });
 });
 
