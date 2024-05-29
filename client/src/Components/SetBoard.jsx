@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Ship from "./Ship";
+import "../styles/setBoard.css";
+
 
 const SetBoard = ({ playerId, fetchInitGameState }) => {
   const [board, setBoard] = useState(Array(10).fill(Array(10).fill(0)));
@@ -113,39 +115,41 @@ const SetBoard = ({ playerId, fetchInitGameState }) => {
   };
 
   return (
-    <div>
-      <h1>place your cats</h1>
-      {waitingMessage && <p className="waiting-message">{waitingMessage}</p>}
-      {board.map((gameRow, rowId) => {
-        return (
-          <div key={rowId} className="grid-row">
-            {gameRow.map((gridItem, itemId) => {
-              return (
-                <div
-                  key={`${rowId}${itemId}`}
-                  id={`${rowId}${itemId}`}
-                  className="grid-item"
-                  onDrop={(e) => handleDrop(e, rowId, itemId)}
-                  onDragOver={handleDragOver}
-                  style={{
-                    backgroundColor:
-                      gridItem !== 0
-                        ? `${shipDetails[gridItem].color}`
-                        : "rgb(161, 212, 212)",
-                  }}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+    <div id="grid-and-h2-cont">
+      <h2>place your cats</h2>
+      <div id="grid-cont">
+        {waitingMessage && <p className="waiting-message">{waitingMessage}</p>}
+        {board.map((gameRow, rowId) => {
+          return (
+            <div key={rowId} className="grid-row">
+              {gameRow.map((gridItem, itemId) => {
+                return (
+                  <div
+                    key={`${rowId}${itemId}`}
+                    id={`${rowId}${itemId}`}
+                    className="grid-item"
+                    onDrop={(e) => handleDrop(e, rowId, itemId)}
+                    onDragOver={handleDragOver}
+                    style={{
+                      backgroundColor:
+                        gridItem !== 0
+                          ? `${shipDetails[gridItem].color}`
+                          : "rgb(251, 238, 224)",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
 
       {!waitingMessage && (
-        <>
-          <button onClick={handleFlip}>flip cats</button>
-          <button onClick={handleReset}>reset rug</button>
-          <button onClick={handleSubmit}>submit your rug</button>
-        </>
+        <div id="set-board-btn-cont">
+          <button className="set-board-btn" onClick={handleFlip}>flip cats</button>
+          <button className="set-board-btn" onClick={handleReset}>reset rug</button>
+          <button className="set-board-btn" onClick={handleSubmit}>submit your rug</button>
+        </div>
       )}
       <div className="ship-container">
         {shipsToPlace.map((ship, idx) => (

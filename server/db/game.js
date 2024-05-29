@@ -15,6 +15,24 @@ const getGame = async (id, player) => {
     console.error("error fetching game for db", error);
   }
 };
+const getListOfUserGames = async (userId) => {
+  try {
+    const allUserGames = await prisma.game.findMany({
+      where: {
+        OR: [
+          { playerOneId: userId},
+          { playerTwoId: userId}
+        ]
+      }
+    });
+    return allUserGames
+    
+  } catch (error) {
+    console.error("error getting list of user games from db", error);
+
+    
+  }
+}
 
 const createGame = async (board, room) => {
   //see if the game with this room name already exists
@@ -248,6 +266,7 @@ const updateGame = async (selectedTile, id) => {
   }
 };
 
+
 const endGameEarly = async (winner, id) => {
   console.log("got to db func")
   let winnerId, loserId;
@@ -274,4 +293,4 @@ const endGameEarly = async (winner, id) => {
   }
 };
 
-module.exports = { getGame, updateGame, createGame, endGameEarly };
+module.exports = { getGame, updateGame, createGame, endGameEarly, getListUserGames };

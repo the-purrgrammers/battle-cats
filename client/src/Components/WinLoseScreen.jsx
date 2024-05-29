@@ -1,10 +1,13 @@
 import { useNavigate, Link } from "react-router-dom";
+import { initializeSocket } from "../socket";
+const socket = initializeSocket();
 
 const WinLoseScreen = ({ winnerId, playerId }) => {
   const playerIdNum = parseInt(playerId.slice(1));
   const navigate = useNavigate();
 
   const clickHandler = () =>{
+    socket.emit("returnHome");
     localStorage.clear();
     sessionStorage.clear();
     navigate('/');

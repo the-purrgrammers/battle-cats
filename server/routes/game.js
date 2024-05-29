@@ -1,6 +1,8 @@
 const router = require("express").Router();
-const { getGame, updateGame, createGame, endGameEarly } = require("../db/game");
+
+const { getGame, updateGame, createGame, endGameEarly, getListOfUserGames } = require("../db/game");
 const jwt = require("jsonwebtoken");
+
 
 router.get("/", async (req, res) => {
   const auth = req.headers.authorization;
@@ -22,6 +24,19 @@ router.get("/", async (req, res) => {
     throw error;
   }
 });
+
+router.get("/:userId", async (req, res) => {
+  const curUserId = parseInt(req.params);
+  try {
+    const listOfUserGames = await getListOfUserGames(curUserId)
+    res.send(listOfUserGames);
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+})
+
 
 router.get("/:id", async (req, res) => {
   try {
