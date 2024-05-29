@@ -69,6 +69,9 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (playerMessage, room) => {
     io.to(room).emit("receivedMessage", playerMessage);
   });
+  socket.on("returnHome", () => {
+    socket.emit("getRooms", rooms);
+  });
 });
 
 // app.use("/", require("./routes/index.js"));
