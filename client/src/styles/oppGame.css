@@ -196,8 +196,8 @@ body {
   background-color: bisque;
   padding: 20px;
   width: 680px;
-  height: 90px;
   margin: 20px;
+  display: inline-block
 }
 .ship-container > * {
   margin: 0px 10px;

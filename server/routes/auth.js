@@ -1,3 +1,4 @@
+require('dotenv').config()
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -9,7 +10,7 @@ router.post("/login", async (req, res, next) => {
     const currentUser = await prisma.user.findFirst({
       where: {
         username: req.body.username,
-      },
+      }
     })
     const matchPassword = await bcrypt.compare(
       req.body.password,
@@ -20,7 +21,6 @@ router.post("/login", async (req, res, next) => {
     } else {
 
       const token = jwt.sign({ id: currentUser.id }, process.env.JWT_SECRET)
-
       res.send({
         message: "You are logged in",
         id: currentUser.id,
@@ -57,5 +57,20 @@ router.post("/register", async (req, res, next) => {
     next(error);
   }
 });
+
+router.get('/me/:id', async (req, res, next) => {
+  const id = parseInt(req.params.id)
+    try{
+      const user = await prisma.user.findUnique({
+        where: {
+          id
+        },
+        include: {gamesAsWinner: true, gamesAsLoser: true}
+      })
+      res.send(user);
+    }catch(error){
+      next(error);
+    }
+})
 
 module.exports = router;

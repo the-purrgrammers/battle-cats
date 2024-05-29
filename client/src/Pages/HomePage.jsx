@@ -4,6 +4,7 @@ import Nav from "../Components/Nav";
 import "../styles/homepage.css";
 
 const HomePage = () => {
+
   return (
     <>
       <div className="homeWrapper">

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
 
-const ChatBox = ({ playerId }) => {
+const ChatBox = ({ playerId, curUser }) => {
   const [chatMessage, setChatMessage] = useState("");
   const [chatLog, setChatLog] = useState([]);
 
@@ -11,6 +11,9 @@ const ChatBox = ({ playerId }) => {
     const room = sessionStorage.getItem("room");
     const playerMessage = {};
     playerMessage.player = playerId;
+    if(curUser){
+      playerMessage.player = curUser.username;
+    }
     playerMessage.message = chatMessage;
 
     socket.emit('sendMessage', playerMessage, room);
