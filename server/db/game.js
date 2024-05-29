@@ -4,7 +4,6 @@ const { prisma } = require("./index.js");
 
 const getGame = async (id, player) => {
   try {
-    console.log("in db getGame");
     const currentGame = await prisma.game.findFirst({
       where: {
         id,
@@ -19,22 +18,16 @@ const getListOfUserGames = async (userId) => {
   try {
     const allUserGames = await prisma.game.findMany({
       where: {
-        OR: [
-          { playerOneId: userId},
-          { playerTwoId: userId}
-        ]
-      }
+        OR: [{ playerOneId: userId }, { playerTwoId: userId }],
+      },
     });
-    return allUserGames
-    
+    return allUserGames;
   } catch (error) {
     console.error("error getting list of user games from db", error);
-
-    
   }
-}
+};
 
-const createGame = async (board, room) => {
+const createGame = async (board, room, catInfo) => {
   //see if the game with this room name already exists
   const existingGame = await prisma.game.findFirst({
     where: {
@@ -54,8 +47,10 @@ const createGame = async (board, room) => {
   //whoever submitted their board first will add it to the template
   if (board.hasOwnProperty("p1")) {
     boardTemplate.p1 = board.p1;
+    boardTemplate.p1Cats = catInfo;
   } else if (board.hasOwnProperty("p2")) {
     boardTemplate.p2 = board.p2;
+    boardTemplate.p2Cats = catInfo;
   }
   //if the game doesn't exist, create it:
   if (!existingGame) {
@@ -92,18 +87,19 @@ const createGame = async (board, room) => {
     // Merge existing game state with the new board data and sign token
     if (board.hasOwnProperty("p1")) {
       existingGameState[0].p1 = board.p1;
+      existingGameState[0].p1Cats = catInfo;
       gameToken = jwt.sign(
         { player: "p1", id: existingGame.id },
         process.env.GAME_JWT
       );
     } else if (board.hasOwnProperty("p2")) {
       existingGameState[0].p2 = board.p2;
+      existingGameState[0].p2Cats = catInfo;
       gameToken = jwt.sign(
         { player: "p2", id: existingGame.id },
         process.env.GAME_JWT
       );
     }
-
     try {
       const updatedGame = await prisma.game.update({
         where: {
@@ -293,4 +289,5 @@ const endGameEarly = async (winner, id) => {
   }
 };
 
-module.exports = { getGame, updateGame, createGame, endGameEarly, getListUserGames };
+module.exports = { getGame, updateGame, createGame, endGameEarly, getListOfUserGames };
+

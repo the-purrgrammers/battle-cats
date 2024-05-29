@@ -49,8 +49,9 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/createGame", async (req, res) => {
+  console.log("endpoint", req.body.catInfo)
   try {
-    const newGame = await createGame(req.body.initialBoard, req.body.room);
+    const newGame = await createGame(req.body.initialBoard, req.body.room, req.body.catInfo);
     res.status(201).send(newGame);
   } catch (error) {
     console.error("error on POST /createGame route", error);

@@ -23,13 +23,21 @@ const GamePage = () => {
   const [winnerId, setWinnerId] = useState(null);
   const [gameId, setGameId] = useState("");
   const [catsLeft, setCatsLeft] = useState([]);
+  const [catInfo, setCatInfo] = useState([])
+  const [oppCatInfo, setOppCatInfo] = useState([])
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
   const navigate = useNavigate()
+
 
   //when one player completes setting their board, they share it along with the turn so that
   //you can set your oppGameState
   socket.on("receiveBoardAndTurn", (board, turn) => {
     setOppGameState(board[board.length - 1][oppId]);
+    if (playerId === "p1") {
+      setOppCatInfo(board[0].p2Cats)
+    } else {
+      setOppCatInfo(board[0].p1Cats)
+    }
     setTurn(turn);
   });
 
@@ -94,11 +102,21 @@ const GamePage = () => {
           setMyGameState(game.gameState[game.gameState.length - 1].p1)
           setOppGameState(game.gameState[game.gameState.length - 1].p2)
           setCatsLeft(game.gameState[game.gameState.length - 1].p2ShipsSunk)
+          setCatInfo(game.gameState[0].p1Cats)
+          if (game.gameState[0].p2Cats){
+            setOppCatInfo(game.gameState[0].p2Cats)
+          }
+
         } else {
           setOppId('p1');
           setMyGameState(game.gameState[game.gameState.length - 1].p2)
           setOppGameState(game.gameState[game.gameState.length - 1].p1)
           setCatsLeft(game.gameState[game.gameState.length - 1].p1ShipsSunk)
+          setCatInfo(game.gameState[0].p2Cats)
+          if (game.gameState[0].p1Cats){
+            setOppCatInfo(game.gameState[0].p1Cats)
+          }
+
         }
         setTurn(game.gameState[game.gameState.length - 1].turn);
         setGameId(game.id)
@@ -132,11 +150,11 @@ const GamePage = () => {
     }
   }
 
-
   //both players call this when finishing their board: one will create the game,
   //while the second to finish will update the game with their board
   const fetchInitGameState = async (initialBoard) => {
     const room = sessionStorage.getItem("room");
+    console.log("fetch", catInfo)
     try {
       //HAVE TO SORT OUT THIS LINK WITH PROXY
       const response = await fetch(`api/game/createGame`, {
@@ -147,6 +165,7 @@ const GamePage = () => {
         body: JSON.stringify({
           initialBoard,
           room,
+          catInfo
         }),
       });
 
@@ -158,8 +177,11 @@ const GamePage = () => {
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-
-      // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
+      if (playerId === 'p1') {
+        setCatInfo(board[0].p1Cats)
+      } else {
+        setCatInfo(board[0].p2Cats)
+      }
       sessionStorage.setItem('gameToken', result.gameToken)
       setGameId(game.id);
 
@@ -169,7 +191,7 @@ const GamePage = () => {
     }
   };
 
-  //page renders conditionally based on having a gameId (change this to something else)
+  //page renders conditionally based on having a gameId,
   //whether their is a winner, etc.
 
   return (
@@ -211,6 +233,7 @@ const GamePage = () => {
                 turn={turn}
                 playerId={playerId}
                 catsLeft={catsLeft}
+                oppCatInfo={oppCatInfo}
               />
               <div id="end-turn-btn-container">
                 <EndTurnButton
@@ -225,15 +248,26 @@ const GamePage = () => {
                 />
               </div>
 
-              <PlayerShipMap myGameState={myGameState} />
+              <PlayerShipMap
+                myGameState={myGameState}
+                catInfo={catInfo}
+              />
             </div>
 
           </>
         ) : (
-          <WinLoseScreen playerId={playerId} winnerId={winnerId} />
+          <WinLoseScreen
+            playerId={playerId}
+            winnerId={winnerId}
+          />
         )
       ) : (
-        <SetBoard playerId={playerId} fetchInitGameState={fetchInitGameState} />
+        <SetBoard
+          playerId={playerId}
+          fetchInitGameState={fetchInitGameState}
+          catInfo={catInfo}
+          setCatInfo={setCatInfo}
+        />
       )}
     </>
   );
