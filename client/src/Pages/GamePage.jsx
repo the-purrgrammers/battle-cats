@@ -22,11 +22,18 @@ const GamePage = () => {
   const [winnerId, setWinnerId] = useState(null);
   const [gameId, setGameId] = useState("");
   const [catsLeft, setCatsLeft] = useState([]);
-
+  const [catInfo, setCatInfo] = useState([])
+  const [oppCatInfo, setOppCatInfo] = useState([])
+console.log("turn", turn)
   //when one player completes setting their board, they share it along with the turn so that
   //you can set your oppGameState
   socket.on("receiveBoardAndTurn", (board, turn) => {
     setOppGameState(board[board.length - 1][oppId]);
+    if (playerId === "p1") {
+      setOppCatInfo(board[0].p2Cats)
+    } else {
+      setOppCatInfo(board[0].p1Cats)
+    }
     setTurn(turn);
   });
 
@@ -52,7 +59,6 @@ const GamePage = () => {
   //get all the necessary info
   useEffect(() => {
     const isPlayingAs = sessionStorage.getItem("player");
-    console.log("this fired", isPlayingAs)
     if (!isPlayingAs) {
       socket.on("assignPlayer", (data) => {
         if (data.player === "p1") {
@@ -72,45 +78,53 @@ const GamePage = () => {
       const opponent = isPlayingAs === "p1" ? "p2" : "p1";
       setOppId(opponent);
     }
-
+    
+    //look in localstorage for token, re-fetch the most recent game state if you lose it
     const refreshGame = async () => {
       const gameToken = sessionStorage.getItem("gameToken")
-      if(gameToken){
+      if (gameToken) {
         console.log("we have a token")
-      const result = await fetch('/api/game', {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${gameToken}`
-        },
-      })
-      const refreshedGame = await result.json();
-      const game = refreshedGame.currentGame;
-      const player = refreshedGame.player;
-      setPlayerId(player);
-      if(player === 'p1'){
-        setOppId('p2')
-        setMyGameState(game.gameState[game.gameState.length -1].p1)
-        setOppGameState(game.gameState[game.gameState.length -1].p2)
-        setCatsLeft(game.gameState[game.gameState.length -1].p2ShipsSunk)
-      }else{
-        setOppId('p1');
-        setMyGameState(game.gameState[game.gameState.length -1].p2)
-        setOppGameState(game.gameState[game.gameState.length -1].p1)
-        setCatsLeft(game.gameState[game.gameState.length -1].p1ShipsSunk)
+        const result = await fetch('/api/game', {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${gameToken}`
+          },
+        })
+        const refreshedGame = await result.json();
+        const game = refreshedGame.currentGame;
+        const player = refreshedGame.player;
+        setPlayerId(player);
+        if (player === 'p1') {
+          setOppId('p2')
+          setMyGameState(game.gameState[game.gameState.length - 1].p1)
+          setOppGameState(game.gameState[game.gameState.length - 1].p2)
+          setCatsLeft(game.gameState[game.gameState.length - 1].p2ShipsSunk)
+          setCatInfo(game.gameState[0].p1Cats)
+          if (game.gameState[0].p2Cats){
+            setOppCatInfo(game.gameState[0].p2Cats)
+          }
+        } else {
+          setOppId('p1');
+          setMyGameState(game.gameState[game.gameState.length - 1].p2)
+          setOppGameState(game.gameState[game.gameState.length - 1].p1)
+          setCatsLeft(game.gameState[game.gameState.length - 1].p1ShipsSunk)
+          setCatInfo(game.gameState[0].p2Cats)
+          if (game.gameState[0].p1Cats){
+            setOppCatInfo(game.gameState[0].p1Cats)
+          }
+        }
+        setTurn(game.gameState[game.gameState.length - 1].turn);
+        setGameId(game.id)
       }
-      setTurn(game.gameState[game.gameState.length -1].turn);
-      setGameId(game.id)
     }
-  }
-  // const [catsLeft, setCatsLeft] = useState([]);
     refreshGame();
-    //look in localstorage for token, re-fetch the most recent game state if you lose it
   }, []);
 
   //both players call this when finishing their board: one will create the game,
   //while the second to finish will update the game with their board
   const fetchInitGameState = async (initialBoard) => {
     const room = sessionStorage.getItem("room");
+    console.log("fetch", catInfo)
     try {
       //HAVE TO SORT OUT THIS LINK WITH PROXY
       const response = await fetch(`api/game/createGame`, {
@@ -121,6 +135,7 @@ const GamePage = () => {
         body: JSON.stringify({
           initialBoard,
           room,
+          catInfo
         }),
       });
 
@@ -132,8 +147,12 @@ const GamePage = () => {
       const myBoard = board[board.length - 1][playerId];
       setTurn(currentTurn);
       setMyGameState(myBoard);
-      
-      // sessionStorage.setItem('myBoard', JSON.stringify(myBoard));
+
+      if (playerId === 'p1') {
+        setCatInfo(board[0].p1Cats)
+      } else {
+        setCatInfo(board[0].p2Cats)
+      }
       sessionStorage.setItem('gameToken', result.gameToken)
       setGameId(game.id);
 
@@ -143,7 +162,7 @@ const GamePage = () => {
     }
   };
 
-  //page renders conditionally based on having a gameId (change this to something else)
+  //page renders conditionally based on having a gameId,
   //whether their is a winner, etc.
 
   return (
@@ -154,53 +173,65 @@ const GamePage = () => {
           <>
 
             <div id="message-container">
-            {turn !== playerId ? (
-              <span className="waiting-message">
-                waiting on your friend...
-              </span>
-            ) : (
-              <span className="waiting-message">Your Turn!</span>
-            )}
-            {!msg ? (
-              ""
-            ) : msg && playerId === "p1" ? (
-              <span className="sunk-ship-message">{msg.p1}</span>
-            ) : (
-              <span className="sunk-ship-message">{msg.p2}</span>
-            )}
+              {turn !== playerId ? (
+                <span className="waiting-message">
+                  waiting on your friend...
+                </span>
+              ) : (
+                <span className="waiting-message">Your Turn!</span>
+              )}
+              {!msg ? (
+                ""
+              ) : msg && playerId === "p1" ? (
+                <span className="sunk-ship-message">{msg.p1}</span>
+              ) : (
+                <span className="sunk-ship-message">{msg.p2}</span>
+              )}
             </div>
-<div id="double-grid-container">
-<ChatBox playerId={playerId} />
-            <OpponentShipMap
-              oppGameState={oppGameState}
-              setSelectedTile={setSelectedTile}
-              selectedTile={selectedTile}
-              turn={turn}
-              playerId={playerId}
-              catsLeft={catsLeft}
-            />
-                <div id="end-turn-btn-container">
-            <EndTurnButton
-              selectedTile={selectedTile}
-              setSelectedTile={setSelectedTile}
-              setMsg={setMsg}
-              setWinnerId={setWinnerId}
-              gameId={gameId}
-              setTurn={setTurn}
-              setCatsLeft={setCatsLeft}
-              playerId={playerId}
-            />
-                </div>
+            <div id="double-grid-container">
+              <ChatBox playerId={playerId} />
+              <OpponentShipMap
+                oppGameState={oppGameState}
+                setSelectedTile={setSelectedTile}
+                selectedTile={selectedTile}
+                turn={turn}
+                playerId={playerId}
+                catsLeft={catsLeft}
+                oppCatInfo={oppCatInfo}
+              />
+              <div id="end-turn-btn-container">
+                <EndTurnButton
+                  selectedTile={selectedTile}
+                  setSelectedTile={setSelectedTile}
+                  setMsg={setMsg}
+                  setWinnerId={setWinnerId}
+                  gameId={gameId}
+                  setTurn={setTurn}
+                  setCatsLeft={setCatsLeft}
+                  playerId={playerId}
+                />
+              </div>
 
-            <PlayerShipMap myGameState={myGameState} />
-</div>
+              <PlayerShipMap
+                myGameState={myGameState}
+                catInfo={catInfo}
+              />
+            </div>
 
           </>
         ) : (
-          <WinLoseScreen playerId={playerId} winnerId={winnerId} />
+          <WinLoseScreen
+            playerId={playerId}
+            winnerId={winnerId}
+          />
         )
       ) : (
-        <SetBoard playerId={playerId} fetchInitGameState={fetchInitGameState} />
+        <SetBoard
+          playerId={playerId}
+          fetchInitGameState={fetchInitGameState}
+          catInfo={catInfo}
+          setCatInfo={setCatInfo}
+        />
       )}
     </>
   );

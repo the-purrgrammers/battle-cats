@@ -1,7 +1,7 @@
 import { initializeSocket } from "../socket";
 const socket = initializeSocket()
 
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId }) => {
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId}) => {
   const endTurn = async () => {
     try {
       setMsg('')
@@ -29,12 +29,12 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
       }
       if(playerId === 'p1'){
         setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p2ShipsSunk)
+        // setCatInfo(updatedGame.gameState[0].p1Cats)  
       }else if(playerId === 'p2'){
         setCatsLeft(updatedGame.gameState[updatedGame.gameState.length - 1].p1ShipsSunk)
+        // setCatInfo(updatedGame.gameState[0].p2Cats)
       }
-     
-    
-     
+
       const newTurn = updatedGame.gameState[updatedGame.gameState.length-1].turn
       setTurn(newTurn)
       setSelectedTile('')

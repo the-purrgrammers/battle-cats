@@ -1,16 +1,15 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const { prisma } = require("./index.js");
 
 const getGame = async (id, player) => {
   try {
-    console.log("in db getGame")
     const currentGame = await prisma.game.findFirst({
       where: {
         id,
       },
     });
-    return {currentGame, player};
+    return { currentGame, player };
   } catch (error) {
     console.error("error fetching game for db", error);
   }
@@ -19,22 +18,16 @@ const getListOfUserGames = async (userId) => {
   try {
     const allUserGames = await prisma.game.findMany({
       where: {
-        OR: [
-          { playerOneId: userId},
-          { playerTwoId: userId}
-        ]
-      }
+        OR: [{ playerOneId: userId }, { playerTwoId: userId }],
+      },
     });
-    return allUserGames
-    
+    return allUserGames;
   } catch (error) {
     console.error("error getting list of user games from db", error);
-
-    
   }
-}
+};
 
-const createGame = async (board, room) => {
+const createGame = async (board, room, catInfo) => {
   //see if the game with this room name already exists
   const existingGame = await prisma.game.findFirst({
     where: {
@@ -42,7 +35,7 @@ const createGame = async (board, room) => {
       winnerId: null,
     },
   });
-// template to provide game with necessary info
+  // template to provide game with necessary info
   const boardTemplate = {
     turn: "p1",
     selectedTile: "",
@@ -51,13 +44,15 @@ const createGame = async (board, room) => {
     p1ShipsSunk: [],
     p2ShipsSunk: [],
   };
-//whoever submitted their board first will add it to the template
+  //whoever submitted their board first will add it to the template
   if (board.hasOwnProperty("p1")) {
     boardTemplate.p1 = board.p1;
+    boardTemplate.p1Cats = catInfo;
   } else if (board.hasOwnProperty("p2")) {
     boardTemplate.p2 = board.p2;
+    boardTemplate.p2Cats = catInfo;
   }
-//if the game doesn't exist, create it:
+  //if the game doesn't exist, create it:
   if (!existingGame) {
     try {
       const newGame = await prisma.game.create({
@@ -68,31 +63,43 @@ const createGame = async (board, room) => {
           room,
         },
       });
-//sign the token here, with player ID and game ID
+      //sign the token here, with player ID and game ID
       const jsonGameState = JSON.parse(newGame.gameState);
       if (jsonGameState[0].hasOwnProperty("p1")) {
-        gameToken = jwt.sign({ player: "p1", id: newGame.id }, process.env.GAME_JWT)
+        gameToken = jwt.sign(
+          { player: "p1", id: newGame.id },
+          process.env.GAME_JWT
+        );
       } else if (jsonGameState[0].hasOwnProperty("p2")) {
-        gameToken = jwt.sign({ player: "p2", id: newGame.id }, process.env.GAME_JWT)
+        gameToken = jwt.sign(
+          { player: "p2", id: newGame.id },
+          process.env.GAME_JWT
+        );
       }
-      return {newGame, gameToken};
+      return { newGame, gameToken };
     } catch (error) {
       console.error("error creating new game in db", error);
     }
   } else {
-
     // Parse the existing game state
     const existingGameState = JSON.parse(existingGame.gameState);
 
     // Merge existing game state with the new board data and sign token
     if (board.hasOwnProperty("p1")) {
       existingGameState[0].p1 = board.p1;
-      gameToken = jwt.sign({ player: "p1", id: existingGame.id }, process.env.GAME_JWT);
+      existingGameState[0].p1Cats = catInfo;
+      gameToken = jwt.sign(
+        { player: "p1", id: existingGame.id },
+        process.env.GAME_JWT
+      );
     } else if (board.hasOwnProperty("p2")) {
       existingGameState[0].p2 = board.p2;
-      gameToken = jwt.sign({ player: "p2", id: existingGame.id }, process.env.GAME_JWT);
+      existingGameState[0].p2Cats = catInfo;
+      gameToken = jwt.sign(
+        { player: "p2", id: existingGame.id },
+        process.env.GAME_JWT
+      );
     }
-
     try {
       const updatedGame = await prisma.game.update({
         where: {
@@ -102,7 +109,7 @@ const createGame = async (board, room) => {
           gameState: JSON.stringify(existingGameState),
         },
       });
-      return {newGame: updatedGame, gameToken};
+      return { newGame: updatedGame, gameToken };
     } catch (error) {
       console.error("error adding second player to newly created game", error);
     }
@@ -146,26 +153,44 @@ const updateGame = async (selectedTile, id) => {
     if (shipsHit[shipType]) {
       shipsHit[shipType]++;
 
-      if(currentPlayer === "p1"){
-        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet part of one of your cats!"};
-      }else if(currentPlayer === "p2"){
-        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet part of one of your cats!"};
+      if (currentPlayer === "p1") {
+        msg = {
+          p1: "You pet part of a cat!",
+          p2: "Your friend has pet part of one of your cats!",
+        };
+      } else if (currentPlayer === "p2") {
+        msg = {
+          p2: "You pet part of a cat!",
+          p1: "Your friend has pet part of one of your cats!",
+        };
       }
     } else {
       shipsHit[shipType] = 1;
-      if(currentPlayer === "p1"){
-        msg = {p1: "You pet part of a cat!", p2: "Your friend has pet a part of one of your cats!"};
-      }else if(currentPlayer === "p2"){
-        msg = {p2: "You pet part of a cat!", p1: "Your friend has pet a part of one of your cats!"};
+      if (currentPlayer === "p1") {
+        msg = {
+          p1: "You pet part of a cat!",
+          p2: "Your friend has pet a part of one of your cats!",
+        };
+      } else if (currentPlayer === "p2") {
+        msg = {
+          p2: "You pet part of a cat!",
+          p1: "Your friend has pet a part of one of your cats!",
+        };
       }
     }
 
     if (shipsHit[shipType] === shipLength[shipType]) {
       shipsSunk.push(shipType);
       if (currentPlayer === "p1") {
-        msg = { p1: "You have pet a whole cat!", p2: "One of your cats has been completely pet!" };
+        msg = {
+          p1: "You have pet a whole cat!",
+          p2: "One of your cats has been completely pet!",
+        };
       } else {
-        msg = { p2: "You have pet a whole cat!", p1: "One of your cats has been completely pet!" };
+        msg = {
+          p2: "You have pet a whole cat!",
+          p1: "One of your cats has been completely pet!",
+        };
       }
     }
 
@@ -199,11 +224,16 @@ const updateGame = async (selectedTile, id) => {
   } else {
     boardToChange[row][col] = 1;
 
-    if(currentPlayer === "p1"){
-      msg = {p1: "No cats hiding there!", p2: "Your opponent didn't find any of your cats!"};
-    }else if(currentPlayer === "p2"){
-      msg = {p2: "No cats hiding there!", p1: "Your opponent didn't find any of your cats!"};
-
+    if (currentPlayer === "p1") {
+      msg = {
+        p1: "No cats hiding there!",
+        p2: "Your opponent didn't find any of your cats!",
+      };
+    } else if (currentPlayer === "p2") {
+      msg = {
+        p2: "No cats hiding there!",
+        p1: "Your opponent didn't find any of your cats!",
+      };
     }
   }
   //update the turn and tile properties of the current gamestate object
@@ -234,4 +264,3 @@ const updateGame = async (selectedTile, id) => {
 
 module.exports = { getGame, updateGame, getListOfUserGames };
 module.exports = { getGame, updateGame, createGame };
-

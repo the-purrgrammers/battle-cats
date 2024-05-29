@@ -75,10 +75,19 @@ body {
 
 #opp-rug {
   background-image: url("../assets/rug1.png");
+  position: relative;
 }
 
 #my-rug {
   background-image: url("../assets/rug2.jpg");
+  position: relative;
+}
+
+
+.cat-image{
+  position: absolute;
+  z-index: 10;
+  background-size: cover;
 }
 
 .grid-row {
@@ -143,6 +152,9 @@ body {
 .grid-item {
   background-color: #fbeee0;
 }
+.clear{
+  background-color: transparent;
+}
 
 .miss {
   background-color: rgba(240, 255, 255, 0);
@@ -150,28 +162,31 @@ body {
 }
 
 .carrier {
-  background-color: rgb(252, 189, 0);
+  /* background-color: rgb(252, 189, 0); */
 }
 
 .battleship {
-  background-color: rgb(98, 158, 38);
+  /* background-color: rgb(98, 158, 38); */
 }
 .cruiser {
-  background-color: rgba(9, 46, 230);
+  /* background-color: rgba(9, 46, 230); */
 }
 
 .sub {
-  background-color: rgb(172, 53, 150);
+  /* background-color: rgb(172, 53, 150); */
 }
 
 .destroyer {
-  background-color: rgb(239, 239, 16);
+  /* background-color: rgb(239, 239, 16); */
 }
 
 .hit {
   background-color: rgba(255, 0, 0, 0);
   background-image: url(../assets/pet-cat-icon.png);
   pointer-events: none;
+}
+.pet{
+  z-index: 11;
 }
 
 .ship-container {
