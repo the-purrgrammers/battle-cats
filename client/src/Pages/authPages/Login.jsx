@@ -1,9 +1,8 @@
 import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom"
-import Nav from "../../Components/Nav";
 
 
-const Login = ({setToken, setCurUser}) => {
+const Login = ({setCurUser}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -25,12 +24,12 @@ const Login = ({setToken, setCurUser}) => {
 
       const json = await result.json();
       setCurUser(json)
-     
+     console.log(json);
+     const id = json.id;
       if (json.token) {
-        localStorage.setItem('token', json.token);
-        
-        setToken(json.token);
-        navigate("/me")
+        sessionStorage.setItem('token', json.token);
+        navigate(`/me/${id}`);
+        console.log(id);
       
       }
      } catch (error) {
@@ -42,7 +41,6 @@ const Login = ({setToken, setCurUser}) => {
   return (
     <>
      <div>
-      <Nav />
     <h1>The cats need you to identify yourself. Let them sniff fingertip below</h1>
 
     <form onSubmit={submitHandler}>

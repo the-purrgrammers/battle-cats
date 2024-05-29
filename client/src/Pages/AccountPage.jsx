@@ -1,31 +1,40 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const AccountPage = ({token, curUser}) => {
-  const [user, setUser] = useState({})
-  token = localStorage.getItem('token');
-  if (!curUser.username) {
-    curUser.username = "Sombody"
-  if (!curUser.id) {
-    curUser.id = "lost under the couch"
-  }
-  if (!curUser.message) {
-    curUser.message = "someday you will find yourself. When you do, tell a cat about it."
-  }
-};
- useEffect(() => {
-  const curToken = localStorage.getItem("token");
-  if (curToken) {
-    token = curToken;
-  }
-  if (curUser) {
-    setUser(curUser);
-  }
- }, [curUser]);
+const AccountPage = ({curUser}) => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const { id: userId } = useParams();
 
-  return <>
-    <h1>{curUser?.username}'s kitten palace</h1>
-    <h3>all we want you to know is that {curUser.message}</h3>
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(`/auth/me/${userId}`);
+      const json = await response.json();
+      setLoggedInUser(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const runFetch = async () => {
+      await fetchUser();
+    };
+    runFetch();
+  }, []);
+
+  return (
+    <>
+      {loggedInUser ? (
+        <>
+          <h1>{loggedInUser.username}</h1>
+          <h2>Games won: {loggedInUser.gamesAsWinner.length}</h2>
+          <h2>Games lost: {loggedInUser.gamesAsLoser.length}</h2>
+        </>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </>
-}
+  );
+};
 
 export default AccountPage;

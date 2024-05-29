@@ -4,7 +4,6 @@ const { prisma } = require("./index.js");
 
 const getGame = async (id, player) => {
   try {
-    console.log("in db getGame")
     const currentGame = await prisma.game.findFirst({
       where: {
         id,
@@ -91,7 +90,7 @@ const createGame = async (board, room) => {
   }
 };
 
-const updateGame = async (selectedTile, id) => {
+const updateGame = async (selectedTile, id, curUser) => {
   //get the game from the db
   const data = await prisma.game.findFirst({
     where: {
@@ -161,7 +160,7 @@ const updateGame = async (selectedTile, id) => {
   const endGame = () => {
     winnerId = currentPlayer === "p1" ? 1 : 2;
     loserId = winnerId === 1 ? 2 : 1;
-
+  
     if (winnerId === 1) {
       msg = { p1: "YOU WIN!", p2: "YOU LOST!" };
     } else {

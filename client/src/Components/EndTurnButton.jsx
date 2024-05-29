@@ -1,7 +1,7 @@
 import { initializeSocket } from "../socket";
 const socket = initializeSocket()
 
-const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId }) => {
+const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId, curUser }) => {
   const endTurn = async () => {
     try {
       setMsg('')
@@ -13,7 +13,8 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
         },
         body: JSON.stringify({
           selectedTile,
-          gameId
+          gameId,
+          curUser
         })
       }
       )

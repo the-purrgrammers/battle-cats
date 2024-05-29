@@ -11,7 +11,7 @@ import WinLoseScreen from "../Components/WinLoseScreen";
 import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
 
-const GamePage = () => {
+const GamePage = ({curUser}) => {
   const [playerId, setPlayerId] = useState("");
   const [turn, setTurn] = useState("");
   const [oppId, setOppId] = useState();
@@ -170,7 +170,7 @@ const GamePage = () => {
             )}
             </div>
 <div id="double-grid-container">
-<ChatBox playerId={playerId} />
+<ChatBox playerId={playerId} curUser={curUser}/>
             <OpponentShipMap
               oppGameState={oppGameState}
               setSelectedTile={setSelectedTile}
@@ -189,6 +189,7 @@ const GamePage = () => {
               setTurn={setTurn}
               setCatsLeft={setCatsLeft}
               playerId={playerId}
+              curUser={curUser}
             />
                 </div>
 

@@ -43,8 +43,9 @@ router.post("/createGame", async (req, res) => {
 router.put("/endturn", async (req, res) => {
   const selectedTile = req.body.selectedTile;
   const gameId = parseInt(req.body.gameId);
+  const curUser = req.body.curUser;
   try {
-    const updatedGame = await updateGame(selectedTile, gameId);
+    const updatedGame = await updateGame(selectedTile, gameId, curUser);
     res.status(200).send(updatedGame);
   } catch (error) {
     console.error("error on PUT endturn route", error);

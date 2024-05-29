@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Nav from "../../Components/Nav";
 
 
-const Register = ({setToken, setCurUser}) => {
+const Register = ({setToken, setCurUser, token}) => {
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const navigate = useNavigate();
@@ -23,19 +22,19 @@ const Register = ({setToken, setCurUser}) => {
         })
       });
       const json = await result.json();
+      console.log(json)
       setCurUser(json)
       if (json.token) {
-        localStorage.setItem('token', json.token);
-        setToken(json.token)
-        navigate("/me")
+        sessionStorage.setItem('token', json.token);
+        // setToken(sessionStorage.getItem('token'));
       }
+      navigate("/me")
     } catch (error) {
       console.log("ERROR caught when signing up user.");
     }
   }
   return (
     <>
-    <Nav />
   <h1>REGISTER PAGE</h1>
   <h2>Create a new account or {<Link to="/login">log in</Link>}</h2>
 
