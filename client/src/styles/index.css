@@ -1,3 +1,6 @@
+
+
+
 .waiting-message {
   background-color: rgb(134, 155, 99);
   padding: 10px;
@@ -17,6 +20,8 @@
   text-wrap: nowrap;
 }
 
+
+
 .chatWindow {
   background-color: white;
   height: 420px;
@@ -34,7 +39,7 @@
   background-color: bisque;
   height: 520px;
   width: 200px;
-  border-color: black;
+  border: 10px double rgb(84, 127, 84);
   border-width: 5px;
   border-style: solid;
   border-radius: 3%;
@@ -42,6 +47,18 @@
   flex-direction: column;
   align-items: center;
   align-content: center;
+}
+.chatWindow {
+  border: 10px double rgb(84, 127, 84);
+
+}
+#chat-h2 {
+  border: 10px double rgb(84, 127, 84);
+
+}
+.map-h2s {
+  border: 10px double rgb(84, 127, 84);
+
 }
 
 /* WinLoseScreen */
@@ -58,3 +75,4 @@
   text-align: center;
   margin-left: 10px;
 }
+
