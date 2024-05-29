@@ -12,7 +12,7 @@ import WinLoseScreen from "../Components/WinLoseScreen";
 import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
 
-const GamePage = () => {
+const GamePage = ({curUser}) => {
   const [playerId, setPlayerId] = useState("");
   const [turn, setTurn] = useState("");
   const [oppId, setOppId] = useState();
@@ -253,6 +253,34 @@ const GamePage = () => {
                 catInfo={catInfo}
               />
             </div>
+
+<div id="double-grid-container">
+<ChatBox playerId={playerId} curUser={curUser}/>
+            <OpponentShipMap
+              oppGameState={oppGameState}
+              setSelectedTile={setSelectedTile}
+              selectedTile={selectedTile}
+              turn={turn}
+              playerId={playerId}
+              catsLeft={catsLeft}
+            />
+                <div id="end-turn-btn-container">
+            <EndTurnButton
+              selectedTile={selectedTile}
+              setSelectedTile={setSelectedTile}
+              setMsg={setMsg}
+              setWinnerId={setWinnerId}
+              gameId={gameId}
+              setTurn={setTurn}
+              setCatsLeft={setCatsLeft}
+              playerId={playerId}
+              curUser={curUser}
+            />
+                </div>
+
+            <PlayerShipMap myGameState={myGameState} />
+</div>
+
 
           </>
         ) : (
