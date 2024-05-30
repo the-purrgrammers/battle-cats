@@ -2,11 +2,14 @@ const Footer = () => {
   return (
     <>
       <div className="namesDiv">
-        <h3>Battle Cats is developed by:</h3>
-        <h3>char</h3>
-        <h3>desmond</h3>
-        <h3>nick</h3>
-        <h3>thomas</h3>
+        <h3 className="devName">Battle Cats is developed by:</h3>
+        <h3 className="devName">char</h3>
+        <br></br>
+        <h3 className="devName">desmond</h3>
+        <br></br>
+        <h3 className="devName">nick</h3>
+        <br></br>
+        <h3 className="devName">thomas</h3>
       </div>
     </>
   );

@@ -10,6 +10,8 @@ body {
   font-size: xx-large;
   padding: 10px;
   background-color: bisque;
+  border-radius: 30px;
+  border: 10px double rgb(84, 127, 84);
   margin: 10px;
   width: 250px;
 }
@@ -46,7 +48,7 @@ body {
 }
 
 .waitDiv {
-  font-size: x-large;
+  font-size: medium;
   background-color: pink;
   text-align: center;
   border: 20px double black;
@@ -71,6 +73,7 @@ body {
   width: 520px;
   border-radius: 30px;
   margin: 20px;
+  /* border: 10px double rgb(84, 127, 84); */
 }
 
 #opp-rug {
@@ -198,4 +201,23 @@ body {
 }
 .ship-container > * {
   margin: 0px 10px;
+}
+
+@media only screen and (max-width : 667px) {
+  .grid-item {
+    text-align: center;
+    margin: auto;
+
+    gap: 0px;
+    display: grid;
+    grid-template-columns: repeat(10, 0fr);
+    grid-auto-rows: minmax(7px);
+    grid-auto-columns: 10;
+
+  }
+  #double-grid-container {
+    display: flex-box;
+   
+    justify-content: space-evenly;
+  }
 }

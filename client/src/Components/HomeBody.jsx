@@ -123,8 +123,8 @@ const HomeBody = () => {
       {
         waitingMessage &&
         <div>
-          <p>{waitingMessage}</p>
-          <button onClick={handleLeaveRoom}>leave room</button>
+          <p className="waitingMsg">{waitingMessage}</p>
+          <button className="leaveButton" onClick={handleLeaveRoom}>leave room</button>
         </div>
       }
     </section>

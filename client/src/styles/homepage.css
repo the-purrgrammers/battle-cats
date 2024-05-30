@@ -1,5 +1,36 @@
+/* 
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+}
+
+/* Portrait */
+/* @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+} */
+
+/* Landscape */
+/* @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+
+} */ 
+
 body {
   background-image: url("../assets/BG2.jpg");
+}
+
+.waitingMsg{
+  padding: 2%;
+  margin-bottom: 0%
 }
 
 .h1-battle-cats-cont {
@@ -97,6 +128,12 @@ body {
   margin-left: 5%;
   margin-right: 5%;
   height: 50%;
+  border: 10px double rgb(84, 127, 84);
+  border-radius: 40px;
+}
+
+.regLabel {
+  margin-left: 20px;
 }
 
 .namesDiv {
@@ -104,17 +141,26 @@ body {
   justify-content: space-evenly;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 95%;
   background-color: rgba(255, 228, 196);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-top: 10px double rgb(84, 127, 84);
 }
 
 .navBar {
   display: flex;
-  width: 100%;
+  width: 95%;
+  padding: 1%;
   justify-content: space-evenly;
   background-color: rgba(255, 228, 196);
   position: fixed;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  border-bottom: 10px double rgb(84, 127, 84); 
+
   top: 0;
+  
   bottom:auto;
   height: 7%;
 }
@@ -135,5 +181,185 @@ body {
     min-width: 120px;
     padding: 0 25px;
   }
+}
+.sniffButton { 
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  width: 50%;
+  margin-left: 10px;
+  margin-top: 5%;
+  display: inline-block;
+  font-weight: 0;
+  font-size: 15px;
+  padding: 0 20px;
+  line-height: 200%;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.loginh1 {
+  font-size: large;
+  text-align: center;
+}
+@media only screen and (max-width : 667px) {
+  .homeMainSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin-top: 30%;
+    margin-bottom: 4%;
+    border-radius: 40px;
+    background-color: rgba(255, 228, 196, 0.9);
+    border: 10px double rgb(84, 127, 84);
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 100%;
+  }
+  .navBar {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: rgba(255, 228, 196);
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-bottom: 10px double rgb(84, 127, 84); 
+    position: fixed;
+    top: 0;
+    bottom:auto;
+    height: 10%;
+  }
+
+  .navBar-button,
+  .playbutton {
+    font-size: smaller;
+    width: 80px;
+    padding: 0 10%;
+  }
+  .createButton { 
+    background-color: #fff9f4;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    width: 33%;
+    margin-left: 10px;
+    margin-bottom: 1%;;
+    display: inline-block;
+    font-weight: 0;
+    font-size: 15px;
+    padding: 2% 20px;
+    line-height: 200%;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .namesDiv {
+    font-size: 4px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 0px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-top: 10px double rgb(84, 127, 84);
+    background-color: rgba(255, 228, 196);
+  }
+  .devName {
+    margin: 1.5%;
+    margin-top: 1%;
+    margin-bottom: .5%;
+    padding: 2%;
+  }
+  .loginh1 {
+    font-size: smaller;
+    text-align: center;
+  }
+  label {
+    font-size: smaller;
+    margin-left: 10%;
+  }
+  .regLabel {
+    display: flex;
+    padding: 2%;
+    margin: 10px;
+    margin-top: 20px;
+  }
+
+  .sniffButton { 
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 5%;
+    display: inline-block;
+    font-weight: 0;
+    font-size: 15px;
+    padding: 0 20px;
+    line-height: 200%;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  .waitingMsg{
+    padding: 2%;
+    margin-bottom: 0%
+  }
+
+  .regH2 {
+    font-size: smaller;
+    border-radius: 40px;
+    margin-bottom: 1%;
+
+  }
+
+  .leaveButton {
+    background-color: #f9f9f9;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    width: 40%;
+    margin-left: 29%;
+    margin-right: auto;
+    margin-top: .5%;
+    margin-bottom: 1%;
+    display: inline-block;
+    font-weight: 300;
+    font-size: 8px;
+    padding: 0 10px;
+    line-height: 200%;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+  }
+  
+
+
 }
 

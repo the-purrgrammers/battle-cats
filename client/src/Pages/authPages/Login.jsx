@@ -41,9 +41,11 @@ const Login = ({setCurUser}) => {
   return (
     <>
      <div>
-    <h1>The cats need you to identify yourself. Let them sniff fingertip below</h1>
 
-    <form onSubmit={submitHandler}>
+      <Nav />
+      <div className="homeMainSection">
+      <h1 className="loginh1">The cats need you to identify yourself. Let them sniff fingertip below</h1>
+      <form onSubmit={submitHandler}>
       <label>
         Username:
         <input
@@ -60,15 +62,19 @@ const Login = ({setCurUser}) => {
         onChange={(e) => { setPassword(e.target.value)}}/>
         <br/>
         
-          <input type="submit" value="let them sniff"/>
+          <input className="sniffButton" type="submit" value="let them sniff"/>
       </label>
-    <label>
+    <label className="regLabel">
       don't have an account yet?
-      <button>
-        <Link to="/register">sign up right meow!</Link>
+      <button className="sniffButton" onClick={()=> {
+        navigate('/register')
+      }}>
+        sign up meow!
       </button>
     </label>
     </form>
+</div>
+
   </div>
     
     </>

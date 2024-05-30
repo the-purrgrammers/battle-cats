@@ -2,12 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+#grid-cont {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border: 10px double rgb(84, 127, 84);
+
+}
+  
+
+}
+.ship-container {
+  border: 10px double rgb(84, 127, 84);
+  border-radius: 20px;
+
 }
 
 h2 {
   text-align: center;
   font-size: x-large;
   background-color: rgb(134, 155, 99);
+  border-radius: 20px;
   padding: 10px;
   margin: 5px;
 }
@@ -31,4 +46,28 @@ h2 {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+
+@media only screen and (max-width : 667px) {
+  #grid-and-h2-cont{
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+   
+  }
+
+
+
+
+  h2 {
+    text-align: center;
+    font-size: medium;
+    background-color: rgb(134, 155, 99);
+    padding: 5%;
+    margin: 4%;
+    border-radius: 40px;
+  }
+  
+
 }

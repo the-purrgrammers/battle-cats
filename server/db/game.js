@@ -290,4 +290,3 @@ const endGameEarly = async (winner, id) => {
 };
 
 module.exports = { getGame, updateGame, createGame, endGameEarly, getListOfUserGames };
-

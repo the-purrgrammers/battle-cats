@@ -35,8 +35,11 @@ const Register = ({setToken, setCurUser, token}) => {
   }
   return (
     <>
-  <h1>REGISTER PAGE</h1>
-  <h2>Create a new account or {<Link to="/login">log in</Link>}</h2>
+    <Nav />
+    <div className="homeMainSection">
+    <h1>REGISTER PAGE</h1>
+  <h2 className="regH2">Create a new account or {<Link to="/login">log in</Link>}</h2>
+
 
   <form onSubmit={signUpHandler}>
     <label>
@@ -55,8 +58,11 @@ const Register = ({setToken, setCurUser, token}) => {
       onChange={(e) => setInputPassword(e.target.value)}
       />
     </label>
-    <button>register</button>
+    <button className="sniffButton">register</button>
   </form>
+
+    </div>
+  
     </> 
   )  
 }
