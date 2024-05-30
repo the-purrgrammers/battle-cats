@@ -11,6 +11,7 @@ import PlayerShipMap from "../Components/PlayerShipMap";
 import WinLoseScreen from "../Components/WinLoseScreen";
 import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
+import logoLong from "../assets/logo-long-cat.png"
 
 const GamePage = ({curUser}) => {
   const [playerId, setPlayerId] = useState("");
@@ -196,7 +197,7 @@ const GamePage = ({curUser}) => {
 
   return (
     <>
-      <div className='h1-battle-cats-cont'><h1 id="h1-battle-cats">Battle Cats!</h1></div>
+      <div className='h1-battle-cats-cont'><img id='long-cat-logo' src={logoLong}></img></div>
       {gameId ? (
         winnerId === null ? (
           <>

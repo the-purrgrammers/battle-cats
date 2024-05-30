@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeSocket } from "../socket";
+import logoExplosion from "../assets/logo-explosion-rectangle.png"
 const socket = initializeSocket();
 
 const HomeBody = () => {
@@ -93,12 +94,13 @@ const HomeBody = () => {
   }
 
   return (
-    <section className="homeMainSection">
-      <h1>Battle Cats!</h1>
-      <h3>join a room:</h3>
-      {/* map out the room array displaying a button for each room that will join you to that room 
-      and nav you to the gamepage */}
-      <ul className="roomsListCont">
+    <div>
+      <section className="homeMainSection">
+      <div id='logo-cont'><img id='logoExplosion' src={logoExplosion}></img></div>
+        <h3>join a room:</h3>
+        {/* map out the room array displaying a button for each room that will join you to that room 
+        and nav you to the gamepage */}
+        <ul className="roomsListCont">
       {
         rooms.map((room, idx) => (
           <li key={idx}><button
@@ -114,23 +116,24 @@ const HomeBody = () => {
         ))
       }
       </ul>
-      <h3>create a room:</h3>
-      <form onSubmit={handleCreate}>
-        <input
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-          placeholder="room name" />
-        <button className="createButton" type="submit">create</button>
-      </form>
-      {
-        waitingMessage &&
-        <div>
-          <p className="waitingMsg">{waitingMessage}</p>
-          <button className="leaveButton" onClick={handleLeaveRoom}>leave room</button>
-        </div>
-      }
-    </section>
-  );
-};
+        <h3>create a room:</h3>
+        <form onSubmit={handleCreate}>
+          <input
+            value={roomName}
+            onChange={(e) => setRoomName(e.target.value)}
+            placeholder="room name" />
+          <button className="createButton" type="submit">create</button>
+        </form>
+        {
+          waitingMessage &&
+          <div>
+            <p className="waitingMsg">{waitingMessage}</p>
+            <button className="leaveButton" onClick={handleLeaveRoom}>leave room</button>
+          </div>
+        }
+      </section>
+    </div>
+    );
+  };
 
 export default HomeBody;

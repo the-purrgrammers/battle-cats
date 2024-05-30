@@ -9,7 +9,6 @@ import BH from '../assets/4blockhorz.png'
 import CH from '../assets/3blockhorz.png'
 import DH from '../assets/3blockhorz.png'
 import EH from '../assets/2blockhorz.png'
-
 import CatsLeft from "./CatsLeft";
 
 
