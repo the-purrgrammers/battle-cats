@@ -76,7 +76,7 @@ const catDirections = {
       })
       const catStyling = {
         position: 'absolute',
-        display: catsLeft.includes(type) ? 'block' :  'none',
+        display: catsLeft.includes(type) ? 'block' :  'none', // if uppercase letter of this letter is in the catsLeft then give x class
         top: `${catType.startRow * 50 + (catType.startRow*2)+2}px`,
         left: `${catType.startCol * 50 + (catType.startCol*2)+2}px`,
       };
@@ -101,7 +101,7 @@ const catDirections = {
         <div className="grid-container">
           <h2 className="map-h2s">your friend's rug</h2>
           <div id="opp-rug">
-          <img src={imageSources[catDirections.A]} style={getCatStyles("A")} className="cat-image"/>
+          <img src={imageSources[catDirections.A]} style={getCatStyles("A")} className="cat-image" />
           <img src={imageSources[catDirections.B]} style={getCatStyles("B")} className="cat-image" />
           <img src={imageSources[catDirections.C]} style={getCatStyles("C")} className="cat-image" />
           <img src={imageSources[catDirections.D]} style={getCatStyles("D")} className="cat-image" />
@@ -114,12 +114,14 @@ const catDirections = {
                     id={`${rowId}${itemId}`}
                     className={
                       `${rowId}${itemId}` === selectedTile
-                        ? "selected-grid-item"
-                        : hitShips.includes(gridItem)
-                          ? "grid-item hit"
-                          : gridItem === 1
-                            ? "grid-item miss"
-                            : "grid-item"
+                      ? "selected-grid-item"
+                      : hitShips.includes(gridItem) 
+                      ? catsLeft.includes(gridItem.toUpperCase())
+                      ? "grid-item clear"
+                      : "grid-item hit"
+                        : gridItem === 1
+                          ? "grid-item miss"
+                          : "grid-item"
                     }
                     onClick={(e) => {
                       if (turn === playerId) {
