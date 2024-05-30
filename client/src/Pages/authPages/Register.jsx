@@ -35,7 +35,6 @@ const Register = ({setToken, setCurUser, token}) => {
   }
   return (
     <>
-    <Nav />
     <div className="homeMainSection">
     <h1>REGISTER PAGE</h1>
   <h2 className="regH2">Create a new account or {<Link to="/login">log in</Link>}</h2>

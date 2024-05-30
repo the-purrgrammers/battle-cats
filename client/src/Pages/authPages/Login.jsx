@@ -41,8 +41,6 @@ const Login = ({setCurUser}) => {
   return (
     <>
      <div>
-
-      <Nav />
       <div className="homeMainSection">
       <h1 className="loginh1">The cats need you to identify yourself. Let them sniff fingertip below</h1>
       <form onSubmit={submitHandler}>
