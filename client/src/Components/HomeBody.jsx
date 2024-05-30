@@ -98,7 +98,7 @@ const HomeBody = () => {
       <h3>join a room:</h3>
       {/* map out the room array displaying a button for each room that will join you to that room 
       and nav you to the gamepage */}
-      {
+      { !waitingMessage &&
         rooms.map((room, idx) => (
           <button
             className="createButton"
@@ -111,8 +111,10 @@ const HomeBody = () => {
             {room}
           </button>
         ))
-      }
-      <h3>create a room:</h3>
+      }{
+        !waitingMessage && 
+        <>  
+        <h3>create a room:</h3>
       <form onSubmit={handleCreate}>
         <input
           value={roomName}
@@ -120,6 +122,9 @@ const HomeBody = () => {
           placeholder="room name" />
         <button className="createButton" type="submit">create</button>
       </form>
+        </>
+      }
+      
       {
         waitingMessage &&
         <div>
