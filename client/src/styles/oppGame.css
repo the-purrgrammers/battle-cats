@@ -5,6 +5,11 @@ body {
   background-image: url("../assets/floor1.jpg");
 }
 
+#long-cat-logo {
+  width: 500px;
+  margin-bottom: 10px;
+}
+
 #h1-battle-cats {
   text-align: center;
   font-size: xx-large;
