@@ -86,8 +86,7 @@ body {
   position: relative;
 }
 
-
-.cat-image{
+.cat-image {
   position: absolute;
   z-index: 10;
   background-size: cover;
@@ -155,8 +154,10 @@ body {
 .grid-item {
   background-color: #fbeee0;
 }
-.clear{
+
+.clear {
   background-color: transparent;
+  background-image: none;
 }
 
 .miss {
@@ -188,7 +189,12 @@ body {
   background-image: url(../assets/pet-cat-icon.png);
   pointer-events: none;
 }
-.pet{
+
+.hit-and-sunk {
+  background-image: none !important;
+}
+
+.pet {
   z-index: 11;
 }
 
@@ -197,13 +203,13 @@ body {
   padding: 20px;
   width: 680px;
   margin: 20px;
-  display: inline-block
+  display: inline-block;
 }
 .ship-container > * {
   margin: 0px 10px;
 }
 
-@media only screen and (max-width : 667px) {
+@media only screen and (max-width: 667px) {
   .grid-item {
     text-align: center;
     margin: auto;
@@ -213,11 +219,10 @@ body {
     grid-template-columns: repeat(10, 0fr);
     grid-auto-rows: minmax(7px);
     grid-auto-columns: 10;
-
   }
   #double-grid-container {
     display: flex-box;
-   
+
     justify-content: space-evenly;
   }
 }
