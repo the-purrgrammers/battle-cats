@@ -17,7 +17,6 @@ function App() {
   console.log(curUser, "in app.jsx")
   return (
     <>
-    <Nav curUser={curUser}/>
       <Routes>
         <Route path="/" element={<HomePage token={token} curUser={curUser}/>}></Route>
         <Route path="/game" element={<GamePage token={token} curUser={curUser}/>}></Route>

@@ -253,35 +253,6 @@ const GamePage = ({curUser}) => {
                 catInfo={catInfo}
               />
             </div>
-
-<div id="double-grid-container">
-<ChatBox playerId={playerId} curUser={curUser}/>
-            <OpponentShipMap
-              oppGameState={oppGameState}
-              setSelectedTile={setSelectedTile}
-              selectedTile={selectedTile}
-              turn={turn}
-              playerId={playerId}
-              catsLeft={catsLeft}
-            />
-                <div id="end-turn-btn-container">
-            <EndTurnButton
-              selectedTile={selectedTile}
-              setSelectedTile={setSelectedTile}
-              setMsg={setMsg}
-              setWinnerId={setWinnerId}
-              gameId={gameId}
-              setTurn={setTurn}
-              setCatsLeft={setCatsLeft}
-              playerId={playerId}
-              curUser={curUser}
-            />
-                </div>
-
-            <PlayerShipMap myGameState={myGameState} />
-</div>
-
-
           </>
         ) : (
           <WinLoseScreen

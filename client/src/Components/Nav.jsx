@@ -15,7 +15,7 @@ const clickHandler = () =>{
         {token && curUser?.id ? 
         (<>
         <Link to={'/'}><button className="navBar-button">home</button></Link>
-        <Link to={`/me/${curUser.id}`}><button className="navBar-button">My Profile</button></Link>
+        <Link to={`/me/${curUser.id}`}><button className="navBar-button">Profile</button></Link>
         <Link to={'/'}><button className="navBar-button" onClick={clickHandler}>Log Out</button></Link>
         </>
         ) : ( <>
