@@ -3,7 +3,6 @@ import Footer from "../Components/Footer";
 import "../styles/homepage.css";
 
 const HomePage = () => {
-
   return (
     <>
       <div className="homeWrapper">

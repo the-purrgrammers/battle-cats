@@ -99,6 +99,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin: 3px;
 }
 
 .createButton:hover{
@@ -140,6 +141,19 @@ body {
   height: 50%;
   border: 10px double rgb(84, 127, 84);
   border-radius: 40px;
+}
+
+.roomsListCont {
+  background-color: rgb(221, 198, 170);
+  height: 420px;
+  width: 500px;
+  overflow: auto;
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-color: rgb(221, 198, 170) rgb(84, 127, 84);
 }
 
 .regLabel {

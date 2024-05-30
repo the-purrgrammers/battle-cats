@@ -100,20 +100,22 @@ const HomeBody = () => {
         <h3>join a room:</h3>
         {/* map out the room array displaying a button for each room that will join you to that room 
         and nav you to the gamepage */}
-        {
-          rooms.map((room, idx) => (
-            <button
-              className="createButton"
-              key={idx}
-              onClick={() => {
-                socket.emit("joinRoom", room);
-                sessionStorage.setItem("room", room)
-                setWaitingMessage('waiting for a friend to join your room')
-              }}>
-              {room}
-            </button>
-          ))
-        }
+        <ul className="roomsListCont">
+      {
+        rooms.map((room, idx) => (
+          <li key={idx}><button
+            className="createButton"
+            key={idx}
+            onClick={() => {
+              socket.emit("joinRoom", room);
+              sessionStorage.setItem("room", room)
+              setWaitingMessage('waiting for a friend to join your room')
+            }}>
+            {room}
+          </button></li>
+        ))
+      }
+      </ul>
         <h3>create a room:</h3>
         <form onSubmit={handleCreate}>
           <input
