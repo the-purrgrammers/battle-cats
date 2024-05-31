@@ -33,7 +33,7 @@ If you would like to have a copy of Battle Cats on your local computer to run in
 If you find any issues or bugs that need addressing, please submit a PR regarding the bug.
 
 ## Credits
-Battle Cats! logo font was created on textstudio.con
+Battle Cats! logo font was created on textstudio.com
 Battle Cats! logo and cats were created by Char B.
 Battle Cats! music written by Thomas H.
 Battle Cats! cat face image was sourced from https://emojipedia.org/google/android-7.0/cat-face 
