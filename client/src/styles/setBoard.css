@@ -10,7 +10,6 @@
 
 }
   
-
 }
 .ship-container {
   border: 10px double rgb(84, 127, 84);
@@ -57,9 +56,6 @@ h2 {
    
   }
 
-
-
-
   h2 {
     text-align: center;
     font-size: medium;
@@ -68,6 +64,4 @@ h2 {
     margin: 4%;
     border-radius: 40px;
   }
-  
-
 }
