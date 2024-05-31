@@ -220,7 +220,7 @@ body {
   transform: translate(2px, 2px);
 }
 
-@media only screen and (max-width: 667px) {
+/* @media only screen and (max-width: 667px) {
   .grid-item {
     text-align: center;
     margin: auto;
@@ -235,4 +235,4 @@ body {
     display: flex-box;
     justify-content: space-evenly;
   }
-}
+} */

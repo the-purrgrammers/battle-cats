@@ -44,7 +44,7 @@ h2 {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
+/* 
 @media only screen and (max-width: 667px) {
   #grid-and-h2-cont {
     display: flex;
@@ -60,4 +60,4 @@ h2 {
     margin: 4%;
     border-radius: 40px;
   }
-}
+} */
