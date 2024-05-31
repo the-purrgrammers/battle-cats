@@ -16,7 +16,7 @@ const WinLoseScreen = ({ winnerId, playerId }) => {
   return (
     <>
       {winnerId === playerIdNum ? (
-        <div id="win-lose-msg-cont">
+        <div className="winLoseMessageDiv" id="win-lose-msg-cont">
           <h1 id="winner-msg">
             you won! the felines celebrate you! you pet every cat!
           </h1>
@@ -26,7 +26,7 @@ const WinLoseScreen = ({ winnerId, playerId }) => {
           </button>
         </div>
       ) : (
-        <div id="win-lose-msg-cont">
+        <div className="winLoseMessageDiv" id="win-lose-msg-cont">
           <h1 id="loser-msg">
             sorry, you lost. every kitten foiled your attempts. try again?
           </h1>
