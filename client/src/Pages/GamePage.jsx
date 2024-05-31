@@ -205,7 +205,7 @@ const GamePage = ({curUser}) => {
               opponentDisconnected &&
               <div>
                 <p>your friend has left the game</p>
-                <button onClick={handleGameEnded}> go to homepage</button>
+                <button className="disconnectButton" onClick={handleGameEnded}> go to homepage</button>
               </div>
             }
 

@@ -115,6 +115,39 @@ body {
   transform: translate(2px, 2px);
 }
 
+.leaveButton { 
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 3px;
+}
+
+.leaveButton:hover{
+  background-color: #F082AC;
+}
+
+.leaveButton:hover {
+  background-color: #fff;
+}
+
+.leaveButton:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
 #logo-cont {
   display: flex;
   align-items: center;
@@ -163,13 +196,12 @@ body {
 .namesDiv {
   display: flex;
   justify-content: space-evenly;
-  position: fixed;
-  bottom: 0;
-  width: 95%;
+  width: 100%;
   background-color: rgba(255, 228, 196);
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   border-top: 10px double rgb(84, 127, 84);
+  margin-bottom: 0;
 }
 
 .navBar {
