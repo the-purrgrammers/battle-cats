@@ -21,7 +21,6 @@ const HomeBody = () => {
       });
     });
 
-    // Event listener to handle all rooms on new connection
     socket.on("shareAllRooms", (allRooms) => {
       setRooms(allRooms);
     });
@@ -109,6 +108,7 @@ const HomeBody = () => {
                     key={idx}
                     onClick={() => {
                       socket.emit("joinRoom", room);
+                      sessionStorage.clear();
                       sessionStorage.setItem("room", room);
                       setWaitingMessage(
                         "waiting for a friend to join your room"

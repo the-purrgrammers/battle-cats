@@ -6,7 +6,6 @@ const HomePage = () => {
   return (
     <>
       <div className="homeWrapper">
-        {/* <Nav curUser={curUser}/> */}
         <HomeBody />
         <Footer />
       </div>
