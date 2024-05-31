@@ -1,20 +1,18 @@
-#grid-and-h2-cont{
+#grid-and-h2-cont {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-#grid-cont {
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: 10px double rgb(84, 127, 84);
+  #grid-cont {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 10px double rgb(84, 127, 84);
+  }
+}
 
-}
-  
-}
 .ship-container {
   border: 10px double rgb(84, 127, 84);
   border-radius: 20px;
-
 }
 
 h2 {
@@ -47,13 +45,11 @@ h2 {
   touch-action: manipulation;
 }
 
-@media only screen and (max-width : 667px) {
-  #grid-and-h2-cont{
+@media only screen and (max-width: 667px) {
+  #grid-and-h2-cont {
     display: flex;
-
     flex-direction: column;
     align-items: center;
-   
   }
 
   h2 {

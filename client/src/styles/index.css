@@ -7,6 +7,7 @@
   width: fit-content;
   text-align: left;
   margin-left: 10px;
+  margin-right: 10px;
   text-wrap: nowrap;
 }
 
@@ -52,6 +53,7 @@
 
 #chat-h2 {
   border: 10px double rgb(84, 127, 84);
+  margin-top: 25px;
 }
 
 .map-h2s {
@@ -64,7 +66,8 @@
   justify-content: center;
 }
 
-#winner-msg, #loser-msg {
+#winner-msg,
+#loser-msg {
   background-color: rgb(134, 155, 99);
   padding: 10px;
   font-size: x-large;
@@ -93,8 +96,8 @@
   margin: 3px;
 }
 
-.returnButton:hover{
-  background-color: #F082AC;
+.returnButton:hover {
+  background-color: #f082ac;
 }
 
 .returnButton:hover {
@@ -137,11 +140,7 @@ body {
     z-index: -1;
     width: calc(100% + var(--border-width) * 2);
     height: calc(100% + var(--border-width) * 2);
-    background: linear-gradient(
-      90deg,
-      rgb(134, 155, 99),
-      white
-    );
+    background: linear-gradient(90deg, rgb(134, 155, 99), white);
     background-size: 300% 300%;
     background-position: 0 50%;
     border-radius: calc(2 * var(--border-width));
