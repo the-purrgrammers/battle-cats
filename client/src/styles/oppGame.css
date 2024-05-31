@@ -52,17 +52,17 @@ body {
   padding: 10px;
 }
 
-.waitDiv {
-  font-size: medium;
-  background-color: pink;
+.waitH3 {
+  font-size: large;
+  background-color: rgb(105, 120, 77);
+  height: fit-content;
+  text-wrap: wrap;
+  margin-top: 44px;
+  margin-left: 250px;
   text-align: center;
-  border: 20px double black;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 50px;
-  padding: 50px;
-  margin-top: 20px;
+  padding: 10px;
 }
+
 #chat-h2 {
   margin-top: 40px;
 }
@@ -78,7 +78,6 @@ body {
   width: 520px;
   border-radius: 30px;
   margin: 20px;
-  /* border: 10px double rgb(84, 127, 84); */
 }
 
 #opp-rug {
@@ -177,6 +176,7 @@ body {
 .battleship {
   /* background-color: rgb(98, 158, 38); */
 }
+
 .cruiser {
   /* background-color: rgba(9, 46, 230); */
 }
@@ -210,6 +210,7 @@ body {
   margin: 20px;
   display: inline-block;
 }
+
 .ship-container > * {
   margin: 0px 10px;
 }
@@ -251,7 +252,6 @@ body {
   .grid-item {
     text-align: center;
     margin: auto;
-
     gap: 0px;
     display: grid;
     grid-template-columns: repeat(10, 0fr);
@@ -260,7 +260,6 @@ body {
   }
   #double-grid-container {
     display: flex-box;
-
     justify-content: space-evenly;
   }
 }

@@ -95,7 +95,7 @@ const catDirections = {
   return (
     <>
       {oppGameState.length === 0 ? (
-        <div className="waitDiv">You're waiting for your friends' cats to find a comfy place to nap</div>
+        <h3 className="waitH3">you're waiting for your friend's cats to find a comfy place to nap</h3>
       ) : (
         <div className="grid-container">
           <h2 className="map-h2s">your friend's rug</h2>
