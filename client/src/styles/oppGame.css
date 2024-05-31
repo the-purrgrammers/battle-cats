@@ -63,10 +63,6 @@ body {
   padding: 10px;
 }
 
-#chat-h2 {
-  margin-top: 40px;
-}
-
 #double-grid-container {
   display: flex;
   justify-content: flex-end;
