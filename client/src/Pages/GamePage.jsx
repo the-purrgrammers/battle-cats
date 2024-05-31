@@ -2,7 +2,6 @@ import "../styles/index.css";
 import "../styles/oppGame.css";
 import { initializeSocket } from "../socket";
 const socket = initializeSocket();
-import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
@@ -134,6 +133,7 @@ const GamePage = ({curUser}) => {
 
   const handleGameEnded = async () => {
     sessionStorage.clear();
+    navigate('/')
     try {
      await fetch('api/game/endgame', {
         method: 'PUT',
@@ -205,7 +205,7 @@ const GamePage = ({curUser}) => {
               opponentDisconnected &&
               <div>
                 <p>your friend has left the game</p>
-                <Link to="/"><button className="disconnectButton" onClick={handleGameEnded}> go to homepage</button></Link>
+                <button className="disconnectButton" onClick={handleGameEnded}> go to homepage</button>
               </div>
             }
 
@@ -215,7 +215,7 @@ const GamePage = ({curUser}) => {
                   waiting on your friend...
                 </span>
               ) : (
-                <span className="waiting-message">Your Turn!</span>
+                <span className="waiting-message gradient-border">Your Turn!</span>
               )}
               {!msg ? (
                 ""

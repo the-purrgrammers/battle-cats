@@ -21,11 +21,6 @@ const HomeBody = () => {
       });
     });
 
-    // Event listener to handle all rooms on new connection
-    socket.on("shareAllRooms", (allRooms) => {
-      setRooms(allRooms);
-    });
-
     socket.on("getRooms", (rooms) => {
       setRooms(rooms);
     });
@@ -60,6 +55,13 @@ const HomeBody = () => {
       socket.off("assignPlayer");
     };
   }, [socket]);
+
+  useEffect(() => {
+    // Event listener to handle all rooms on new connection
+    socket.on("shareAllRooms", (allRooms) => {
+      setRooms(allRooms);
+    });
+  }, []);
 
   //use the sockets to share your newly created room with others
   const handleCreate = (e) => {
