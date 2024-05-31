@@ -109,6 +109,7 @@ const HomeBody = () => {
                     key={idx}
                     onClick={() => {
                       socket.emit("joinRoom", room);
+                      sessionStorage.clear();
                       sessionStorage.setItem("room", room);
                       setWaitingMessage(
                         "waiting for a friend to join your room"

@@ -263,6 +263,7 @@ body {
 }
 
 @media only screen and (max-width: 667px) {
+
   .homeMainSection {
     display: flex;
     flex-direction: column;
@@ -418,4 +419,5 @@ body {
     -webkit-user-select: none;
     touch-action: manipulation;
   }
+
 }
