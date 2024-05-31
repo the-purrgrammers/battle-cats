@@ -263,7 +263,6 @@ body {
   font-size: large;
   text-align: center;
 }
-@media only screen and (max-width : 667px) {
   .homeMainSection {
     display: flex;
     flex-direction: column;
@@ -415,7 +414,4 @@ body {
 
   }
   
-
-
-}
 
