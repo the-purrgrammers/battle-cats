@@ -115,14 +115,6 @@
   align-items: center;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #222;
-}
-
 .gradient-border {
   --border-width: 3px;
 

@@ -1,30 +1,11 @@
-/* 
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3) { 
-
+#logo-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Portrait */
-/* @media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) { 
-
-} */
-
-/* Landscape */
-/* @media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: landscape) { 
-} */
-
-body {
-  background-image: url("../assets/BG2.jpg");
+#logoExplosion {
+  width: 420px;
 }
 
 .waitingMsg {
@@ -147,16 +128,6 @@ body {
   transform: translate(2px, 2px);
 }
 
-#logo-cont {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#logoExplosion {
-  width: 400px;
-}
-
 .homeMainSection {
   display: flex;
   flex-direction: column;
@@ -164,10 +135,10 @@ body {
   align-content: center;
   justify-content: center;
   margin-top: 0%;
-  margin-bottom: 10%;
+  margin-bottom: 1%;
   background-color: rgba(255, 228, 196, 0.9);
-  padding-top: 7%;
-  padding-bottom: 8%;
+  padding-top: 1%;
+  padding-bottom: 2%;
   margin-left: 5%;
   margin-right: 5%;
   height: 50%;
@@ -177,8 +148,8 @@ body {
 
 .roomsListCont {
   background-color: rgb(221, 198, 170);
-  height: 420px;
-  width: 500px;
+  height: 200px;
+  width: 400px;
   overflow: auto;
   list-style: none;
   padding-left: 0;
@@ -193,6 +164,9 @@ body {
 }
 
 .namesDiv {
+  position: fixed;
+  left: 0;
+  bottom: 0;
   display: flex;
   justify-content: space-evenly;
   width: 100%;
@@ -200,7 +174,6 @@ body {
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   border-top: 10px double rgb(84, 127, 84);
-  margin-bottom: 0;
 }
 
 .navBar {
@@ -226,14 +199,14 @@ body {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
 }
-
+/* 
 @media (min-width: 768px) {
   .navBar-button,
   .playbutton {
     min-width: 120px;
     padding: 0 25px;
   }
-}
+} */
 
 .sniffButton {
   background-color: #fbeee0;
@@ -262,6 +235,36 @@ body {
   text-align: center;
 }
 
+.devName {
+margin-right: 2%;
+}
+
+/* 
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+}
+
+/* Portrait */
+/* @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+} */
+
+/* Landscape */
+/* @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+} */
+
+/* 
 @media only screen and (max-width: 667px) {
 
   .homeMainSection {
@@ -419,5 +422,4 @@ body {
     -webkit-user-select: none;
     touch-action: manipulation;
   }
-
-}
+} */
