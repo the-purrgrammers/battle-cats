@@ -133,7 +133,8 @@ const GamePage = ({curUser}) => {
 
   const handleGameEnded = async () => {
     sessionStorage.clear();
-    navigate('/')
+    socket.emit("startWithRooms");
+    navigate('/');
     try {
      await fetch('api/game/endgame', {
         method: 'PUT',

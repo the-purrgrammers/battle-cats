@@ -25,6 +25,10 @@ const rooms = [];
 io.on("connection", (socket) => {
   socket.emit("shareAllRooms", rooms);
 
+  socket.on("startWithRooms", () => {
+    socket.emit("shareAllRooms", rooms);
+  });
+
 //handle a permanent disconnection during game
   socket.on("disconnecting", () => {
     const rooms = Array.from(socket.rooms).filter((r) => r !== socket.id);
