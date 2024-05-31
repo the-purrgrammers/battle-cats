@@ -215,7 +215,7 @@ const GamePage = ({curUser}) => {
                   waiting on your friend...
                 </span>
               ) : (
-                <span className="waiting-message">Your Turn!</span>
+                <span className="waiting-message gradient-border">Your Turn!</span>
               )}
               {!msg ? (
                 ""

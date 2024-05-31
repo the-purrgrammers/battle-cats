@@ -23,4 +23,3 @@ const Ship = ({ type, direction, shipDetails }) => {
 }
 
 export default Ship
-

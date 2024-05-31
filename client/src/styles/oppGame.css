@@ -52,19 +52,15 @@ body {
   padding: 10px;
 }
 
-.waitDiv {
-  font-size: medium;
-  background-color: pink;
+.waitH3 {
+  font-size: large;
+  background-color: rgb(105, 120, 77);
+  height: fit-content;
+  text-wrap: wrap;
+  margin-top: 44px;
+  margin-left: 250px;
   text-align: center;
-  border: 20px double black;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 50px;
-  padding: 50px;
-  margin-top: 20px;
-}
-#chat-h2 {
-  margin-top: 40px;
+  padding: 10px;
 }
 
 #double-grid-container {
@@ -78,7 +74,6 @@ body {
   width: 520px;
   border-radius: 30px;
   margin: 20px;
-  /* border: 10px double rgb(84, 127, 84); */
 }
 
 #opp-rug {
@@ -170,25 +165,6 @@ body {
   pointer-events: none;
 }
 
-.carrier {
-  /* background-color: rgb(252, 189, 0); */
-}
-
-.battleship {
-  /* background-color: rgb(98, 158, 38); */
-}
-.cruiser {
-  /* background-color: rgba(9, 46, 230); */
-}
-
-.sub {
-  /* background-color: rgb(172, 53, 150); */
-}
-
-.destroyer {
-  /* background-color: rgb(239, 239, 16); */
-}
-
 .hit {
   background-color: rgba(255, 0, 0, 0);
   background-image: url(../assets/pet-cat-icon.png);
@@ -210,6 +186,7 @@ body {
   margin: 20px;
   display: inline-block;
 }
+
 .ship-container > * {
   margin: 0px 10px;
 }
@@ -234,10 +211,6 @@ body {
   margin: 3px;
 }
 
-.disconnectButton:hover{
-  background-color: #F082AC;
-}
-
 .disconnectButton:hover {
   background-color: #fff;
 }
@@ -251,16 +224,15 @@ body {
   .grid-item {
     text-align: center;
     margin: auto;
-
     gap: 0px;
     display: grid;
     grid-template-columns: repeat(10, 0fr);
     grid-auto-rows: minmax(7px);
     grid-auto-columns: 10;
   }
+
   #double-grid-container {
     display: flex-box;
-
     justify-content: space-evenly;
   }
 }

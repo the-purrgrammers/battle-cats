@@ -21,16 +21,15 @@
   and (max-device-width: 812px) 
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: landscape) { 
-
-} */ 
+} */
 
 body {
   background-image: url("../assets/BG2.jpg");
 }
 
-.waitingMsg{
+.waitingMsg {
   padding: 2%;
-  margin-bottom: 0%
+  margin-bottom: 0%;
 }
 
 .h1-battle-cats-cont {
@@ -82,7 +81,7 @@ body {
   transform: translate(2px, 2px);
 }
 
-.createButton { 
+.createButton {
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -102,8 +101,8 @@ body {
   margin: 3px;
 }
 
-.createButton:hover{
-  background-color: #F082AC;
+.createButton:hover {
+  background-color: #f082ac;
 }
 
 .createButton:hover {
@@ -115,7 +114,7 @@ body {
   transform: translate(2px, 2px);
 }
 
-.leaveButton { 
+.leaveButton {
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -135,8 +134,8 @@ body {
   margin: 3px;
 }
 
-.leaveButton:hover{
-  background-color: #F082AC;
+.leaveButton:hover {
+  background-color: #f082ac;
 }
 
 .leaveButton:hover {
@@ -207,17 +206,14 @@ body {
 .navBar {
   display: flex;
   width: 95%;
-  /* padding: 1%; */
   justify-content: space-evenly;
   background-color: rgba(255, 228, 196);
   position: none;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-  border-bottom: 10px double rgb(84, 127, 84); 
-
+  border-bottom: 10px double rgb(84, 127, 84);
   top: 0;
-  
-  bottom:auto;
+  bottom: auto;
   height: 75px;
 }
 
@@ -238,7 +234,8 @@ body {
     padding: 0 25px;
   }
 }
-.sniffButton { 
+
+.sniffButton {
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -259,10 +256,14 @@ body {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+
 .loginh1 {
   font-size: large;
   text-align: center;
 }
+
+@media only screen and (max-width: 667px) {
+
   .homeMainSection {
     display: flex;
     flex-direction: column;
@@ -280,6 +281,7 @@ body {
     margin-right: 5%;
     height: 100%;
   }
+
   .navBar {
     display: flex;
     width: 100%;
@@ -287,10 +289,10 @@ body {
     background-color: rgba(255, 228, 196);
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    border-bottom: 10px double rgb(84, 127, 84); 
+    border-bottom: 10px double rgb(84, 127, 84);
     position: fixed;
     top: 0;
-    bottom:auto;
+    bottom: auto;
     height: 10%;
   }
 
@@ -300,7 +302,8 @@ body {
     width: 80px;
     padding: 0 10%;
   }
-  .createButton { 
+
+  .createButton {
     background-color: #fff9f4;
     border: 2px solid #422800;
     border-radius: 30px;
@@ -309,7 +312,7 @@ body {
     cursor: pointer;
     width: 33%;
     margin-left: 10px;
-    margin-bottom: 1%;;
+    margin-bottom: 1%;
     display: inline-block;
     font-weight: 0;
     font-size: 15px;
@@ -335,20 +338,24 @@ body {
     border-top: 10px double rgb(84, 127, 84);
     background-color: rgba(255, 228, 196);
   }
+
   .devName {
     margin: 1.5%;
     margin-top: 1%;
-    margin-bottom: .5%;
+    margin-bottom: 0.5%;
     padding: 2%;
   }
+
   .loginh1 {
     font-size: smaller;
     text-align: center;
   }
+
   label {
     font-size: smaller;
     margin-left: 10%;
   }
+
   .regLabel {
     display: flex;
     padding: 2%;
@@ -356,7 +363,7 @@ body {
     margin-top: 20px;
   }
 
-  .sniffButton { 
+  .sniffButton {
     background-color: #fbeee0;
     border: 2px solid #422800;
     border-radius: 30px;
@@ -377,16 +384,16 @@ body {
     -webkit-user-select: none;
     touch-action: manipulation;
   }
-  .waitingMsg{
+
+  .waitingMsg {
     padding: 2%;
-    margin-bottom: 0%
+    margin-bottom: 0%;
   }
 
   .regH2 {
     font-size: smaller;
     border-radius: 40px;
     margin-bottom: 1%;
-
   }
 
   .leaveButton {
@@ -399,7 +406,7 @@ body {
     width: 40%;
     margin-left: 29%;
     margin-right: auto;
-    margin-top: .5%;
+    margin-top: 0.5%;
     margin-bottom: 1%;
     display: inline-block;
     font-weight: 300;
@@ -411,7 +418,6 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-
   }
-  
 
+}
