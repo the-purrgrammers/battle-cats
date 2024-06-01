@@ -13,8 +13,9 @@ import ChatBox from "../Components/ChatBox";
 import SetBoard from "../Components/SetBoard";
 import logoLong from "../assets/logo-long-cat.png"
 
-const GamePage = ({curUser}) => {
+const GamePage = ({ curUser }) => {
   const [playerId, setPlayerId] = useState("");
+  const [musicIsPlaying, setMusicIsPlaying] = useState(true)
   const [turn, setTurn] = useState("");
   const [oppId, setOppId] = useState();
   const [oppGameState, setOppGameState] = useState([]);
@@ -28,6 +29,11 @@ const GamePage = ({curUser}) => {
   const [oppCatInfo, setOppCatInfo] = useState([])
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
   const navigate = useNavigate()
+  const gameAudio = new Audio('/src/assets/bcthemegame.mp3');
+  const fullyPetAudio = new Audio("/src/assets/bcFULLYPET.mp3")
+
+  const [musicMessage, setMusicMessage] = useState("shhh the music");
+
 
 
   //when one player completes setting their board, they share it along with the turn so that
@@ -58,7 +64,41 @@ const GamePage = ({curUser}) => {
     if (data.msg) {
       setMsg(data.msg);
     }
+
   });
+  useEffect(() => {
+    fullyPetAudio.play(false)
+  }, [catsLeft]);
+
+
+
+  const startAndPauseMusic = () => {
+    if (musicIsPlaying) {
+      // gameAudio.pause();
+      setMusicMessage("play the music")
+      setMusicIsPlaying(false)
+    } else {
+      //  gameAudio.play();
+      setMusicMessage("shhhh the music")
+      setMusicIsPlaying(true)
+    }
+  }
+ useEffect(() => {
+    if (gameId && musicIsPlaying) {
+      gameAudio.play();
+      setMusicIsPlaying(true)
+    } else if (gameId && !musicIsPlaying) {
+      gameAudio.pause();
+      gameAudio.currentTime = 0;
+    }
+    return () => {
+      gameAudio.pause();
+      gameAudio.currentTime = 0;
+    }
+  }, [gameId, musicIsPlaying]);
+  useEffect(() => {
+    fullyPetAudio.play(false)
+  }, [catsLeft])
 
   //code for refreshing: if connection is lost, go into session storage and
   //get all the necessary info
@@ -84,6 +124,7 @@ const GamePage = ({curUser}) => {
       setOppId(opponent);
     }
 
+
     //look in localstorage for token, re-fetch the most recent game state if you lose it
     const refreshGame = async () => {
       const gameToken = sessionStorage.getItem("gameToken")
@@ -104,7 +145,7 @@ const GamePage = ({curUser}) => {
           setOppGameState(game.gameState[game.gameState.length - 1].p2)
           setCatsLeft(game.gameState[game.gameState.length - 1].p2ShipsSunk)
           setCatInfo(game.gameState[0].p1Cats)
-          if (game.gameState[0].p2Cats){
+          if (game.gameState[0].p2Cats) {
             setOppCatInfo(game.gameState[0].p2Cats)
           }
 
@@ -114,7 +155,7 @@ const GamePage = ({curUser}) => {
           setOppGameState(game.gameState[game.gameState.length - 1].p1)
           setCatsLeft(game.gameState[game.gameState.length - 1].p1ShipsSunk)
           setCatInfo(game.gameState[0].p2Cats)
-          if (game.gameState[0].p1Cats){
+          if (game.gameState[0].p1Cats) {
             setOppCatInfo(game.gameState[0].p1Cats)
           }
 
@@ -131,12 +172,14 @@ const GamePage = ({curUser}) => {
     setOpponentDisconnected(true);
   });
 
+
+
   const handleGameEnded = async () => {
     sessionStorage.clear();
     socket.emit("startWithRooms");
     navigate('/');
     try {
-     await fetch('api/game/endgame', {
+      await fetch('api/game/endgame', {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
@@ -193,6 +236,8 @@ const GamePage = ({curUser}) => {
     }
   };
 
+
+
   //page renders conditionally based on having a gameId,
   //whether their is a winner, etc.
 
@@ -226,6 +271,9 @@ const GamePage = ({curUser}) => {
                 <span className="sunk-ship-message">{msg.p2}</span>
               )}
             </div>
+            <div>
+              <button onClick={startAndPauseMusic} className="music-button">{musicMessage}</button>
+            </div>
             <div id="double-grid-container">
               <ChatBox playerId={playerId} />
               <OpponentShipMap
@@ -241,6 +289,7 @@ const GamePage = ({curUser}) => {
                 <EndTurnButton
                   selectedTile={selectedTile}
                   setSelectedTile={setSelectedTile}
+                  msg={msg}
                   setMsg={setMsg}
                   setWinnerId={setWinnerId}
                   gameId={gameId}

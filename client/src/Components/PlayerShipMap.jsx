@@ -94,6 +94,7 @@ const catDirections = {
 
   return (
     <>
+    
       <div className="grid-container">
       
         <h2 className="map-h2s">your rug</h2>

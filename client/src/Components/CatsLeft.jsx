@@ -3,11 +3,14 @@ import "../styles/catsLeft.css";
 
 const CatsLeft = ({oppGameState, catsLeft}) => {
 
+
   const catsArray = [0,0,0,0,0]
 
   catsLeft.forEach((cat, index)=>{
+
     catsArray[index] = 1
   })
+ 
 
   return (
     <>
@@ -16,6 +19,7 @@ const CatsLeft = ({oppGameState, catsLeft}) => {
           {
             catsArray.map((cat, index)=>{
               if(cat){
+            
                 return <div key={index} className="catCircleSunk"></div>
               }else{
                 return <div key={index} className="catCircle"></div>

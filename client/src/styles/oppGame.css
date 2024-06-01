@@ -30,6 +30,37 @@ body {
   margin-left: 22px;
 }
 
+.music-button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+
+}
+
+.music-button {
+  width: auto;
+  margin-top: 5px;
+  text-wrap: nowrap;
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: block;
+  font-family: "Short Stack", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+
+}
 #send-messg-btn {
   display: flex;
   justify-content: center;
