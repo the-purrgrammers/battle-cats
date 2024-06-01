@@ -1,9 +1,12 @@
 import { initializeSocket } from "../socket";
 const socket = initializeSocket()
+const petAudio = new Audio("/src/assets/bcPET.mp3");
+const missAudio = new Audio("/src/assets/bcMISS.mp3")
 
 const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gameId, setTurn, setCatsLeft, playerId, curUser }) => {
 
   const endTurn = async () => {
+    petAudio.play()
     try {
       setMsg('')
       const result = await fetch('api/game/endturn', {
@@ -42,8 +45,9 @@ const EndTurnButton = ({ setWinnerId, selectedTile, setSelectedTile, setMsg, gam
     } catch (error) {
       console.error("error fetching updated board", error);
     }
+    
   };
-
+  
   return (
     <>{selectedTile && <button id='end-turn-btn' onClick={endTurn}>pet that cat!</button>}</>
   );

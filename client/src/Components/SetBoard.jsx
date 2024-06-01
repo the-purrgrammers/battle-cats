@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import Ship from "./Ship";
 import "../styles/setBoard.css";
 
 
 const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
+  const dropAudio = new Audio("/src/assets/bcFULLYPET.mp3")
+  const flipAudio = new Audio("./src/assets/flipCatsAudio.mp3")
   const [board, setBoard] = useState(Array(10).fill(Array(10).fill(0)));
   const [direction, setDirection] = useState("horizontal");
   const [shipsToPlace, setShipsToPlace] = useState(["A", "B", "C", "D", "E"]);
@@ -17,7 +19,9 @@ const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
     E: { length: 2, color: "rgb(239, 239, 16)" },
   };
 
+
   const handleFlip = () => {
+    flipAudio.play()
     const newDirection = direction === "horizontal" ? "vertical" : "horizontal";
     setDirection(newDirection);
   };
@@ -100,6 +104,10 @@ const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
     });
   }, [board]);
 
+  useEffect(() => {
+    dropAudio.play()
+  }, [board])
+
   const handleReset = () => {
     setBoard(Array(10).fill(Array(10).fill(0)));
     setShipsToPlace(["A", "B", "C", "D", "E"]);
@@ -125,6 +133,7 @@ const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
   return (
     <div id="grid-and-h2-cont">
       <h2>place your cats</h2>
+   
       <div id="grid-cont">
         {waitingMessage && <p className="waiting-message">{waitingMessage}</p>}
         {board.map((gameRow, rowId) => {

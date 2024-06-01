@@ -13,6 +13,7 @@ import CatsLeft from "./CatsLeft";
 
 
 
+
 const imageSources = {
   A: A,
   AH: AH,
@@ -94,6 +95,7 @@ const catDirections = {
   //NOTE: SORT OUT KEY PROPS WHEN THERE ARE ID's COMING IN
   return (
     <>
+    
       {oppGameState.length === 0 ? (
         <div className="waitDiv">You're waiting for your friends' cats to find a comfy place to nap</div>
       ) : (
@@ -132,6 +134,7 @@ const catDirections = {
               </div>
             ))}
           </div>
+          
           <CatsLeft
             oppGameState={oppGameState}
             playerId={playerId}
