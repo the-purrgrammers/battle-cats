@@ -4,8 +4,8 @@ import "../styles/setBoard.css";
 
 
 const SetBoard = ({ playerId, fetchInitGameState, setCatInfo, catInfo }) => {
-  const dropAudio = new Audio("/src/assets/bcFULLYPET.mp3")
-  const flipAudio = new Audio("./src/assets/flipCatsAudio.mp3")
+  const dropAudio = new Audio("/bcFULLYPET.mp3");
+  const flipAudio = new Audio("/flipCatsAudio.mp3")
   const [board, setBoard] = useState(Array(10).fill(Array(10).fill(0)));
   const [direction, setDirection] = useState("horizontal");
   const [shipsToPlace, setShipsToPlace] = useState(["A", "B", "C", "D", "E"]);

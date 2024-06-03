@@ -6,7 +6,7 @@ import "../styles/homepage.css";
 
 
 const HomePage = () => {
-  const waitingForAudio = new Audio("./src/assets/waitingForBC.mp3")
+  const waitingForAudio = new Audio("/waitingForBC.mp3")
   useEffect(() => {
     const playAudio = async () => {
       try {
