@@ -29,8 +29,8 @@ const GamePage = ({ curUser }) => {
   const [oppCatInfo, setOppCatInfo] = useState([])
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
   const navigate = useNavigate()
-  const gameAudio = new Audio('/src/assets/bcthemegame.mp3');
-  const fullyPetAudio = new Audio("/src/assets/bcFULLYPET.mp3")
+  const gameAudio = new Audio('/bcthemegame.mp3');
+  const fullyPetAudio = new Audio("/bcFULLYPET.mp3")
 
   const [musicMessage, setMusicMessage] = useState("shhh the music");
 
