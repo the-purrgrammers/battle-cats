@@ -3,6 +3,8 @@ Welcome to Battle Cats! - an in-browser multiplayer Battleship game, but with ca
 
 Play Battle Cats! here - on Render.com: https://battle-cats-t7kz.onrender.com/
 
+![Screenshot 2024-06-05 at 12 22 45 PM](https://github.com/user-attachments/assets/08fc84dd-a629-4edc-857d-d9dc53dbf29c)
+
 This project was initially created by Nick R., Desmond W., Char B., and Thomas H, and overseen by our instructors Jonathan, Tyler, and T.A. Divyah. It served as our final capstone project for Fullstack Academy.
 
 ## Project Description
